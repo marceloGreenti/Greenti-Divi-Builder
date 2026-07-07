@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BKGlass – Ventanas PVC Termopanel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:wght@300;500&display=swap" rel="stylesheet" />
+
+  <style>
+  /*
+  ================================================================
+  RESPONSIVE BREAKPOINTS — DIVI 5 REFERENCE
+  ================================================================
+  Divi usa 3 breakpoints para sus opciones responsive en el editor:
+    - Desktop  : sin media query (estilos base inline en cada módulo)
+    - Tablet   : @media (max-width: 980px)
+    - Phone    : @media (max-width: 767px)
+
+  CONVENCIÓN DE CLASES en este archivo:
+  Cada sección/módulo tiene una clase CSS que refleja su nombre
+  en Divi para facilitar el mapeo:
+    .divi-section     → ET_Section
+    .divi-row         → ET_Row (contenedor de columnas)
+    .divi-col         → ET_Column
+    .divi-navbar      → Header / Fullwidth Header
+    .divi-hero        → Fullwidth Section
+    .divi-grid-3col   → Row con 3 columnas iguales (1/3 1/3 1/3)
+    .divi-grid-4col   → Row con 4 columnas iguales (1/4 1/4 1/4 1/4)
+    .divi-grid-2col   → Row con 2 columnas (1/2 1/2 o proporcional)
+    .divi-card        → Blurb Module o Text Module dentro de columna
+    .divi-form        → Contact Form Module
+  ================================================================
+  */
+
+  /* ── NAVBAR ─────────────────────────────────────── */
+  /* Desktop: flex horizontal, todos los links visibles */
+  /* Tablet/Phone: ocultar links centrales, mostrar solo logo + CTA */
+  @media (max-width: 980px) {
+    .divi-navbar { padding: 0 32px !important; }
+    .divi-navbar .nav-links { display: none !important; }
+    /* En Divi: activar el menú hamburguesa nativo del Header Module */
+  }
+  @media (max-width: 767px) {
+    .divi-navbar { padding: 0 20px !important; height: 60px !important; }
+    .divi-navbar .nav-cta-group .nav-whatsapp { display: none !important; }
+  }
+
+  /* ── HERO ────────────────────────────────────────── */
+  /* Desktop: padding 80px, h1 56px, stats en fila */
+  @media (max-width: 980px) {
+    .divi-hero { padding: 64px 40px !important; min-height: 520px !important; }
+    .divi-hero h1 { font-size: 44px !important; }
+    /* En Divi: Fullwidth Section → Responsive → Padding Tablet */
+  }
+  @media (max-width: 767px) {
+    .divi-hero { padding: 48px 20px !important; min-height: auto !important; }
+    .divi-hero h1 { font-size: 34px !important; line-height: 1.1 !important; }
+    .divi-hero p.hero-desc { font-size: 14px !important; }
+    .divi-hero .hero-ctas { flex-direction: column !important; gap: 10px !important; }
+    .divi-hero .hero-stats { flex-direction: column !important; gap: 20px !important; }
+    .divi-hero .hero-stats .stat-divider { display: none !important; }
+    /* En Divi: cada stat es un Number Counter Module con responsive activado */
+  }
+
+  /* ── PRODUCT THUMBNAIL STRIP ─────────────────────── */
+  /* Desktop: fila horizontal con scroll, 5 thumbs */
+  /* Tablet/Phone: scroll horizontal se mantiene, se reduce el ancho de cada thumb */
+  @media (max-width: 980px) {
+    .divi-thumb-strip { padding: 0 32px 40px !important; }
+    .divi-thumb-strip .thumb-card { width: 150px !important; }
+  }
+  @media (max-width: 767px) {
+    .divi-thumb-strip { padding: 0 20px 32px !important; }
+    .divi-thumb-strip .thumb-card { width: 130px !important; }
+    .divi-thumb-strip .thumb-card .thumb-img { height: 80px !important; }
+    /* En Divi: usar un Slider Module o galería horizontal para este bloque */
+  }
+
+  /* ── SECCIONES GENÉRICAS (padding) ───────────────── */
+  /* Desktop: 100px 80px */
+  @media (max-width: 980px) {
+    .divi-section { padding: 72px 40px !important; }
+    /* En Divi: Section → Responsive → Padding Tablet: 72px 40px */
+  }
+  @media (max-width: 767px) {
+    .divi-section { padding: 56px 20px !important; }
+    /* En Divi: Section → Responsive → Padding Phone: 56px 20px */
+  }
+
+  /* ── EYEBROW + TÍTULOS DE SECCIÓN ────────────────── */
+  @media (max-width: 767px) {
+    .divi-section-eyebrow { font-size: 10px !important; }
+    .divi-section-title { font-size: 30px !important; }
+    .divi-section-subtitle { font-size: 14px !important; }
+    /* En Divi: Heading Module → Responsive → Font Size Phone */
+  }
+
+  /* ── GRID 3 COLUMNAS → VENTAJAS + PRODUCTOS ──────── */
+  /* Desktop: 3 cols */
+  /* Tablet:  2 cols */
+  /* Phone:   1 col  */
+  @media (max-width: 980px) {
+    .divi-grid-3col {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    /* En Divi: Row → Responsive → Column Structure Tablet: 1/2 1/2 */
+  }
+  @media (max-width: 767px) {
+    .divi-grid-3col {
+      grid-template-columns: 1fr !important;
+    }
+    /* En Divi: Row → Responsive → Column Structure Phone: full width (1 col) */
+  }
+
+  /* ── PRODUCT CARD WIDE (Corredera 3 Hojas, span 2) ── */
+  /* Desktop: ocupa 2 columnas, layout interno horizontal */
+  /* Tablet:  ocupa 1 columna, layout interno horizontal */
+  /* Phone:   ocupa 1 columna, layout interno vertical   */
+  @media (max-width: 980px) {
+    .divi-card-wide { grid-column: span 1 !important; }
+    /* En Divi: mover esta card a su propio Row de 1 columna en tablet */
+  }
+  @media (max-width: 767px) {
+    .divi-card-wide .card-wide-inner { flex-direction: column !important; }
+    .divi-card-wide .card-wide-img { height: 160px !important; }
+  }
+
+  /* ── GRID 4 COLUMNAS → PROCESO ───────────────────── */
+  /* Desktop: 4 cols */
+  /* Tablet:  2 cols */
+  /* Phone:   1 col  */
+  @media (max-width: 980px) {
+    .divi-grid-4col {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    /* En Divi: Row → Responsive → Column Structure Tablet: 1/2 1/2 */
+  }
+  @media (max-width: 767px) {
+    .divi-grid-4col {
+      grid-template-columns: 1fr !important;
+    }
+    /* En Divi: Row → Responsive → Column Structure Phone: full width */
+  }
+
+  /* ── GALERÍA ─────────────────────────────────────── */
+  /* Desktop: grid asimétrico (1 grande izq. + 2 cols der., 2 filas) */
+  /* Tablet:  grid 2 cols uniformes, sin la foto grande */
+  /* Phone:   1 col, todas las fotos apiladas */
+  @media (max-width: 980px) {
+    .divi-gallery-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-rows: repeat(3, 200px) !important;
+    }
+    .divi-gallery-grid .gallery-main {
+      grid-row: span 1 !important;
+      grid-column: span 2 !important;
+    }
+    /* En Divi: usar Gallery Module o Image Modules en Row 1/2 1/2 */
+  }
+  @media (max-width: 767px) {
+    .divi-gallery-grid {
+      grid-template-columns: 1fr !important;
+      grid-template-rows: repeat(5, 200px) !important;
+    }
+    .divi-gallery-grid .gallery-main {
+      grid-column: span 1 !important;
+    }
+    /* En Divi: cada imagen en su propio Row de 1 columna full width */
+  }
+
+  /* ── CONTACTO (2 cols: info + formulario) ─────────── */
+  /* Desktop: 2 cols (info izq. + form der.) */
+  /* Tablet:  2 cols más ajustadas */
+  /* Phone:   1 col, info arriba, formulario abajo */
+  @media (max-width: 980px) {
+    .divi-grid-2col-contact {
+      grid-template-columns: 1fr 1.2fr !important;
+      gap: 40px !important;
+    }
+    /* En Divi: Row → Responsive → Column Structure Tablet: 1/2 1/2 */
+  }
+  @media (max-width: 767px) {
+    .divi-grid-2col-contact {
+      grid-template-columns: 1fr !important;
+      gap: 40px !important;
+    }
+    .divi-form { padding: 28px 20px !important; }
+    /* En Divi: Row → Responsive → Column Structure Phone: full width */
+    /* El Contact Form Module de Divi ya adapta sus campos automáticamente */
+  }
+
+  /* ── FORM ROWS INTERNOS (2 cols dentro del form) ─── */
+  /* Desktop: 2 cols (nombre + tel, dirección + comuna, etc.) */
+  /* Phone:   1 col apilado */
+  @media (max-width: 767px) {
+    .divi-form-row-2col {
+      grid-template-columns: 1fr !important;
+    }
+    /* En Divi: cada campo del Contact Form ocupa ancho completo en phone */
+  }
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  /* Desktop: flex horizontal (logo + links + info) */
+  /* Tablet:  flex wrap, links centrales debajo del logo */
+  /* Phone:   columna, centrado */
+  @media (max-width: 980px) {
+    .divi-footer {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 20px !important;
+      padding: 32px 40px !important;
+    }
+    /* En Divi: Footer → Responsive → ajustar layout de columnas */
+  }
+  @media (max-width: 767px) {
+    .divi-footer {
+      align-items: center !important;
+      text-align: center !important;
+      padding: 28px 20px !important;
+    }
+    .divi-footer .footer-nav { justify-content: center !important; flex-wrap: wrap !important; gap: 16px !important; }
+    .divi-footer .footer-right { text-align: center !important; }
+  }
+
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#070F1C; font-family:'DM Sans', sans-serif; color:#D8EEF7;">
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<!-- DIVI MAP: Header Module (Fullwidth) → "divi-navbar" -->
+<header>
+<nav class="divi-navbar" style="
+  background-color:#0B1A2E;
+  padding:0 48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:68px;
+  border-bottom:1px solid rgba(168,212,232,0.1);
+">
+  <!-- Logo → Divi: Logo en Header Module -->
+  <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:#FFFFFF; letter-spacing:-0.5px;">
+    BK<span style="color:#38C3FF;">Glass</span>
+  </div>
+
+  <!-- Links → Divi: Menu en Header Module. Tablet/Phone: hamburger automático -->
+  <div class="nav-links" style="display:flex; gap:32px; align-items:center;">
+    <a href="#ventajas"  style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:14px; color:#8CA0B8; text-decoration:none;">Ventajas</a>
+    <a href="#productos" style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:14px; color:#8CA0B8; text-decoration:none;">Productos</a>
+    <a href="#proceso"   style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:14px; color:#8CA0B8; text-decoration:none;">Proceso</a>
+    <a href="#proyectos" style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:14px; color:#8CA0B8; text-decoration:none;">Proyectos</a>
+    <a href="#contacto"  style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:14px; color:#8CA0B8; text-decoration:none;">Contacto</a>
+  </div>
+
+  <!-- CTA group → Divi: Button Module en Header. "nav-whatsapp" se oculta en phone -->
+  <div class="nav-cta-group" style="display:flex; gap:16px; align-items:center;">
+    <a class="nav-whatsapp" href="https://wa.me/56994336807" style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:14px; color:#38C3FF; text-decoration:none;">WhatsApp</a>
+    <a href="#contacto" style="
+      background-color:#38C3FF;
+      color:#070F1C;
+      font-family:'DM Sans',sans-serif;
+      font-weight:500;
+      font-size:14px;
+      padding:10px 22px;
+      border-radius:6px;
+      text-decoration:none;
+    ">Cotizar ahora</a>
+  </div>
+</nav>
+</header>
+
+
+<!-- ============================================================
+     HERO
+     DIVI MAP: Fullwidth Section → Fullwidth Header Module
+     - Background: imagen a reemplazar (hoy placeholder #152540)
+     - Desktop padding: 80px top/bottom, 80px left/right
+     - Tablet  padding: 64px top/bottom, 40px left/right   (max-width:980px)
+     - Phone   padding: 48px top/bottom, 20px left/right   (max-width:767px)
+============================================================ -->
+<section class="divi-hero" style="
+  background-color:#0B1A2E;
+  background-image:linear-gradient(to right, rgba(7,15,28,0.92) 45%, rgba(7,15,28,0.3) 100%);
+  min-height:600px;
+  display:flex;
+  align-items:center;
+  padding:80px 80px;
+  position:relative;
+  overflow:hidden;
+">
+  <!-- Placeholder BG → Divi: Section Background Image -->
+  <div style="position:absolute; inset:0; background-color:#152540; z-index:0;"></div>
+
+  <!-- Contenido → Divi: columna izquierda dentro del Fullwidth Header -->
+  <div style="position:relative; z-index:1; max-width:560px;">
+
+    <!-- Eyebrow → Divi: Text Module, font-size Desktop:11px / Phone:10px -->
+    <p class="divi-section-eyebrow" style="
+      font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px;
+      letter-spacing:2.5px; text-transform:uppercase; color:#38C3FF; margin:0 0 20px;
+    ">● Producto Destacado</p>
+
+    <!-- Título → Divi: Heading Module (H1). Font-size: D:56px / T:44px / P:34px
+         Nota: originalmente eran 2 H1. Consolidado en un solo H1 con span interno
+         para cumplir jerarquía (1 H1 por página) preservando el estilo visual. -->
+    <h1 style="
+      font-family:'Syne',sans-serif; font-weight:800; font-size:56px;
+      line-height:1.05; color:#FFFFFF; margin:0 0 24px;
+    ">Ventana Corredera<br/><span style="color:#38C3FF;">PVC Termopanel</span></h1>
+
+    <!-- Descripción → Divi: Text Module. Font-size: D:16px / P:14px -->
+    <p class="hero-desc" style="
+      font-family:'DM Sans',sans-serif; font-weight:300; font-size:16px;
+      line-height:1.7; color:#8CA0B8; margin:0 0 36px; max-width:440px;
+    ">Deslizamiento suave, hermeticidad superior y aislación térmica de clase europea. Disponible en 1, 2 y 3 hojas a la medida de tu espacio.</p>
+
+    <!-- CTAs → Divi: 2x Button Module en fila. Phone: flex-direction column -->
+    <div class="hero-ctas" style="display:flex; gap:14px; flex-wrap:wrap;">
+      <a href="#contacto" style="
+        background-color:#38C3FF; color:#070F1C;
+        font-family:'DM Sans',sans-serif; font-weight:500; font-size:15px;
+        padding:14px 28px; border-radius:6px; text-decoration:none;
+      ">Cotizar ahora</a>
+      <a href="#productos" style="
+        background-color:transparent; color:#D8EEF7;
+        font-family:'DM Sans',sans-serif; font-weight:500; font-size:15px;
+        padding:14px 28px; border-radius:6px;
+        border:1px solid rgba(168,212,232,0.3); text-decoration:none;
+      ">Ver todos los productos</a>
+    </div>
+
+    <!-- Stats → Divi: 3x Number Counter Module en Row 1/3 1/3 1/3
+         Phone: apilados (Row → Phone column structure: full width)
+         Los separadores verticales se ocultan en phone (.stat-divider) -->
+    <div class="hero-stats" style="display:flex; gap:40px; margin-top:52px;">
+      <div>
+        <p style="font-family:'Syne',sans-serif; font-weight:800; font-size:32px; color:#FFFFFF; margin:0;">+500</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:#8CA0B8; margin:4px 0 0;">Proyectos Realizados</p>
+      </div>
+      <div class="stat-divider" style="width:1px; background:rgba(168,212,232,0.15);"></div>
+      <div>
+        <p style="font-family:'Syne',sans-serif; font-weight:800; font-size:32px; color:#FFFFFF; margin:0;">10+</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:#8CA0B8; margin:4px 0 0;">Años de Experiencia</p>
+      </div>
+      <div class="stat-divider" style="width:1px; background:rgba(168,212,232,0.15);"></div>
+      <div>
+        <p style="font-family:'Syne',sans-serif; font-weight:800; font-size:32px; color:#FFFFFF; margin:0;">RM</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:#8CA0B8; margin:4px 0 0;">Cobertura Completa</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PRODUCT THUMBNAIL STRIP
+     DIVI MAP: Section → Row (scroll horizontal)
+     - Desktop: 5 thumbs en fila, width:180px c/u
+     - Tablet : thumb-card width:150px              (max-width:980px)
+     - Phone  : thumb-card width:130px, img h:80px  (max-width:767px)
+     NOTA Divi: considerar Slider Module o Gallery Module para este bloque
+============================================================ -->
+<section class="divi-thumb-strip" style="
+  background-color:#0B1A2E;
+  padding:0 80px 48px;
+  border-bottom:1px solid rgba(168,212,232,0.08);
+">
+  <div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px;">
+
+    <!-- Thumb helper macro: repeated 5 times -->
+    <!-- Ventana Corredera -->
+    <div class="thumb-card" style="
+      flex:0 0 auto; width:180px;
+      background-color:#152540;
+      border:1px solid rgba(56,195,255,0.35);
+      border-radius:8px; overflow:hidden;
+    ">
+      <div class="thumb-img" style="height:100px; background-color:#1E3252; display:flex; align-items:center; justify-content:center;">
+        <!-- Window illustration SVG -->
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="56" height="48" rx="2" stroke="#38C3FF" stroke-width="2"/>
+          <line x1="32" y1="8" x2="32" y2="56" stroke="#38C3FF" stroke-width="1.5"/>
+          <line x1="4" y1="32" x2="60" y2="32" stroke="#38C3FF" stroke-width="1" stroke-dasharray="3 3"/>
+          <circle cx="32" cy="32" r="3" fill="#38C3FF"/>
+        </svg>
+      </div>
+      <div style="padding:10px 12px;">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Ventana Corredera</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:11px; color:#8CA0B8; margin:3px 0 0;">PVC Termopanel</p>
+      </div>
+    </div>
+
+    <!-- Ventana Abatir -->
+    <div class="thumb-card" style="
+      flex:0 0 auto; width:180px;
+      background-color:#152540;
+      border:1px solid rgba(168,212,232,0.15);
+      border-radius:8px; overflow:hidden;
+    ">
+      <div class="thumb-img" style="height:100px; background-color:#1E3252; display:flex; align-items:center; justify-content:center;">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="56" height="48" rx="2" stroke="#8CA0B8" stroke-width="2"/>
+          <polyline points="4,8 52,32" stroke="#8CA0B8" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="52" cy="32" r="3" fill="#8CA0B8"/>
+        </svg>
+      </div>
+      <div style="padding:10px 12px;">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Ventana Abatir</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:11px; color:#8CA0B8; margin:3px 0 0;">Alta hermeticidad</p>
+      </div>
+    </div>
+
+    <!-- Cierre de terraza -->
+    <div class="thumb-card" style="
+      flex:0 0 auto; width:180px;
+      background-color:#152540;
+      border:1px solid rgba(168,212,232,0.15);
+      border-radius:8px; overflow:hidden;
+    ">
+      <div class="thumb-img" style="height:100px; background-color:#1E3252; display:flex; align-items:center; justify-content:center;">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="56" height="48" rx="2" stroke="#8CA0B8" stroke-width="2"/>
+          <line x1="22" y1="8" x2="22" y2="56" stroke="#8CA0B8" stroke-width="1.5"/>
+          <line x1="42" y1="8" x2="42" y2="56" stroke="#8CA0B8" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div style="padding:10px 12px;">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Cierre de terraza</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:11px; color:#8CA0B8; margin:3px 0 0;">3 hojas – PVC</p>
+      </div>
+    </div>
+
+    <!-- Proyecto Casa -->
+    <div class="thumb-card" style="
+      flex:0 0 auto; width:180px;
+      background-color:#152540;
+      border:1px solid rgba(168,212,232,0.15);
+      border-radius:8px; overflow:hidden;
+    ">
+      <div class="thumb-img" style="height:100px; background-color:#152540;"></div>
+      <div style="padding:10px 12px;">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Proyecto Casa</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:11px; color:#8CA0B8; margin:3px 0 0;">Renovación integral</p>
+      </div>
+    </div>
+
+    <!-- Proyecto Edificio -->
+    <div class="thumb-card" style="
+      flex:0 0 auto; width:180px;
+      background-color:#152540;
+      border:1px solid rgba(168,212,232,0.15);
+      border-radius:8px; overflow:hidden;
+    ">
+      <div class="thumb-img" style="height:100px; background-color:#152540;"></div>
+      <div style="padding:10px 12px;">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Proyecto Edificio</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:11px; color:#8CA0B8; margin:3px 0 0;">Gran escala</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VENTAJAS – La diferencia BKGlass
+     DIVI MAP: Section (bg:#070F1C) → Row → 6x Blurb Module
+     - Desktop: grid 3 cols  (Row: 1/3 1/3 1/3)
+     - Tablet : grid 2 cols  (Row Tablet: 1/2 1/2)
+     - Phone  : grid 1 col   (Row Phone: full width)
+     Padding: D:100px 80px / T:72px 40px / P:56px 20px
+============================================================ -->
+<section id="ventajas" class="divi-section" style="padding:100px 80px; background-color:#070F1C;">
+
+  <!-- Eyebrow → Divi: Text Module. Color:#38C3FF, font:DM Sans 500, 11px -->
+  <p class="divi-section-eyebrow" style="
+    font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px;
+    letter-spacing:2.5px; text-transform:uppercase; color:#38C3FF; margin:0 0 16px;
+  ">Por qué elegirnos</p>
+
+  <!-- Título → Divi: Heading Module H2. Font-size: D:40px / P:30px -->
+  <h2 class="divi-section-title" style="
+    font-family:'Syne',sans-serif; font-weight:800; font-size:40px;
+    color:#FFFFFF; margin:0 0 12px;
+  ">La diferencia BKGlass</h2>
+
+  <!-- Subtítulo → Divi: Text Module. Font-size: D:16px / P:14px -->
+  <p class="divi-section-subtitle" style="
+    font-family:'DM Sans',sans-serif; font-weight:300; font-size:16px;
+    color:#8CA0B8; margin:0 0 60px; max-width:520px; line-height:1.7;
+  ">Tecnología europea, fabricación local y atención personalizada para cada proyecto.</p>
+
+  <!-- Grid 3x2 → Divi: Row con column structure 1/3 1/3 1/3, repetido 2 veces
+       Tablet: cambiar a 1/2 1/2 | Phone: full width -->
+  <div class="divi-grid-3col" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+
+    <!-- Card macro -->
+    <!-- 1 -->
+    <div style="
+      background-color:rgba(168,212,232,0.05);
+      border:1px solid rgba(168,212,232,0.12);
+      border-radius:12px;
+      padding:32px 28px;
+    ">
+      <!-- Icon placeholder -->
+      <div style="
+        width:48px; height:48px;
+        background-color:rgba(56,195,255,0.12);
+        border-radius:10px;
+        display:flex; align-items:center; justify-content:center;
+        margin-bottom:20px;
+      ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" stroke="#38C3FF" stroke-width="1.8"/>
+          <path d="M9 12l2 2 4-4" stroke="#38C3FF" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 10px;">Aislamiento térmico</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Termopanel de doble vidrio que mantiene la temperatura interior y reduce costos de calefacción hasta un 30%.</p>
+    </div>
+
+    <!-- 2 -->
+    <div style="
+      background-color:rgba(168,212,232,0.05);
+      border:1px solid rgba(168,212,232,0.12);
+      border-radius:12px;
+      padding:32px 28px;
+    ">
+      <div style="
+        width:48px; height:48px;
+        background-color:rgba(56,195,255,0.12);
+        border-radius:10px;
+        display:flex; align-items:center; justify-content:center;
+        margin-bottom:20px;
+      ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" stroke="#38C3FF" stroke-width="1.8"/>
+          <path d="M8 9V7a4 4 0 0 1 8 0v2" stroke="#38C3FF" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 10px;">Aislamiento acústico</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Reducción de ruido exterior de hasta 40dB. Ideal para zonas urbanas y sectores con alto tráfico.</p>
+    </div>
+
+    <!-- 3 -->
+    <div style="
+      background-color:rgba(168,212,232,0.05);
+      border:1px solid rgba(168,212,232,0.12);
+      border-radius:12px;
+      padding:32px 28px;
+    ">
+      <div style="
+        width:48px; height:48px;
+        background-color:rgba(56,195,255,0.12);
+        border-radius:10px;
+        display:flex; align-items:center; justify-content:center;
+        margin-bottom:20px;
+      ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="4" stroke="#38C3FF" stroke-width="1.8"/>
+          <circle cx="5" cy="7" r="2" fill="#38C3FF" opacity="0.5"/>
+          <circle cx="19" cy="7" r="2" fill="#38C3FF" opacity="0.7"/>
+          <circle cx="5" cy="17" r="2" fill="#38C3FF" opacity="0.3"/>
+          <circle cx="19" cy="17" r="2" fill="#38C3FF"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 10px;">Variedad de colores</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Blanco, grafito, negro e imitación madera. Marcos que se adaptan a cualquier estilo arquitectónico.</p>
+    </div>
+
+    <!-- 4 -->
+    <div style="
+      background-color:rgba(168,212,232,0.05);
+      border:1px solid rgba(168,212,232,0.12);
+      border-radius:12px;
+      padding:32px 28px;
+    ">
+      <div style="
+        width:48px; height:48px;
+        background-color:rgba(56,195,255,0.12);
+        border-radius:10px;
+        display:flex; align-items:center; justify-content:center;
+        margin-bottom:20px;
+      ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="11" width="18" height="11" rx="2" stroke="#38C3FF" stroke-width="1.8"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#38C3FF" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="12" cy="16" r="1.5" fill="#38C3FF"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 10px;">Alta seguridad</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Sistemas de cierre multipunto y manillas de alta resistencia. Refuerzo de acero galvanizado en marcos y hojas.</p>
+    </div>
+
+    <!-- 5 -->
+    <div style="
+      background-color:rgba(168,212,232,0.05);
+      border:1px solid rgba(168,212,232,0.12);
+      border-radius:12px;
+      padding:32px 28px;
+    ">
+      <div style="
+        width:48px; height:48px;
+        background-color:rgba(56,195,255,0.12);
+        border-radius:10px;
+        display:flex; align-items:center; justify-content:center;
+        margin-bottom:20px;
+      ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3C8 3 4 7 4 12s3 7 8 9c5-2 8-4 8-9S16 3 12 3z" stroke="#38C3FF" stroke-width="1.8"/>
+          <path d="M9 12l2 2 4-4" stroke="#38C3FF" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 10px;">Eco amigable</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">El PVC es 100% reciclable y requiere mínimo mantenimiento. Una inversión sostenible para tu hogar.</p>
+    </div>
+
+    <!-- 6 -->
+    <div style="
+      background-color:rgba(168,212,232,0.05);
+      border:1px solid rgba(168,212,232,0.12);
+      border-radius:12px;
+      padding:32px 28px;
+    ">
+      <div style="
+        width:48px; height:48px;
+        background-color:rgba(56,195,255,0.12);
+        border-radius:10px;
+        display:flex; align-items:center; justify-content:center;
+        margin-bottom:20px;
+      ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="18" height="18" rx="2" stroke="#38C3FF" stroke-width="1.8"/>
+          <path d="M8 12h8M12 8v8" stroke="#38C3FF" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 10px;">Fabricación a medida</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Cada ventana se fabrica según las medidas exactas de tu proyecto. Sin adaptaciones, sin compromisos.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CATÁLOGO – Nuestros productos
+     DIVI MAP: Section (bg:#0B1A2E) → Rows con product cards
+     - Desktop: grid 3 cols  (Row: 1/3 1/3 1/3)
+     - Tablet : grid 2 cols  (Row Tablet: 1/2 1/2)
+     - Phone  : grid 1 col   (Row Phone: full width)
+     Card ancha (Corredera 3 Hojas):
+       - Desktop: span 2 cols → Row propio 2/3 + 1/3 o Row full + layout horizontal
+       - Tablet : span 1 col, layout horizontal
+       - Phone  : 1 col, layout vertical (.card-wide-inner flex-direction:column)
+     Padding: D:100px 80px / T:72px 40px / P:56px 20px
+============================================================ -->
+<section id="productos" class="divi-section" style="padding:100px 80px; background-color:#0B1A2E;">
+
+  <p class="divi-section-eyebrow" style="
+    font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px;
+    letter-spacing:2.5px; text-transform:uppercase; color:#38C3FF; margin:0 0 16px;
+  ">Catálogo</p>
+
+  <h2 class="divi-section-title" style="
+    font-family:'Syne',sans-serif; font-weight:800; font-size:40px;
+    color:#FFFFFF; margin:0 0 52px;
+  ">Nuestros productos</h2>
+
+  <!-- Grid 3 cols, 2 rows → Divi: 2x Row (1/3 1/3 1/3) + 1x Row (2/3 + vacío o full) -->
+  <div class="divi-grid-3col" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+
+    <!-- Product Card 1 – Ventana Corredera (MÁS POPULAR) -->
+    <div style="
+      background-color:#152540;
+      border:1px solid rgba(56,195,255,0.3);
+      border-radius:12px;
+      overflow:hidden;
+      position:relative;
+    ">
+      <span style="
+        position:absolute; top:14px; left:14px;
+        background-color:#38C3FF;
+        color:#070F1C;
+        font-family:'DM Sans',sans-serif;
+        font-weight:500;
+        font-size:10px;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        padding:4px 10px;
+        border-radius:4px;
+      ">Más popular</span>
+      <!-- Image placeholder -->
+      <div style="height:180px; background-color:#1E3252; display:flex; align-items:center; justify-content:center;">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="10" width="68" height="60" rx="3" stroke="#38C3FF" stroke-width="2"/>
+          <line x1="40" y1="10" x2="40" y2="70" stroke="#38C3FF" stroke-width="2"/>
+          <line x1="6" y1="40" x2="74" y2="40" stroke="#38C3FF" stroke-width="1" stroke-dasharray="4 3"/>
+          <circle cx="40" cy="40" r="4" fill="#38C3FF"/>
+        </svg>
+      </div>
+      <div style="padding:24px;">
+        <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:18px; color:#FFFFFF; margin:0 0 16px;">Ventana Corredera</h3>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px; align-items:flex-start;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> 1 a 3 hojas móviles deslizantes
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px; align-items:flex-start;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Perfiles con tecnología europea
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px; align-items:flex-start;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Cierre multipunto con manilla
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px; align-items:flex-start;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Refuerzo metálico galvanizado
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Product Card 2 – Ventana Abatir -->
+    <div style="background-color:#152540; border:1px solid rgba(168,212,232,0.12); border-radius:12px; overflow:hidden; position:relative;">
+      <span style="
+        position:absolute; top:14px; left:14px;
+        background-color:rgba(168,212,232,0.15);
+        color:#38C3FF;
+        font-family:'DM Sans',sans-serif;
+        font-weight:500;
+        font-size:10px;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        padding:4px 10px;
+        border-radius:4px;
+      ">Alta hermeticidad</span>
+      <div style="height:180px; background-color:#1E3252; display:flex; align-items:center; justify-content:center;">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="10" width="68" height="60" rx="3" stroke="#8CA0B8" stroke-width="2"/>
+          <polyline points="6,10 66,40" stroke="#8CA0B8" stroke-width="2" stroke-dasharray="5 4"/>
+          <circle cx="66" cy="40" r="4" fill="#8CA0B8"/>
+        </svg>
+      </div>
+      <div style="padding:24px;">
+        <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:18px; color:#FFFFFF; margin:0 0 16px;">Ventana Abatir</h3>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Apertura frontal interior o exterior
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> 1 o 2 hojas abatibles
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Esquinas termofusionadas
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Máxima hermeticidad
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Product Card 3 – Ventana Proyectante -->
+    <div style="background-color:#152540; border:1px solid rgba(168,212,232,0.12); border-radius:12px; overflow:hidden; position:relative;">
+      <span style="
+        position:absolute; top:14px; left:14px;
+        background-color:rgba(168,212,232,0.15);
+        color:#38C3FF;
+        font-family:'DM Sans',sans-serif;
+        font-weight:500;
+        font-size:10px;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        padding:4px 10px;
+        border-radius:4px;
+      ">Ventilación óptima</span>
+      <div style="height:180px; background-color:#1E3252; display:flex; align-items:center; justify-content:center;">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="10" width="68" height="60" rx="3" stroke="#8CA0B8" stroke-width="2"/>
+          <polyline points="6,70 74,70 74,40" stroke="#8CA0B8" stroke-width="2" stroke-dasharray="5 4"/>
+          <circle cx="74" cy="40" r="4" fill="#8CA0B8"/>
+        </svg>
+      </div>
+      <div style="padding:24px;">
+        <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:18px; color:#FFFFFF; margin:0 0 16px;">Ventana Proyectante</h3>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Apertura exterior inferior
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Brazo regulable de retención
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Alta hermeticidad
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Aislación térmica y acústica
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Product Card 4 – Ventana Fija -->
+    <div style="background-color:#152540; border:1px solid rgba(168,212,232,0.12); border-radius:12px; overflow:hidden; position:relative;">
+      <span style="
+        position:absolute; top:14px; left:14px;
+        background-color:rgba(168,212,232,0.15);
+        color:#38C3FF;
+        font-family:'DM Sans',sans-serif;
+        font-weight:500;
+        font-size:10px;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        padding:4px 10px;
+        border-radius:4px;
+      ">Sin apertura</span>
+      <div style="height:180px; background-color:#1E3252; display:flex; align-items:center; justify-content:center;">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="10" width="68" height="60" rx="3" stroke="#8CA0B8" stroke-width="2"/>
+          <rect x="14" y="18" width="52" height="44" rx="2" stroke="#8CA0B8" stroke-width="1.5" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <div style="padding:24px;">
+        <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:18px; color:#FFFFFF; margin:0 0 16px;">Ventana Fija</h3>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> 3 hojas móviles deslizantes
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Cierre multipunto seguro
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Tecnología europea de perfiles
+          </li>
+          <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+            <span style="color:#38C3FF; flex-shrink:0;">✓</span> Aislación térmica y acústica
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Product Card 5 – Corredera 3 Hojas / Terraza
+         DIVI MAP: Row propio full-width → columna única con layout interno flex
+         - Desktop: grid-column span 2, layout interno horizontal (imagen izq. + texto der.)
+         - Tablet : span 1 col, layout interno horizontal  (max-width:980px)
+         - Phone  : span 1 col, layout interno vertical (.card-wide-inner flex-direction:column) -->
+    <div class="divi-card-wide" style="
+      background-color:#152540; border:1px solid rgba(168,212,232,0.12);
+      border-radius:12px; overflow:hidden; position:relative; grid-column:span 2;
+    ">
+      <span style="
+        position:absolute; top:14px; left:14px;
+        background-color:rgba(168,212,232,0.15); color:#38C3FF;
+        font-family:'DM Sans',sans-serif; font-weight:500; font-size:10px;
+        letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:4px;
+      ">Cierre de terrazas</span>
+      <!-- Inner → .card-wide-inner: flex-direction cambia a column en phone -->
+      <div class="card-wide-inner" style="display:flex;">
+        <div class="card-wide-img" style="flex:1; height:180px; background-color:#1E3252; display:flex; align-items:center; justify-content:center;">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="112" height="64" rx="3" stroke="#8CA0B8" stroke-width="2"/>
+            <line x1="42" y1="8" x2="42" y2="72" stroke="#8CA0B8" stroke-width="2"/>
+            <line x1="80" y1="8" x2="80" y2="72" stroke="#8CA0B8" stroke-width="2"/>
+          </svg>
+        </div>
+        <div style="flex:1; padding:28px;">
+          <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:18px; color:#FFFFFF; margin:0 0 16px;">Corredera 3 Hojas – Cierre de Terraza</h3>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+            <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+              <span style="color:#38C3FF; flex-shrink:0;">✓</span> Sin apertura, máxima hermeticidad
+            </li>
+            <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+              <span style="color:#38C3FF; flex-shrink:0;">✓</span> Aislación térmica superior
+            </li>
+            <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+              <span style="color:#38C3FF; flex-shrink:0;">✓</span> Ideal para grandes superficies
+            </li>
+            <li style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; display:flex; gap:8px;">
+              <span style="color:#38C3FF; flex-shrink:0;">✓</span> Refuerzo galvanizado en marco
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PROCESO – Tu proyecto en 4 pasos
+     DIVI MAP: Section (bg:#070F1C) → Row → 4x Blurb Module
+     - Desktop: 4 cols  (Row: 1/4 1/4 1/4 1/4)
+     - Tablet : 2 cols  (Row Tablet: 1/2 1/2)
+     - Phone  : 1 col   (Row Phone: full width)
+     Padding: D:100px 80px / T:72px 40px / P:56px 20px
+============================================================ -->
+<section id="proceso" class="divi-section" style="padding:100px 80px; background-color:#070F1C;">
+
+  <p class="divi-section-eyebrow" style="
+    font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px;
+    letter-spacing:2.5px; text-transform:uppercase; color:#38C3FF; margin:0 0 16px;
+  ">Proceso simple</p>
+
+  <h2 class="divi-section-title" style="
+    font-family:'Syne',sans-serif; font-weight:800; font-size:40px;
+    color:#FFFFFF; margin:0 0 12px;
+  ">Tu proyecto en 4 pasos</h2>
+
+  <p class="divi-section-subtitle" style="
+    font-family:'DM Sans',sans-serif; font-weight:300; font-size:16px;
+    color:#8CA0B8; margin:0 0 64px; line-height:1.7;
+  ">Desde la primera consulta hasta la instalación, te acompañamos en cada etapa.</p>
+
+  <!-- 4 cols → Divi: Row 1/4 1/4 1/4 1/4
+       Tablet: 1/2 1/2 | Phone: full width -->
+  <div class="divi-grid-4col" style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+
+    <!-- Step 1 -->
+    <div style="
+      background-color:rgba(168,212,232,0.04);
+      border:1px solid rgba(168,212,232,0.1);
+      border-radius:12px;
+      padding:32px 24px;
+    ">
+      <p style="
+        font-family:'Syne',sans-serif;
+        font-weight:800;
+        font-size:40px;
+        color:rgba(56,195,255,0.2);
+        margin:0 0 16px;
+        line-height:1;
+      ">01</p>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 12px;">Solicita tu cotización</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Completa el formulario o escríbenos por WhatsApp con las medidas y tipo de ventana que necesitas.</p>
+    </div>
+
+    <!-- Step 2 -->
+    <div style="
+      background-color:rgba(168,212,232,0.04);
+      border:1px solid rgba(168,212,232,0.1);
+      border-radius:12px;
+      padding:32px 24px;
+    ">
+      <p style="
+        font-family:'Syne',sans-serif;
+        font-weight:800;
+        font-size:40px;
+        color:rgba(56,195,255,0.2);
+        margin:0 0 16px;
+        line-height:1;
+      ">02</p>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 12px;">Visita técnica</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Nuestro equipo agenda una visita a domicilio para tomar medidas exactas y asesorarte en las mejores opciones.</p>
+    </div>
+
+    <!-- Step 3 -->
+    <div style="
+      background-color:rgba(168,212,232,0.04);
+      border:1px solid rgba(168,212,232,0.1);
+      border-radius:12px;
+      padding:32px 24px;
+    ">
+      <p style="
+        font-family:'Syne',sans-serif;
+        font-weight:800;
+        font-size:40px;
+        color:rgba(56,195,255,0.2);
+        margin:0 0 16px;
+        line-height:1;
+      ">03</p>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 12px;">Fabricación a medida</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Fabricamos tus ventanas con los más altos estándares, usando perfiles con tecnología europea.</p>
+    </div>
+
+    <!-- Step 4 -->
+    <div style="
+      background-color:rgba(168,212,232,0.04);
+      border:1px solid rgba(168,212,232,0.1);
+      border-radius:12px;
+      padding:32px 24px;
+    ">
+      <p style="
+        font-family:'Syne',sans-serif;
+        font-weight:800;
+        font-size:40px;
+        color:rgba(56,195,255,0.2);
+        margin:0 0 16px;
+        line-height:1;
+      ">04</p>
+      <h3 style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:17px; color:#FFFFFF; margin:0 0 12px;">Instalación profesional</h3>
+      <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:#8CA0B8; line-height:1.7; margin:0;">Nuestro equipo instala con precisión, garantizando el sellado perfecto y el correcto funcionamiento.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     GALERÍA – Proyectos realizados
+     DIVI MAP: Section (bg:#0B1A2E) → Gallery Module o Image Modules en Rows
+     Layout:
+       - Desktop: grid asimétrico: col izq. grande (row-span 2) + 2x2 der.
+                  grid-template-columns: 1fr 1fr 1fr / rows: 240px 240px
+       - Tablet : grid 2 cols uniformes, foto grande ocupa col-span 2 (fila propia)
+                  grid-template-columns: 1fr 1fr / rows: 200px 200px 200px
+       - Phone  : 1 col, 5 fotos apiladas, height:200px c/u
+     Padding: D:100px 80px / T:72px 40px / P:56px 20px
+============================================================ -->
+<section id="proyectos" class="divi-section" style="padding:100px 80px; background-color:#0B1A2E;">
+
+  <p class="divi-section-eyebrow" style="
+    font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px;
+    letter-spacing:2.5px; text-transform:uppercase; color:#38C3FF; margin:0 0 16px;
+  ">Galería</p>
+
+  <h2 class="divi-section-title" style="
+    font-family:'Syne',sans-serif; font-weight:800; font-size:40px;
+    color:#FFFFFF; margin:0 0 12px;
+  ">Proyectos realizados</h2>
+
+  <p class="divi-section-subtitle" style="
+    font-family:'DM Sans',sans-serif; font-weight:300; font-size:16px;
+    color:#8CA0B8; margin:0 0 52px; line-height:1.7;
+  ">Más de 500 proyectos completados en la Región Metropolitana.</p>
+
+  <!-- Grid asimétrico
+       Tablet: .gallery-main → col-span 2, row-span 1
+       Phone : .gallery-main → col-span 1 -->
+  <div class="divi-gallery-grid" style="
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows:240px 240px;
+    gap:16px;
+  ">
+    <!-- Foto grande → Divi: Image Module en columna izq. con row-span -->
+    <div class="gallery-main" style="
+      grid-row:span 2;
+      background-color:#152540; border-radius:10px;
+      position:relative; overflow:hidden;
+    ">
+      <div style="
+        position:absolute; bottom:14px; left:14px;
+        background-color:rgba(7,15,28,0.8);
+        backdrop-filter:blur(4px);
+        padding:6px 12px;
+        border-radius:5px;
+      ">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Casa Familiar — Las Condes</p>
+      </div>
+    </div>
+
+    <!-- Photo 2 -->
+    <div style="background-color:#152540; border-radius:10px; position:relative; overflow:hidden;">
+      <div style="
+        position:absolute; bottom:14px; left:14px;
+        background-color:rgba(7,15,28,0.8);
+        backdrop-filter:blur(4px);
+        padding:6px 12px;
+        border-radius:5px;
+      ">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Apartamento — Providencia</p>
+      </div>
+    </div>
+
+    <!-- Photo 3 -->
+    <div style="background-color:#152540; border-radius:10px; position:relative; overflow:hidden;">
+      <div style="
+        position:absolute; bottom:14px; left:14px;
+        background-color:rgba(7,15,28,0.8);
+        backdrop-filter:blur(4px);
+        padding:6px 12px;
+        border-radius:5px;
+      ">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Oficinas — Santiago Centro</p>
+      </div>
+    </div>
+
+    <!-- Photo 4 -->
+    <div style="background-color:#152540; border-radius:10px; position:relative; overflow:hidden;">
+      <div style="
+        position:absolute; bottom:14px; left:14px;
+        background-color:rgba(7,15,28,0.8);
+        backdrop-filter:blur(4px);
+        padding:6px 12px;
+        border-radius:5px;
+      ">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Edificio — Ñuñoa</p>
+      </div>
+    </div>
+
+    <!-- Photo 5 -->
+    <div style="background-color:#152540; border-radius:10px; position:relative; overflow:hidden;">
+      <div style="
+        position:absolute; bottom:14px; left:14px;
+        background-color:rgba(7,15,28,0.8);
+        backdrop-filter:blur(4px);
+        padding:6px 12px;
+        border-radius:5px;
+      ">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#D8EEF7; margin:0;">Terraza — Vitacura</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CONTACTO
+     DIVI MAP: Section (bg:#070F1C) → Row 2 cols
+     Col izq. (1/3): info de contacto → Text + Button Modules
+     Col der. (2/3): formulario → Contact Form Module
+     - Desktop: grid 2 cols (1fr 1.6fr), gap:80px
+     - Tablet : grid 2 cols (1fr 1.2fr), gap:40px      (max-width:980px)
+     - Phone  : 1 col, info arriba + form abajo, gap:40px (max-width:767px)
+     Padding: D:100px 80px / T:72px 40px / P:56px 20px
+============================================================ -->
+<section id="contacto" class="divi-section" style="padding:100px 80px; background-color:#070F1C;">
+
+  <div class="divi-grid-2col-contact" style="display:grid; grid-template-columns:1fr 1.6fr; gap:80px; align-items:start;">
+
+    <!-- Left: info → Divi: columna 1/3 con Text + Button Modules -->
+    <div>
+      <p class="divi-section-eyebrow" style="
+        font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px;
+        letter-spacing:2.5px; text-transform:uppercase; color:#38C3FF; margin:0 0 16px;
+      ">Contacto</p>
+
+      <h2 class="divi-section-title" style="
+        font-family:'Syne',sans-serif; font-weight:800; font-size:36px;
+        color:#FFFFFF; line-height:1.15; margin:0 0 16px;
+      ">¿Listo para renovar tus ventanas?</h2>
+
+      <p class="divi-section-subtitle" style="
+        font-family:'DM Sans',sans-serif; font-weight:300; font-size:15px;
+        color:#8CA0B8; line-height:1.7; margin:0 0 40px;
+      ">Completa el formulario y te contactamos en menos de 24 horas con una cotización personalizada. Sin costo, sin compromiso.</p>
+
+      <!-- Contact details -->
+      <div style="display:flex; flex-direction:column; gap:18px;">
+
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="
+            width:36px; height:36px; flex-shrink:0;
+            background-color:rgba(56,195,255,0.1);
+            border-radius:8px;
+            display:flex; align-items:center; justify-content:center;
+          ">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38C3FF" stroke-width="2" stroke-linecap="round">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+          </div>
+          <div>
+            <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:13px; color:#FFFFFF; margin:0;">Av. Don Luis 643, Bodega 5, Lampa</p>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:14px; align-items:center;">
+          <div style="
+            width:36px; height:36px; flex-shrink:0;
+            background-color:rgba(56,195,255,0.1);
+            border-radius:8px;
+            display:flex; align-items:center; justify-content:center;
+          ">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38C3FF" stroke-width="2" stroke-linecap="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 4.18 2 2 0 0 1 5.07 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:13px; color:#FFFFFF; margin:0;">(+569) 94336807</p>
+        </div>
+
+        <div style="display:flex; gap:14px; align-items:center;">
+          <div style="
+            width:36px; height:36px; flex-shrink:0;
+            background-color:rgba(56,195,255,0.1);
+            border-radius:8px;
+            display:flex; align-items:center; justify-content:center;
+          ">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38C3FF" stroke-width="2" stroke-linecap="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:13px; color:#FFFFFF; margin:0;">ventanaspvc@bkglass.cl</p>
+        </div>
+
+        <div style="display:flex; gap:14px; align-items:center;">
+          <div style="
+            width:36px; height:36px; flex-shrink:0;
+            background-color:rgba(56,195,255,0.1);
+            border-radius:8px;
+            display:flex; align-items:center; justify-content:center;
+          ">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38C3FF" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12,6 12,12 16,14"/>
+            </svg>
+          </div>
+          <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:13px; color:#FFFFFF; margin:0;">Lunes a Viernes, 9:00 – 18:00 hrs</p>
+        </div>
+
+      </div>
+
+      <!-- WhatsApp CTA -->
+      <a href="https://wa.me/56994336807" style="
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        margin-top:36px;
+        background-color:#25D366;
+        color:#FFFFFF;
+        font-family:'DM Sans',sans-serif;
+        font-weight:500;
+        font-size:15px;
+        padding:14px 28px;
+        border-radius:8px;
+        text-decoration:none;
+      ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.533 5.855L.057 23.882l6.18-1.622A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 0 1-5.013-1.376l-.36-.214-3.664.963.979-3.575-.234-.369A9.792 9.792 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+        </svg>
+        Chatear por WhatsApp
+      </a>
+    </div>
+
+    <!-- Right: Form → Divi: Contact Form Module
+         Phone: padding se reduce (28px 20px) → .divi-form
+         Nota: envuelto en <form> semántico para que la Skill lo detecte
+         y emita Code Module con placeholder [contact-form-7]. -->
+    <form class="divi-form" action="#" method="post" style="
+      background-color:#0B1A2E;
+      border:1px solid rgba(168,212,232,0.1);
+      border-radius:16px;
+      padding:40px;
+    ">
+      <h3 style="
+        font-family:'DM Sans',sans-serif;
+        font-weight:500;
+        font-size:20px;
+        color:#FFFFFF;
+        margin:0 0 8px;
+      ">Solicitar cotización gratuita</h3>
+      <p style="
+        font-family:'DM Sans',sans-serif;
+        font-weight:300;
+        font-size:13px;
+        color:#8CA0B8;
+        margin:0 0 32px;
+        line-height:1.6;
+      ">Detalla ubicación + medidas en los comentarios: "Living: ancho 200cm, alto 150cm, modelo corredera"</p>
+
+      <!-- Input style helper – reused inline per field -->
+
+      <!-- Row 1: Nombre + Teléfono → Phone: 1 col (.divi-form-row-2col) -->
+      <div class="divi-form-row-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+        <div>
+          <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">NOMBRE COMPLETO</label>
+          <input type="text" placeholder="Juan Pérez" style="
+            width:100%; box-sizing:border-box;
+            background-color:#152540;
+            border:1px solid rgba(168,212,232,0.15);
+            border-radius:8px;
+            padding:12px 14px;
+            font-family:'DM Sans',sans-serif;
+            font-weight:300;
+            font-size:14px;
+            color:#D8EEF7;
+            outline:none;
+          "/>
+        </div>
+        <div>
+          <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">TELÉFONO</label>
+          <input type="tel" placeholder="+56 9 ···· ····" style="
+            width:100%; box-sizing:border-box;
+            background-color:#152540;
+            border:1px solid rgba(168,212,232,0.15);
+            border-radius:8px;
+            padding:12px 14px;
+            font-family:'DM Sans',sans-serif;
+            font-weight:300;
+            font-size:14px;
+            color:#D8EEF7;
+            outline:none;
+          "/>
+        </div>
+      </div>
+
+      <!-- Row 2: Email -->
+      <div style="margin-bottom:16px;">
+        <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">CORREO ELECTRÓNICO</label>
+        <input type="email" placeholder="tu@correo.cl" style="
+          width:100%; box-sizing:border-box;
+          background-color:#152540;
+          border:1px solid rgba(168,212,232,0.15);
+          border-radius:8px;
+          padding:12px 14px;
+          font-family:'DM Sans',sans-serif;
+          font-weight:300;
+          font-size:14px;
+          color:#D8EEF7;
+          outline:none;
+        "/>
+      </div>
+
+      <!-- Row 3: Dirección + Comuna → Phone: 1 col (.divi-form-row-2col) -->
+      <div class="divi-form-row-2col" style="display:grid; grid-template-columns:1.5fr 1fr; gap:16px; margin-bottom:16px;">
+        <div>
+          <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">DIRECCIÓN</label>
+          <input type="text" placeholder="Av. Ejemplo 123" style="
+            width:100%; box-sizing:border-box;
+            background-color:#152540;
+            border:1px solid rgba(168,212,232,0.15);
+            border-radius:8px;
+            padding:12px 14px;
+            font-family:'DM Sans',sans-serif;
+            font-weight:300;
+            font-size:14px;
+            color:#D8EEF7;
+            outline:none;
+          "/>
+        </div>
+        <div>
+          <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">COMUNA</label>
+          <input type="text" placeholder="Las Condes" style="
+            width:100%; box-sizing:border-box;
+            background-color:#152540;
+            border:1px solid rgba(168,212,232,0.15);
+            border-radius:8px;
+            padding:12px 14px;
+            font-family:'DM Sans',sans-serif;
+            font-weight:300;
+            font-size:14px;
+            color:#D8EEF7;
+            outline:none;
+          "/>
+        </div>
+      </div>
+
+      <!-- Row 4: Tipo vivienda + Construcción nueva → Phone: 1 col -->
+      <div class="divi-form-row-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+        <div>
+          <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">TIPO DE VIVIENDA</label>
+          <select style="
+            width:100%; box-sizing:border-box;
+            background-color:#152540;
+            border:1px solid rgba(168,212,232,0.15);
+            border-radius:8px;
+            padding:12px 14px;
+            font-family:'DM Sans',sans-serif;
+            font-weight:300;
+            font-size:14px;
+            color:#8CA0B8;
+            outline:none;
+            appearance:none;
+          ">
+            <option value="">Seleccionar</option>
+            <option>Casa</option>
+            <option>Apartamento</option>
+            <option>Oficina</option>
+            <option>Edificio</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">¿CONSTRUCCIÓN NUEVA?</label>
+          <select style="
+            width:100%; box-sizing:border-box;
+            background-color:#152540;
+            border:1px solid rgba(168,212,232,0.15);
+            border-radius:8px;
+            padding:12px 14px;
+            font-family:'DM Sans',sans-serif;
+            font-weight:300;
+            font-size:14px;
+            color:#8CA0B8;
+            outline:none;
+            appearance:none;
+          ">
+            <option value="">Seleccionar</option>
+            <option>Sí</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 5: Color marcos + Ventanas actuales → Phone: 1 col -->
+      <div class="divi-form-row-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+        <div>
+          <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">COLOR DE MARCOS</label>
+          <select style="
+            width:100%; box-sizing:border-box;
+            background-color:#152540;
+            border:1px solid rgba(168,212,232,0.15);
+            border-radius:8px;
+            padding:12px 14px;
+            font-family:'DM Sans',sans-serif;
+            font-weight:300;
+            font-size:14px;
+            color:#8CA0B8;
+            outline:none;
+            appearance:none;
+          ">
+            <option value="">Seleccionar</option>
+            <option>Blanco</option>
+            <option>Grafito</option>
+            <option>Negro</option>
+            <option>Imitación madera</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">VENTANAS ACTUALES</label>
+          <select style="
+            width:100%; box-sizing:border-box;
+            background-color:#152540;
+            border:1px solid rgba(168,212,232,0.15);
+            border-radius:8px;
+            padding:12px 14px;
+            font-family:'DM Sans',sans-serif;
+            font-weight:300;
+            font-size:14px;
+            color:#8CA0B8;
+            outline:none;
+            appearance:none;
+          ">
+            <option value="">Seleccionar</option>
+            <option>Aluminio</option>
+            <option>Madera</option>
+            <option>PVC</option>
+            <option>Sin ventanas</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 6: Descripción -->
+      <div style="margin-bottom:16px;">
+        <label style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:12px; color:#8CA0B8; display:block; margin-bottom:6px; letter-spacing:0.5px;">DESCRIPCIÓN DEL PROYECTO</label>
+        <textarea rows="4" placeholder="Ej: Living: ancho 200cm, alto 150cm, modelo corredera..." style="
+          width:100%; box-sizing:border-box;
+          background-color:#152540;
+          border:1px solid rgba(168,212,232,0.15);
+          border-radius:8px;
+          padding:12px 14px;
+          font-family:'DM Sans',sans-serif;
+          font-weight:300;
+          font-size:14px;
+          color:#D8EEF7;
+          outline:none;
+          resize:vertical;
+          line-height:1.6;
+        "></textarea>
+      </div>
+
+      <!-- Row 7: Adjuntar archivos -->
+      <div style="
+        border:1.5px dashed rgba(168,212,232,0.2);
+        border-radius:8px;
+        padding:20px;
+        text-align:center;
+        margin-bottom:24px;
+        background-color:rgba(168,212,232,0.03);
+      ">
+        <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:13px; color:#8CA0B8; margin:0 0 4px;">⬆ Arrastra archivos aquí o haz clic para seleccionar</p>
+        <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:11px; color:rgba(140,160,184,0.6); margin:0;">Planos, fotos o medidas · PDF, DWG, JPG, PNG · Máx. 10 MB por archivo</p>
+        <label style="
+          display:inline-block;
+          margin-top:12px;
+          font-family:'DM Sans',sans-serif;
+          font-weight:500;
+          font-size:12px;
+          color:#38C3FF;
+          border:1px solid rgba(56,195,255,0.3);
+          padding:7px 18px;
+          border-radius:6px;
+          cursor:pointer;
+        ">
+          Seleccionar archivos
+          <input type="file" multiple accept=".pdf,.dwg,.jpg,.jpeg,.png" style="display:none;"/>
+        </label>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" style="
+        width:100%;
+        background-color:#38C3FF;
+        color:#070F1C;
+        font-family:'DM Sans',sans-serif;
+        font-weight:500;
+        font-size:16px;
+        padding:16px;
+        border-radius:8px;
+        border:none;
+        cursor:pointer;
+        letter-spacing:0.3px;
+      ">Enviar solicitud de cotización →</button>
+
+      <p style="
+        font-family:'DM Sans',sans-serif;
+        font-weight:300;
+        font-size:12px;
+        color:rgba(140,160,184,0.7);
+        text-align:center;
+        margin:16px 0 0;
+      ">También puedes adjuntar planos al correo <span style="color:#38C3FF;">ventanaspvc@bkglass.cl</span></p>
+
+    </form>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     DIVI MAP: Footer Section → 3 columnas (logo / links / info+teléfono)
+     - Desktop: flex horizontal, justify space-between
+     - Tablet : flex column, align-start, gap:20px, padding:32px 40px  (max-width:980px)
+     - Phone  : flex column, align-center, text-center, padding:28px 20px (max-width:767px)
+============================================================ -->
+<footer class="divi-footer" style="
+  background-color:#0B1A2E;
+  border-top:1px solid rgba(168,212,232,0.08);
+  padding:32px 80px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:24px;
+">
+  <!-- Logo → Divi: Image Module (logo) -->
+  <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:#FFFFFF;">
+    BK<span style="color:#38C3FF;">Glass</span>
+  </div>
+
+  <!-- Nav links → Divi: Menu Module. Phone: justify-content:center -->
+  <div class="footer-nav" style="display:flex; gap:28px; flex-wrap:wrap;">
+    <a href="#ventajas"  style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; text-decoration:none;">Ventajas</a>
+    <a href="#productos" style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; text-decoration:none;">Productos</a>
+    <a href="#proceso"   style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; text-decoration:none;">Proceso</a>
+    <a href="#proyectos" style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; text-decoration:none;">Proyectos</a>
+    <a href="#contacto"  style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:#8CA0B8; text-decoration:none;">Contacto</a>
+  </div>
+
+  <!-- Right: phone + copyright → Divi: Text Module. Phone: text-align:center -->
+  <div class="footer-right" style="text-align:right;">
+    <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:14px; color:#38C3FF; margin:0 0 4px;">(+569) 94336807</p>
+    <p style="font-family:'DM Sans',sans-serif; font-weight:300; font-size:12px; color:rgba(140,160,184,0.5); margin:0;">© 2025 BKGlass SPA · Ventanas PVC Región Metropolitana · Av. Don Luis 643, Bodega 5, Lampa</p>
+  </div>
+</footer>
+
+</body>
+</html>

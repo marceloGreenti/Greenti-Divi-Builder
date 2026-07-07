@@ -1,0 +1,34 @@
+# Outputs generados por la Skill (no versionar, son derivados de los inputs)
+projects/*/output/
+projects/*/html/*-corrected.html
+
+# Archivos temporales de sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editores
+.vscode/
+.idea/
+*.code-workspace
+
+# Node (por si acaso)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python (por si acaso)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Archivos temporales de Claude Code
+.claude/cache/
+.claude/logs/
+
+# Backups automáticos
+*.bak
+*.tmp
