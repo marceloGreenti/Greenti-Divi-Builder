@@ -28,3 +28,10 @@ Aquí van las ideas y mejoras propuestas que aún no se implementan.
 - [ ] Ejemplo end-to-end en `examples/` con HTML + assets + output esperado.
 - [ ] Templates skeleton en `templates/`.
 - [ ] Versión sistema-agnóstica para compatibilidad con otras IAs (OpenCode, etc.).
+
+
+## Mejoras Hechas / Aplicadas
+
+Aquí dejaremos las tareas completadas que hayan sido desarrolladas y aplicadas a la Skill
+
+- [x] Ejemplo Tarea completada
