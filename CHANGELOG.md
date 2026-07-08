@@ -4,6 +4,24 @@ Todas las mejoras notables a la Skill `html-to-divi` se documentan aquí.
 
 Se sigue el formato de [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) y versionado [Semver](https://semver.org/lang/es/).
 
+
+## [v1.1.0] - 2026-07-08
+
+### Agregado
+- Sistema de contenedores unificado como parte de los design tokens del proyecto.
+  - Nuevo token `sectionPaddingHorizontal` (por breakpoint).
+  - Nuevo token `sectionPaddingVertical` (por breakpoint).
+  - Nuevo token `contentMaxWidth` (opcional, para pantallas ultrawide).
+- Fase 2 de la Skill ahora confirma explícitamente el sistema de contenedores antes de emitir el JSON.
+- `contentMaxWidth`: si el HTML no lo declara, la Skill pregunta explícitamente al usuario en vez de aplicar default silencioso.
+- Nueva categoría de validación 6b en `divi-qa-validator`: verifica consistencia de padding entre sections y sizing explícito en rows.
+
+### Corregido
+- Rows ya no se emiten sin `sizing.width` y `sizing.maxWidth` (antes causaba que Divi aplicara default 1080px rompiendo la unificación visual).
+- Sections del proyecto ahora respetan el mismo padding horizontal por breakpoint (antes había variaciones que causaban desalineación visual entre secciones).
+
+
+
 ## [v1.0.0] - 2026-07-06
 
 ### Agregado

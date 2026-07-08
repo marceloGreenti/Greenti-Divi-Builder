@@ -72,6 +72,36 @@ Si hay desviaciones, reportar cada una con:
   Sugerencia: usar <token_más_cercano> o confirmar excepción.
 ```
 
+### Categoría 6b — Sistema de contenedores (crítico)
+
+Consultar los tokens `sectionPaddingHorizontal`, `sectionPaddingVertical` y `contentMaxWidth` confirmados en Fase 2.
+
+**Validaciones sobre sections:**
+
+1. **Todas las sections deben tener padding horizontal declarado en desktop y phone como mínimo.** Si falta, es error crítico.
+2. **El valor de padding horizontal debe coincidir con `sectionPaddingHorizontal`** del manifiesto (con tolerancia de 0px — debe ser exacto).
+3. **Si una section tiene padding horizontal distinto** al del manifiesto, verificar que esté documentado como excepción en `notes.md`. Si no lo está, reportar como error.
+4. **El padding vertical puede variar** entre sections (hero suele ser diferente del resto). No es error, pero debe seguir un patrón consistente entre sections del mismo tipo.
+
+**Validaciones sobre rows:**
+
+1. **TODO row debe tener `sizing.width` y `sizing.maxWidth` declarados explícitamente.** Si algún row no los tiene, error crítico (Divi aplicaría default 1080px rompiendo el patrón).
+2. **`sizing.width` debe ser `"100%"`** en desktop (y en breakpoints inferiores salvo instrucción contraria).
+3. **`sizing.maxWidth` debe ser** o bien `"100%"` (diseño fluido) o el valor declarado en `contentMaxWidth` (ej: `"1400px"`).
+4. **Todos los rows del proyecto deben usar el mismo `maxWidth`** salvo excepciones documentadas en `notes.md` (ej: un row edge-to-edge para una CTA con background especial).
+
+Formato de reporte de fallo:
+
+```
+[CRÍTICO] Categoría 6b - Sistema de contenedores
+  - Row "Ventajas - fila 1" (línea XXX): sin sizing declarado.
+    Esperado: width 100% + maxWidth 1400px (según manifiesto).
+    Divi aplicará default 1080px, rompiendo la unificación visual.
+
+  - Section "Contacto" (línea YYY): padding-left/right = 40px en desktop.
+    Esperado: 80px (según sectionPaddingHorizontal.desktop del manifiesto).
+```
+
 ### Categoría 7 — Assets
 
 1. **Toda URL de imagen referenciada en el JSON** debe existir en el `assets-checklist.md`.
@@ -112,6 +142,7 @@ Checks aplicados:
   - Coherencia de columnas      ✓
   - Catálogo de módulos         ✓
   - Design tokens               ✓
+  - Sistema de contenedores     ✓
   - Assets                      ✓
   - Header/Footer separación    ✓
   - Idempotencia y adminLabels  ✓

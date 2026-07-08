@@ -2,13 +2,14 @@
 
 Este documento define la cascada de 4 pasos por la que la Skill obtiene los design tokens del proyecto. La consulta la Skill durante la Fase 2, antes de invocar al `divi-json-builder`.
 
-## Los 5 grupos de tokens que se manejan
+## Los 6 grupos de tokens que se manejan
 
 1. **Paleta de colores.** Primario, secundario, acento, texto base, fondo base, y adicionales.
 2. **Tipografía.** Familias (headings, body, UI/botones), weights disponibles, escala tipográfica por breakpoint.
 3. **Sistema de espaciado.** Base (típicamente 8px) y escala derivada (8, 16, 24, 32, 48, 64, 96...).
 4. **Radios de borde.** sm, md, lg, pill.
 5. **Sombras (opcional).** Elevaciones (sm, md, lg, xl).
+6. **Sistema de contenedores.** Padding horizontal y vertical de sections, y ancho máximo de rows en pantallas extrawide. Se detalla en el bloque específico más abajo.
 
 ## Cascada de 4 pasos
 
@@ -62,6 +63,29 @@ Padding sections phone:   48px vertical / 16px horizontal.
 - md: 0 4px 8px rgba(0,0,0,0.08)
 - lg: 0 8px 24px rgba(0,0,0,0.12)
 - xl: 0 16px 48px rgba(0,0,0,0.16)
+
+## Sistema de contenedores
+
+### Padding horizontal de sections
+Se aplica uniformemente a TODAS las sections del proyecto para garantizar alineación consistente.
+- desktop:    80px
+- tabletWide: 80px  (hereda de desktop si no se declara)
+- tablet:     40px
+- phoneWide:  24px  (interpolado si no se declara)
+- phone:      20px
+
+### Padding vertical de sections
+- desktop:    100px (sections de contenido estándar)
+- tabletWide: 100px (hereda de desktop)
+- tablet:     72px
+- phoneWide:  64px  (interpolado)
+- phone:      56px
+
+### Ancho máximo de contenedor (`contentMaxWidth`)
+Opcional. Se aplica al maxWidth de los rows para evitar que el contenido se estire demasiado en pantallas ultrawide.
+- desktop: 1400px  (o null si el diseño debe ser 100% fluido)
+
+Valores típicos: null, 1400px, 1600px, 1800px.
 ```
 
 Si el archivo existe pero está incompleto, la Skill completa los huecos con Pasos 2-4 y avisa qué se agregó.
@@ -92,6 +116,45 @@ Si aún quedan huecos después del Paso 2, aplicar heurísticas de sistemas de d
 
 Los tokens generados así van al manifiesto marcados como `[inferred]`.
 
+### Paso 3.5 — Inferencia específica del sistema de contenedores
+
+El sistema de contenedores tiene reglas propias porque afecta la consistencia visual crítica del sitio. Se procesa así:
+
+**A) Padding horizontal de sections:**
+
+1. Buscar en el HTML las declaraciones de padding lateral de sections (`<section style="padding: X Y">`, `@media (max-width: 980px) { .section { padding: ... } }`, etc.).
+2. Si hay valores consistentes (todas las sections del HTML usan el mismo padding en un breakpoint), extraerlos como el token.
+3. Si hay variaciones menores (ej: la mayoría usa 80px pero una usa 100px), usar el más frecuente y avisar en notas.
+4. Si el HTML no declara padding lateral, aplicar defaults: 80px desktop, 40px tablet, 20px phone.
+5. Interpolar `tabletWide` y `phoneWide` a partir de desktop/tablet y tablet/phone respectivamente.
+
+**B) Padding vertical de sections:**
+
+1. Igual método: buscar declaraciones de padding vertical en sections del HTML.
+2. Si hay consistencia, extraer.
+3. Si no, aplicar defaults: 100px desktop, 72px tablet, 56px phone.
+
+**C) `contentMaxWidth` (crítico — decisión inferencia B):**
+
+1. Buscar en el HTML declaraciones de `max-width` en wrappers globales (ej: `.container { max-width: 1400px }`, `.wrapper { max-width: 1200px }`, o media queries que afecten el ancho máximo del contenido).
+2. Si el HTML declara un valor, usarlo tal cual: no preguntar al usuario.
+3. Si el HTML NO declara ningún `max-width` para el contenedor de contenido:
+   - **Preguntar al usuario explícitamente**: "¿Quieres aplicar un `contentMaxWidth` a los rows para pantallas ultrawide? Opciones típicas: null (diseño 100% fluido), 1400px, 1600px, 1800px. Sugerencia: 1400px."
+   - No aplicar default silencioso. Este token requiere confirmación explícita para evitar decisiones invisibles.
+
+### Nota importante sobre el sistema de contenedores
+
+El `contentMaxWidth` funciona en tandem con el padding horizontal de sections. La lógica final es:
+
+```
+sections tienen padding horizontal uniforme → esto define el "margen interior" en cualquier viewport.
+rows dentro tienen width: 100% + maxWidth: contentMaxWidth (o 100% si null).
+  - Si viewport es más pequeño que contentMaxWidth: el row ocupa todo el ancho disponible.
+  - Si viewport es más grande que contentMaxWidth: el row se limita al maxWidth y queda centrado.
+```
+
+Este sistema es la base de la "unificación de anchos" en todo el proyecto.
+
 ### Paso 4 — Confirmación con el usuario
 
 Al terminar los 3 pasos anteriores, la Skill **presenta el manifiesto completo al usuario** con marca de origen de cada token:
@@ -121,6 +184,14 @@ Escala tipográfica:
 Spacing base: 8pt   [inferred - patrón detectado en el HTML]
 
 Radios: sm 4px / md 8px / lg 16px / pill 999px   [inferred - estándar]
+
+Sistema de contenedores:
+- Padding horizontal sections:
+    desktop 80px / tabletWide 80px / tablet 40px / phoneWide 24px / phone 20px   [extracted]
+- Padding vertical sections:
+    desktop 100px / tablet 72px / phone 56px   [extracted]
+- contentMaxWidth (ancho máximo de rows en extrawide):
+    1400px   [inferred - PREGUNTA AL USUARIO si no viene explícito]
 
 ¿Confirmas este manifiesto? Puedes:
 1. Aceptar tal cual → escribe "OK" y continúa.

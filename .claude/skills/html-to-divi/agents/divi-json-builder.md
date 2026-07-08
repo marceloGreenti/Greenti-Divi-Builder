@@ -131,6 +131,68 @@ Si algo falla, corregir e intentar de nuevo. Si no se puede, reportar y no escri
 
 ## Reglas específicas del emisor
 
+### Sobre el sistema de contenedores unificado (regla crítica)
+
+Antes de emitir cualquier section o row, consultar los tokens del sistema de contenedores confirmados en Fase 2:
+
+- `sectionPaddingHorizontal.<breakpoint>`
+- `sectionPaddingVertical.<breakpoint>`
+- `contentMaxWidth.desktop` (puede ser `null`, `"1400px"`, `"1600px"`, etc.)
+
+**Toda `section` emite padding uniforme:**
+
+```json
+{
+  "module": {
+    "decoration": {
+      "spacing": {
+        "desktop":    { "value": { "padding": { "top": "<vertical>", "right": "<horizontal>", "bottom": "<vertical>", "left": "<horizontal>", "syncVertical": "off", "syncHorizontal": "off" } } },
+        "tabletWide": { "value": { "padding": { ... } } },
+        "tablet":     { "value": { "padding": { ... } } },
+        "phoneWide":  { "value": { "padding": { ... } } },
+        "phone":      { "value": { "padding": { ... } } }
+      }
+    }
+  }
+}
+```
+
+Los valores de padding horizontal deben ser IDÉNTICOS en todas las sections del proyecto. Si el HTML declara variaciones legítimas (ej: una section específica con padding distinto por razón de diseño), registrarlo como excepción en `notes.md`.
+
+**Todo `row` emite sizing explícito:**
+
+Regla mandatoria: nunca dejar un row sin `sizing.width` y `sizing.maxWidth` declarados. El default de Divi es 1080px y rompe el patrón de unificación.
+
+Caso A — con `contentMaxWidth` definido (ej: 1400px):
+
+```json
+{
+  "module": {
+    "decoration": {
+      "sizing": {
+        "desktop": { "value": { "width": "100%", "maxWidth": "1400px" } }
+      }
+    }
+  }
+}
+```
+
+Caso B — sin `contentMaxWidth` (diseño 100% fluido):
+
+```json
+{
+  "module": {
+    "decoration": {
+      "sizing": {
+        "desktop": { "value": { "width": "100%", "maxWidth": "100%" } }
+      }
+    }
+  }
+}
+```
+
+En breakpoints inferiores (tablet, phone), el `maxWidth` puede seguir siendo el mismo valor porque el viewport ya es menor que el contentMaxWidth. Solo se declaran overrides si el HTML lo pide explícitamente.
+
 ### Sobre `columnStructure` y `flexColumnStructure`
 
 Todo `row` debe emitir estas 2 propiedades en `advanced`:

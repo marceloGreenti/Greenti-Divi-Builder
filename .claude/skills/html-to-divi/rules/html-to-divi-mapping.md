@@ -161,6 +161,78 @@ Todo lo que no es header ni footer va en `divi-import-page.json`.
 
 ### Reglas transversales de mapeo
 
+#### Sistema de contenedores unificado (regla crítica)
+
+Todo el JSON emitido debe respetar el sistema de contenedores del proyecto, definido en los design tokens (`sectionPaddingHorizontal`, `sectionPaddingVertical`, `contentMaxWidth`).
+
+**Regla para TODAS las sections:**
+
+```json
+{
+  "module": {
+    "decoration": {
+      "spacing": {
+        "desktop": {
+          "value": {
+            "padding": {
+              "top":    "<sectionPaddingVertical.desktop>",
+              "right":  "<sectionPaddingHorizontal.desktop>",
+              "bottom": "<sectionPaddingVertical.desktop>",
+              "left":   "<sectionPaddingHorizontal.desktop>",
+              "syncVertical": "off",
+              "syncHorizontal": "off"
+            }
+          }
+        },
+        "tabletWide": { "value": { "padding": { ... } } },
+        "tablet":     { "value": { "padding": { ... } } },
+        "phoneWide":  { "value": { "padding": { ... } } },
+        "phone":      { "value": { "padding": { ... } } }
+      }
+    }
+  }
+}
+```
+
+- Todas las sections comparten los mismos valores de padding horizontal por breakpoint.
+- El padding vertical puede variar según el tipo de section (hero suele tener más, secciones estándar comparten un valor común).
+- La primera section (hero) puede tener padding vertical propio si el HTML lo declara distinto.
+
+**Regla para TODOS los rows:**
+
+Los rows DEBEN emitir explícitamente `width` y `maxWidth`. Nunca dejarlos sin declarar (el default de Divi es 1080px que rompe el patrón).
+
+```json
+{
+  "module": {
+    "decoration": {
+      "sizing": {
+        "desktop": {
+          "value": {
+            "width":    "100%",
+            "maxWidth": "<contentMaxWidth.desktop o '100%' si no hay tope>"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+- Si `contentMaxWidth` está definido (ej: 1400px): `maxWidth: "1400px"` + `width: "100%"`. El row se estira al 100% en viewports pequeños y se limita a 1400px en viewports grandes.
+- Si `contentMaxWidth` es null: `maxWidth: "100%"` + `width: "100%"`. El row es 100% fluido siempre.
+
+**Excepciones legítimas donde se rompe la regla:**
+
+Ciertos módulos requieren edge-to-edge o comportamiento distinto:
+
+- **`fullwidth-header`**: la section del hero puede tener `padding: 0` y el módulo `fullwidth-header` ocupa toda la pantalla.
+- **`fullwidth-portfolio`**: mismo caso.
+- **Sliders/carouseles edge-to-edge**: cuando el diseño explícitamente muestra un slider que corta los bordes de la pantalla.
+- **Banners CTA con background image edge-to-edge**: la section puede omitir padding horizontal, con el contenido del row manteniendo el padding lateral propio.
+
+Todas las excepciones deben registrarse en `notes.md` con la razón.
+
 #### Módulos con fondo transparente obligatorio por defecto
 
 Ciertos módulos de Divi aplican un fondo por defecto (blanco u otro) cuando no se declara `background.color`. Esto rompe el diseño cuando la sección/row ya define el color de fondo (patrón habitual). Para evitarlo, la Skill emite estos módulos **siempre** con `background.color: "transparent"` en el grupo `module.decoration`, salvo que el HTML declare un color de fondo específico para el módulo:

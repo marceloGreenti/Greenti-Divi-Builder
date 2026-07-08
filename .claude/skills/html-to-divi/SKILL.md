@@ -84,6 +84,16 @@ Se invocan dos subagentes en paralelo:
 
 Al final de esta fase, si el HTML no tiene tokens de diseño explícitos y `design-tokens.md` no existe, la Skill aplica la cascada de inferencia (ver `rules/design-tokens-inference.md`) y **presenta al usuario el manifiesto de tokens** con marca de origen (`[explicit]`, `[extracted]`, `[inferred]`) para confirmación antes de continuar.
 
+**Confirmación específica del sistema de contenedores (crítica):**
+
+Como parte de la confirmación del manifiesto, la Skill presenta explícitamente los tokens del sistema de contenedores (padding horizontal/vertical de sections y `contentMaxWidth`). Estos afectan la consistencia visual de todo el sitio y merecen atención especial.
+
+Regla mandatoria para `contentMaxWidth`:
+- Si el HTML declara un `max-width` en el wrapper de contenido: aplicar sin preguntar.
+- Si el HTML NO declara: **preguntar al usuario explícitamente** qué valor usar (null, 1400px, 1600px, 1800px). No aplicar default silencioso.
+
+La confirmación es un gate: la Fase 3 no arranca hasta que el usuario confirme el manifiesto completo, incluyendo el sistema de contenedores.
+
 ### Fase 3 — Emisión del JSON
 
 Objetivo: construir el JSON de Divi respetando el schema del reference doc.
@@ -143,6 +153,7 @@ Pasos:
 
 ## Reglas transversales
 
+- **Sistema de contenedores unificado.** Todas las sections del proyecto emiten el mismo padding horizontal (según `sectionPaddingHorizontal` del manifiesto). Todos los rows emiten `sizing.width: "100%"` + `sizing.maxWidth` explícito (nunca dejar sin declarar — el default de Divi es 1080px y rompe la unificación). Excepciones legítimas se registran en `notes.md`.
 - **Fidelidad de estilos.** La Skill nunca inventa valores. Si un valor no viene en el HTML o los tokens, aplica la cascada de inferencia y confirma con el usuario.
 - **builderVersion fijo.** Siempre `"5.8.1"` en cada bloque emitido.
 - **5 breakpoints Divi 5.** desktop, tabletWide, tablet, phoneWide, phone. Ver `rules/responsive-inference.md` para inferencia.
