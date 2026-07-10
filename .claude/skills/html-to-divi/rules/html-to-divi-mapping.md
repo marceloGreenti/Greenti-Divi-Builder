@@ -73,9 +73,83 @@ Este documento es la tabla de decisión que usa el `divi-json-builder` para deci
 
 | Patrón HTML | Módulo Divi | Notas |
 |---|---|---|
-| `<form>` (cualquiera) | `code` (Code Module) con placeholder CF7 | Ver `code-module-triggers.md`. Greenti no usa formularios Divi. |
+| `<form>` (contacto/cotización) | **Depende de elección del usuario en Fase 2** (v1.2.0+): CF7 → Code Module con placeholder + archivos compañeros. Divi Form → módulo `contact-form` con campos mapeados. | Ver `code-module-triggers.md` y `cf7-form-generation.md`. |
 | Input search con label "buscar" | `search` | Solo si es la búsqueda WP nativa. |
 | Formulario de login | `login` | Solo si es login WP nativo. |
+| Formulario de comentarios | `comments` | Solo en single post. |
+| Formulario de suscripción a newsletter | `signup` (con confirmación del usuario) o vía CF7 | La Skill pregunta antes de decidir. |
+
+**Mapeo detallado de campos HTML → Divi Form (cuando el usuario elige Divi Form):**
+
+| Elemento HTML | contact-field.fieldType | Notas |
+|---|---|---|
+| `<input type="text">` | `input` | Type text estándar. |
+| `<input type="email">` | `email` | Validación email automática. |
+| `<input type="tel">` | `input` | Type text con notas sobre pattern/inputmode. |
+| `<input type="number">` | `input` | Type text con validación numérica. |
+| `<input type="url">` | `input` | Type text con validación URL. |
+| `<input type="checkbox">` | `checkbox` | Con opciones si hay múltiples. |
+| `<input type="radio">` | `radio` | Grupo de radio buttons. |
+| `<textarea>` | `text` | Multi-línea. |
+| `<select>` | `select` | Con las opciones del `<option>`. |
+| `<input type="file">` | Warning en notes: no cubierto por Divi Form. Sugerir CF7. |
+| `<input type="date">` | Warning: mapea a `input` pero sin datepicker nativo. |
+| `<input type="hidden">` | `input` con `showLabel: off`. |
+| `<button type="submit">` | Grupo `button` del contact-form. |
+
+**Estados y estilos que Divi Form NO cubre nativamente** (registrar en notes.md y en `divi-form-styles.css`):
+- Placeholder color específico (Divi usa uno por defecto).
+- Focus state con outline o border custom.
+- Input con ícono a la izquierda o derecha.
+- Floating labels.
+- Máscaras de input (ej: formatear teléfono `+56 9 XXXX XXXX`).
+- Validación custom más allá de required + type.
+- Campos condicionales (mostrar X solo si Y).
+- Multi-step forms.
+
+### Carruseles
+
+| Patrón HTML | Módulo Divi | Notas |
+|---|---|---|
+| Slider/carousel de contenido rico (título + descripción + imagen fondo) | `slider` con `slide`s | Slides fullwidth con contenido completo. |
+| Slider/carousel de imágenes | `gallery` en modo slider | Solo imágenes con lightbox opcional. |
+| Slider/carousel de videos | `video-slider` con `video-slider-item`s | Videos YouTube/Vimeo. |
+| Carrusel horizontal de cards, thumbnails, logos (N items visibles simultáneamente) | `group-carousel` con módulos hijos | Ver reglas detalladas más abajo. |
+| Carrusel de posts del blog | `post-slider` | Contenido dinámico WP. |
+
+**Regla crítica de inferencia para `group-carousel` — `slidesPerView`:**
+
+El parámetro `slidesPerView` controla cuántos elementos se ven simultáneamente. Emitirlo mal produce un carrusel que muestra 1 solo elemento (bug conocido en versiones previas).
+
+Reglas de inferencia por breakpoint, en orden:
+
+1. **Si el HTML declara CSS explícito** (`.carousel-item { width: 25% }` implica 4 visibles, `width: 33.33%` implica 3 visibles, etc.), extraer el valor exacto.
+2. **Si el HTML usa flex con `flex-basis` o `min-width` en los hijos**, calcular cuántos caben en el ancho del contenedor.
+3. **Si el HTML tiene un patrón "peek" (parcialmente visible el siguiente slide)** — detectable por `overflow: visible` en el contenedor y `width` de items que no encaja exacto en 100% — emitir como decimal (`4.5`, `3.5`, `1.8`, etc.) para reproducir el efecto.
+4. **Si el HTML es ambiguo** (no hay CSS claro sobre cuántos items mostrar), **preguntar al usuario explícitamente**:
+   ```
+   Detecté un carrusel en <ubicación>. ¿Cuántos elementos deben verse simultáneamente?
+   - Desktop: __ (típico: 3, 4, 4.5)
+   - Tablet:  __ (típico: 2, 3)
+   - Phone:   __ (típico: 1, 1.5, 1.8)
+   Nota: los decimales muestran una fracción del siguiente slide como hint visual.
+   ```
+
+**Regla crítica para autoplay:**
+
+Cuando el carrusel debe hacer autoplay, emitir **ambos** parámetros con estado consistente:
+- `module.advanced.carousel.desktop.value.autoplay: "on"`
+- `module.advanced.auto.desktop.value: "on"`
+
+Si solo se emite uno, Divi puede no activar el autoplay correctamente. Ambos deben coincidir siempre.
+
+**Regla para `speed` y `transitionSpeed`:**
+
+Detectar del CSS del HTML si hay declaraciones de duración de transiciones (`transition-duration`, `animation-duration`). Si no vienen declaradas, aplicar defaults sensatos:
+- `speed` (duración entre autoplay): `"3000ms"`.
+- `transitionSpeed` (velocidad de la animación): `"250ms"`.
+
+Ver schema completo del `group-carousel` en `divi5-reference.md`.
 
 ### Componentes interactivos
 
@@ -83,9 +157,6 @@ Este documento es la tabla de decisión que usa el `divi-json-builder` para deci
 |---|---|---|
 | `<details><summary>` (acordeón nativo HTML) | `accordion` con `accordion-item`s | O `toggle` si es uno solo. |
 | Tabs (`<div role="tablist">` + panels) | `tabs` con `tab`s | |
-| Slider/carousel de contenido | `slider` con `slide`s | |
-| Slider/carousel de imágenes | `gallery` en modo slider | O `slider` con imágenes como fondo. |
-| Slider/carousel de videos | `video-slider` con `video-slider-item`s | |
 | Dropdown/modal genérico | `dropdown` con `group` adentro | Nuevo en Divi 5. |
 | Timeline/línea de tiempo | `timeline` con `timeline-item`s | Nuevo en Divi 5. |
 | Countdown a fecha | `countdown-timer` | |

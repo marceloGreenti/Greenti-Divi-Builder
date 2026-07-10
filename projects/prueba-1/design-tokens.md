@@ -72,6 +72,19 @@ Padding de secciones (vertical / horizontal):
 
 Gaps de grid: `24px` (cards), `16px` (galería), `12px` (thumbs).
 
+## Sistema de contenedores unificado (Skill v1.1.0)
+
+Aplicado a **todas** las sections y rows para garantizar alineación consistente en todo el sitio.
+
+| Token | Desktop | Tablet (≤980px) | Phone (≤767px) | Origen |
+|-------|---------|-----------------|----------------|--------|
+| `sectionPaddingHorizontal` | 80px | 40px | 20px | [extracted] — padding lateral idéntico en todas las sections |
+| `sectionPaddingVertical` | 100px | 72px | 56px | [extracted] — hero usa 80/64/48 propio |
+| `contentMaxWidth` | **null (100% fluido)** | — | — | [confirmed] — el usuario eligió diseño 100% fluido (2026-07-08); el HTML no declaraba tope |
+
+- **Rows:** todos emiten `sizing.width: "100%"` + `sizing.maxWidth: "100%"` (nunca sin declarar → evita el default 1080px de Divi que rompe la unificación).
+- **`contentMaxWidth = null`** → el contenido siempre ocupa el ancho disponible menos los 80px de padding lateral; no hay tope en pantallas ultrawide.
+
 ## Radios de borde
 
 | Token | Valor | Origen | Uso |

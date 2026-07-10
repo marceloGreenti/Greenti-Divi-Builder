@@ -6,7 +6,8 @@
       "Read(//home/marcelo/.claude/jobs/53348748/tmp/**)",
       "Bash(python3 gen.py)",
       "Bash(python3 qa.py)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(sort -t p -k1 -n)"
     ]
   }
 }

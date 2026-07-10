@@ -118,7 +118,13 @@ El `seo-auditor` prepara el borrador de `seo-meta.md` con esta estructura:
 
 1. **`html/landing-corrected.html`** — HTML corregido con todas las correcciones de Nivel 1 aplicadas + Nivel 2 respondidas por el usuario.
 2. **Borrador de `output/seo-meta.md`** — se completa en la Fase 5 de la Skill.
-3. **Log interno** con todas las correcciones aplicadas y decisiones tomadas, que la Skill copia a `notes.md`.
+3. **Inventario de formularios detectados** (nuevo en v1.2.0) — lista estructurada de todos los `<form>` encontrados en el HTML, con:
+   - Ubicación (section, row) para adminLabel.
+   - Campos detectados con `type`, `name`, `placeholder`, `required`.
+   - Botón submit con texto.
+   - Notas de estilo relevantes (border-radius, colores, spacing).
+   Este inventario alimenta la pregunta de "CF7 vs Divi Form" que la Skill hace al usuario en Fase 2, y es consumido por el `divi-json-builder` en Fase 3.
+4. **Log interno** con todas las correcciones aplicadas y decisiones tomadas, que la Skill copia a `notes.md`.
 
 ## Cómo reportar
 

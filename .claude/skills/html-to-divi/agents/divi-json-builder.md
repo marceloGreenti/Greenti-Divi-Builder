@@ -20,6 +20,7 @@ Antes de emitir cualquier bloque, este subagente **debe consultar** los siguient
 3. **`rules/code-module-triggers.md`** — patrones que fuerzan Code Module.
 4. **`rules/responsive-inference.md`** — cascada de inferencia entre breakpoints.
 5. **`rules/design-tokens-inference.md`** — cascada de tokens (ya aplicada en Fase 2, aquí solo consulta el manifiesto confirmado).
+6. **`rules/cf7-form-generation.md`** — reglas para generar Contact Form 7 (solo si el usuario eligió CF7 en Fase 2).
 
 ## Alcance de la emisión
 
@@ -28,6 +29,11 @@ Antes de emitir cualquier bloque, este subagente **debe consultar** los siguient
 - `output/divi-import-header.json` — si aplica.
 - `output/divi-import-footer.json` — si aplica.
 - Log interno de decisiones que la Skill copia a `notes.md` en Fase 5.
+
+**Emite condicionalmente (según elección del usuario en Fase 2):**
+- `output/cf7-form-config.md` — si el usuario eligió CF7 y hay formularios detectados. Ver `rules/cf7-form-generation.md`.
+- `output/cf7-form-styles.css` — si el usuario eligió CF7 y hay formularios detectados.
+- `output/divi-form-styles.css` — si el usuario eligió Divi Form y hay estilos del HTML que Divi Form no cubre nativamente.
 
 **No emite en v1:**
 - `presets` (queda en `null`).
@@ -275,6 +281,53 @@ Buenas prácticas:
 ### Sobre `builderVersion`
 
 **Siempre** `"builderVersion": "5.8.1"` en cada bloque, sin excepción. No usar valores como `5.0.0-public-alpha.23` aunque aparezcan en exports de referencia.
+
+### Sobre formularios (v1.2.0+)
+
+La decisión de CF7 vs Divi Form se toma en Fase 2 (con el usuario). En Fase 3, el `divi-json-builder` recibe esa decisión como input y actúa:
+
+**Vía A — Usuario eligió Contact Form 7:**
+
+1. Por cada `<form>` detectado, emitir un Code Module con:
+   ```json
+   {
+     "module": {
+       "meta": {
+         "adminLabel": { "desktop": { "value": "Formulario CF7 - reemplazar shortcode" } }
+       }
+     },
+     "content": {
+       "innerContent": {
+         "desktop": { "value": "[contact-form-7 id=\"INSERTA_ID_AQUI\" title=\"Inserta shortcode del formulario aquí\"]" }
+       }
+     },
+     "builderVersion": "5.8.1"
+   }
+   ```
+2. Generar `output/cf7-form-config.md` siguiendo el schema de `rules/cf7-form-generation.md`.
+3. Generar `output/cf7-form-styles.css` siguiendo las plantillas de `rules/cf7-form-generation.md`, resolviendo los tokens del manifiesto.
+
+**Vía B — Usuario eligió Divi Form nativo:**
+
+1. Por cada `<form>` detectado, emitir un módulo `contact-form` con:
+   - Los campos mapeados según la tabla en `rules/html-to-divi-mapping.md`.
+   - Los estilos aplicados según los design tokens del manifiesto.
+2. Detectar features del HTML que Divi Form NO cubre nativamente. Para cada una, registrar en `notes.md`:
+   ```
+   - <feature> no soportada por Divi Form nativo.
+     Ubicación: <section, row>.
+     Sugerencia: <alternativa>.
+   ```
+3. Si hay estilos que necesitan CSS adicional (placeholder color, focus custom, etc.), generar `output/divi-form-styles.css`.
+
+### Sobre carruseles (`group-carousel`)
+
+Cuando el HTML declara un carrusel horizontal de items (cards, thumbnails, logos), emitir `group-carousel` con:
+
+1. **`slidesPerView` correctamente inferido** según reglas de `rules/html-to-divi-mapping.md`. Si no se puede inferir del HTML, preguntar al usuario. **Nunca dejar `"1"` como default sin razón** — es un bug conocido.
+2. **Autoplay coherente**: si aplica, emitir tanto `module.advanced.carousel.desktop.value.autoplay: "on"` como `module.advanced.auto.desktop.value: "on"` (ambos deben coincidir).
+3. **Grupos `arrows`, `dotNav`, `children`, `activeGroups`** configurados si el diseño los requiere. Ver schema completo en `divi5-reference.md`.
+4. **`speed` y `transitionSpeed`** extraídos del CSS del HTML, o defaults `"3000ms"` y `"250ms"`.
 
 ## Salida de este subagente
 

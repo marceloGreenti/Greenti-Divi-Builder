@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BKGlass | Ventanas PVC Termopanel — Región Metropolitana</title>
+<meta name="description" content="Fabricación e instalación de ventanas PVC-termopanel a medida. Aislación térmica y acústica de grado técnico, refuerzo galvanizado, cobertura en toda la Región Metropolitana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* ── Blue-tinted steel neutrals — derived from the brand's own ink (#001724), not a generic grey ── */
+    --ink:        #001724;
+    --surface:    #052A3D;
+    --surface-2:  #0B3C57;
+    --line:       rgba(124, 170, 197, 0.14);
+    --line-strong: rgba(124, 170, 197, 0.30);
+    --steel:      #6791A9;
+    --steel-light: #7CAAC5;
+    --text:       #F7F8F8;
+
+    /* ── Blueprint/spec-sheet paper insert (a literal material reference, not a default bg) ── */
+    --paper:      oklch(96% 0.01 90);
+    --paper-line: oklch(55% 0.03 90 / 45%);
+    --ink-on-paper: oklch(19% 0.012 250);
+
+    /* ── Brand primary: signal blue. Secondary: thermopane teal ── */
+    --accent:      #1C8CCC;
+    --accent-hi:   #5CACDA;
+    --accent-ink:  #001724;
+    --accent-wash: rgba(28, 140, 204, 0.10);
+    --accent-line: rgba(28, 140, 204, 0.35);
+
+    --secondary:      #3CB99E;
+    --secondary-hi:   #73CDB9;
+    --secondary-ink:  #001724;
+    --secondary-wash: rgba(60, 185, 158, 0.10);
+    --secondary-line: rgba(60, 185, 158, 0.35);
+
+    --wa-green: #25D366;
+    --wa-green-dark: #1DBE5A;
+    --danger: #FF6B6B;
+
+    /* ── Spacing (4pt base) ── */
+    --space-3xs: 0.25rem;
+    --space-2xs: 0.5rem;
+    --space-xs: 0.75rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4rem;
+    --space-3xl: 6rem;
+    --space-4xl: 8rem;
+
+    /* ── Type: BBH Bogle for display, Inter Tight for everything else — including labels that used
+       to be set in a mono face. --font-mono keeps its name (many selectors reference it) but now
+       points at Inter Tight; the tracked-uppercase treatment on those selectors is what reads as
+       "technical", not the typeface. ── */
+    --font-display: 'Anton', system-ui, sans-serif;
+    --font-body: 'Inter Tight', system-ui, sans-serif;
+    --font-mono: 'Inter Tight', system-ui, sans-serif;
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.25rem;
+    --text-xl: clamp(1.5rem, 1.25rem + 1.2vw, 2rem);
+    --text-display-sm: clamp(2rem, 1.5rem + 2.2vw, 3rem);
+    --text-display: clamp(2.5rem, 1.65rem + 4vw, 5.25rem);
+
+    /* ── Motion ── */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+    --radius: 8px;
+    --nav-h: 4.75rem;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+  body {
+    font-family: var(--font-body);
+    background: var(--ink);
+    color: var(--text);
+    overflow-x: hidden;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; }
+  img { max-width: 100%; display: block; }
+
+  a { color: inherit; }
+
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+
+  /* ── Skip link ── */
+  .skip-link {
+    position: fixed; top: -100%; left: var(--space-sm); z-index: 300;
+    background: var(--accent); color: var(--accent-ink);
+    font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600;
+    padding: var(--space-xs) var(--space-md); border-radius: var(--radius);
+    transition: top 200ms var(--ease-out-quart);
+  }
+  .skip-link:focus { top: var(--space-sm); }
+
+  /* ── Focus rings ── */
+  :focus { outline: none; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+  textarea:focus-visible, .dot:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 1px;
+  }
+
+  /* ══════════════════ NAV ══════════════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h);
+    padding: 0 clamp(1.25rem, 5vw, 3rem);
+    display: flex; align-items: center; justify-content: space-between;
+    background: oklch(15% 0.014 242 / 90%); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line); transition: background 250ms var(--ease-out-quart);
+  }
+  nav.scrolled { background: oklch(15% 0.014 242 / 98%); border-bottom-color: var(--line-strong); }
+
+  .nav-logo {
+    font-family: var(--font-display); font-size: 1.35rem; font-weight: 400;
+    letter-spacing: -0.02em; text-decoration: none; text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-logo::before {
+    content: ''; width: 9px; height: 9px; background: var(--accent); flex-shrink: 0;
+  }
+
+  .nav-links { display: flex; gap: var(--space-lg); list-style: none; }
+  .nav-links a {
+    font-family: var(--font-mono); text-decoration: none; font-size: 0.78rem;
+    font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--steel-light); transition: color 150ms var(--ease-out-quart);
+    position: relative; padding-bottom: 2px;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px;
+    background: var(--accent); transition: right 220ms var(--ease-out-expo);
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { right: 0; }
+
+  .nav-cta { display: flex; gap: 0.75rem; align-items: center; }
+  .nav-hamburger { display: none; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.4rem;
+    border-radius: var(--radius); font-family: var(--font-body); font-size: 0.875rem;
+    font-weight: 500; cursor: pointer; text-decoration: none; transition: transform 160ms var(--ease-out-quart), background 160ms var(--ease-out-quart), box-shadow 160ms var(--ease-out-quart), border-color 160ms var(--ease-out-quart);
+    border: 1px solid transparent; white-space: nowrap;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-outline { background: transparent; border-color: var(--line-strong); color: var(--steel-light); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent-hi); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .btn-primary:hover { background: var(--accent-hi); box-shadow: 0 8px 24px oklch(76% 0.19 68 / 30%); }
+  .btn-wa { background: var(--wa-green); color: #fff; font-weight: 600; padding: 0.9rem 1.75rem; font-size: 1rem; }
+  .btn-wa:hover { background: var(--wa-green-dark); box-shadow: 0 10px 28px rgba(37,211,102,0.32); }
+  .btn svg { flex-shrink: 0; }
+
+  /* ══════════════════ MOBILE MENU ══════════════════ */
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 250;
+    background: var(--ink);
+    display: flex; flex-direction: column;
+    padding: calc(var(--nav-h) + 1rem) clamp(1.25rem, 6vw, 3rem) 2rem;
+    transform: translateX(100%);
+    transition: transform 320ms var(--ease-out-expo);
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu-close {
+    position: absolute; top: 1.1rem; right: clamp(1.25rem, 6vw, 3rem);
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+    background: none; border: 1px solid var(--line-strong); color: var(--text); cursor: pointer;
+  }
+  .mobile-menu-links { list-style: none; display: flex; flex-direction: column; margin-top: var(--space-lg); }
+  .mobile-menu-links li { border-bottom: 1px solid var(--line); }
+  .mobile-menu-links a {
+    display: block; padding: 1.15rem 0; text-decoration: none; color: var(--text);
+    font-family: var(--font-display); font-size: 1.6rem; font-weight: 400; letter-spacing: -0.01em; text-transform: uppercase;
+  }
+  .mobile-menu-actions { margin-top: auto; display: flex; flex-direction: column; gap: 0.75rem; padding-top: var(--space-lg); }
+  .mobile-menu-actions .btn { width: 100%; justify-content: center; padding: 1rem; font-size: 1rem; }
+  body.menu-open { overflow: hidden; }
+
+  @media (max-width: 860px) {
+    .nav-links, .nav-cta .btn-outline { display: none; }
+    .nav-hamburger {
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; background: none; border: 1px solid var(--line-strong);
+      color: var(--text); cursor: pointer;
+    }
+  }
+
+  /* ══════════════════ HERO SLIDER ══════════════════ */
+  .hero-slider { position: relative; width: 100%; height: 100vh; min-height: 640px; overflow: hidden; background: var(--ink); }
+
+  .slides-track { display: flex; height: 100%; transition: transform 700ms var(--ease-out-expo); will-change: transform; }
+  .slide { flex: 0 0 100%; width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; align-items: center; }
+
+  .slide-bg {
+    position: absolute; inset: 0; background-size: cover; background-position: center;
+    transition: transform 8s var(--ease-out-quart); transform: scale(1.06); filter: saturate(0.85) contrast(1.05);
+  }
+  .slide.active .slide-bg { transform: scale(1); }
+
+  .slide-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, oklch(12% 0.01 242 / 92%) 0%, oklch(15% 0.014 242 / 68%) 52%, oklch(15% 0.014 242 / 18%) 100%);
+  }
+
+  .slide-content {
+    position: relative; z-index: 2; padding: 0 clamp(1.25rem, 5vw, 3rem); max-width: 760px;
+  }
+  .slide-content > * { clip-path: inset(0 0 0 0); }
+  .slide-content .reveal-el {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 550ms var(--ease-out-quart), transform 550ms var(--ease-out-quart);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  .slide.active .reveal-el { opacity: 1; transform: translateY(0); }
+
+  .slide-tag {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-hi);
+    margin-bottom: 1.4rem; border: 1px solid var(--accent-line); padding: 0.4rem 0.8rem 0.4rem 0.6rem;
+    background: var(--accent-wash);
+  }
+  .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  .slide-content h1 {
+    font-size: var(--text-display); line-height: 0.98; letter-spacing: -0.03em;
+    margin-bottom: 1.1rem; text-wrap: balance;
+  }
+  .slide-content h1 em { font-style: normal; color: var(--accent); }
+
+  .slide-content p {
+    font-size: 1.05rem; color: var(--steel-light); line-height: 1.7; max-width: 52ch;
+    margin-bottom: 2rem; font-weight: 300;
+  }
+
+  .slide-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+
+  .hero-stats-bar { display: flex; gap: 2.25rem; padding-top: 1.6rem; border-top: 1px solid var(--line-strong); flex-wrap: wrap; }
+  .stat-num { font-family: var(--font-display); font-size: 1.7rem; font-weight: 400; color: var(--text); display: block; letter-spacing: -0.01em; text-transform: uppercase; }
+  .stat-label { font-family: var(--font-mono); font-size: 0.68rem; color: var(--steel); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .slider-arrow {
+    position: absolute; top: 50%; z-index: 10; transform: translateY(-50%);
+    width: 46px; height: 46px; background: oklch(15% 0.014 242 / 55%); backdrop-filter: blur(6px);
+    border: 1px solid var(--line-strong); color: var(--text); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 160ms, border-color 160ms, transform 160ms;
+  }
+  .slider-arrow:hover { background: var(--accent-wash); border-color: var(--accent); transform: translateY(-50%) scale(1.06); }
+  .slider-arrow.prev { left: clamp(1rem, 3vw, 2rem); }
+  .slider-arrow.next { right: clamp(1rem, 3vw, 2rem); }
+
+  .slider-dots { position: absolute; bottom: 2.25rem; left: clamp(1.25rem, 5vw, 3rem); z-index: 10; display: flex; gap: 8px; align-items: center; }
+  .dot { width: 26px; height: 3px; background: var(--line-strong); cursor: pointer; transition: background 250ms, width 250ms; padding: 0; border: none; }
+  .dot.active { background: var(--accent); width: 44px; }
+
+  .scroll-cue {
+    position: absolute; right: clamp(1.25rem, 5vw, 3rem); bottom: 2.25rem; z-index: 10;
+    font-family: var(--font-mono); font-size: 0.65rem; color: var(--steel); letter-spacing: 0.1em;
+    writing-mode: vertical-rl; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .scroll-cue span { width: 1px; height: 32px; background: var(--line-strong); display: block; }
+
+  @media (max-width: 768px) {
+    .slider-arrow, .scroll-cue { display: none; }
+    .hero-stats-bar { gap: 1.4rem; }
+  }
+
+  /* ══════════════════ SECTIONS (SHARED) ══════════════════ */
+  section { padding: var(--space-3xl) clamp(1.25rem, 5vw, 3rem); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-lg); margin-bottom: var(--space-2xl); flex-wrap: wrap; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono);
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-hi); margin-bottom: 0.9rem;
+  }
+  .section-title { font-size: var(--text-display-sm); font-weight: 400; letter-spacing: -0.02em; line-height: 1.05; text-wrap: balance; }
+  .section-sub { font-size: 1rem; color: var(--steel-light); line-height: 1.7; max-width: 46ch; font-weight: 300; }
+
+  .reveal { opacity: 0; }
+  .reveal.is-visible { opacity: 1; }
+  .reveal[data-reveal="rise"] { transform: translateY(22px) scale(0.97); transition: opacity 550ms var(--ease-out-quart), transform 550ms var(--ease-out-quart); transition-delay: calc(var(--i, 0) * 60ms); }
+  .reveal[data-reveal="rise"].is-visible { transform: translateY(0) scale(1); }
+
+  /* ── WHY: diferencia carousel ── */
+  .why { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
+  .diff-carousel { margin-top: var(--space-2xl); position: relative; width: 100%; }
+  .diff-track {
+    display: flex; gap: var(--space-md); overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: none; padding-bottom: 0.25rem;
+  }
+  .diff-track::-webkit-scrollbar { display: none; }
+  .diff-card {
+    flex: 0 0 clamp(230px, 27vw, 300px); scroll-snap-align: start; background: var(--ink);
+    border-radius: var(--radius); padding: var(--space-lg);
+    display: flex; flex-direction: column; gap: 0.6rem; transition: background 200ms;
+  }
+  .diff-card:hover { background: var(--surface-2); }
+  .diff-code { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.06em; color: var(--accent-hi); }
+  .diff-card h3 { font-size: 1.15rem; letter-spacing: -0.01em; margin-top: 0.2rem; }
+  .diff-stat { font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600; color: var(--secondary); letter-spacing: 0.02em; }
+  .diff-detail { font-size: 0.88rem; color: var(--steel-light); line-height: 1.6; }
+
+  .diff-controls { display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-lg); }
+  .diff-dots { display: flex; gap: 8px; }
+  .diff-dots .dot { width: 22px; }
+  .diff-arrows { display: flex; gap: 0.6rem; }
+  .diff-arrow {
+    width: 40px; height: 40px; border-radius: var(--radius); border: 1px solid var(--line-strong); background: none;
+    color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer;
+    transition: background 160ms, border-color 160ms, transform 160ms var(--ease-out-quart);
+  }
+  .diff-arrow:hover { border-color: var(--accent); background: var(--accent-wash); }
+  .diff-arrow:active { transform: scale(0.94); }
+  @media (max-width: 640px) { .diff-card { flex-basis: 78vw; } }
+
+  /* ── CONFIGURATOR ── */
+  .configurator-wrap {
+    margin-top: var(--space-2xl); border: 1px solid var(--line-strong); border-radius: var(--radius);
+    background: var(--ink); overflow: hidden;
+  }
+  .configurator-tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--line-strong); background: var(--surface); }
+  .configurator-tab {
+    flex: 1 1 auto; padding: 1rem 1.25rem; background: none; border: none; border-right: 1px solid var(--line);
+    font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--steel-light); cursor: pointer; transition: background 160ms, color 160ms;
+  }
+  .configurator-tab:last-child { border-right: none; }
+  .configurator-tab:hover { color: var(--text); background: var(--accent-wash); }
+  .configurator-tab[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); }
+
+  .configurator-body { display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 760px) { .configurator-body { grid-template-columns: 1fr; } }
+
+  .configurator-stage {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+    padding: var(--space-xl) var(--space-lg); border-right: 1px solid var(--line);
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  @media (max-width: 760px) { .configurator-stage { border-right: none; border-bottom: 1px solid var(--line); } }
+  .rig { width: 190px; height: 190px; color: var(--accent); }
+  .rig .sash { transition: transform 500ms var(--ease-in-out); transform-box: fill-box; transform-origin: var(--hinge, center); }
+  .rig .guide { stroke: var(--line-strong); transition: stroke 300ms; }
+  .configurator-stage[data-open="true"] .rig .guide { stroke: var(--accent-line); }
+  .configurator-stage[data-open="true"] .rig .sash { transform: var(--open-transform, none); }
+
+  .configurator-toggle {
+    display: inline-flex; align-items: center; gap: 0.6rem; background: none; border: 1px solid var(--line-strong);
+    border-radius: var(--radius); padding: 0.6rem 1.1rem; color: var(--text); font-family: var(--font-mono);
+    font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+    transition: transform 160ms var(--ease-out-quart), border-color 160ms, background 160ms;
+  }
+  .configurator-toggle:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-wash); }
+  .configurator-toggle:active:not(:disabled) { transform: scale(0.97); }
+  .configurator-toggle:disabled { opacity: 0.5; cursor: not-allowed; }
+  .configurator-toggle .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--steel); flex-shrink: 0; transition: background 200ms; }
+  .configurator-stage[data-open="true"] .configurator-toggle .dot { background: var(--accent); }
+
+  .configurator-specs { padding: var(--space-lg); display: flex; flex-direction: column; gap: 1.4rem; }
+  .configurator-specs h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 400; letter-spacing: -0.01em; }
+  .configurator-specs > p { font-size: 0.88rem; color: var(--steel-light); line-height: 1.6; }
+  .cfg-spec-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+  .cfg-spec-row .k { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--steel); flex-shrink: 0; }
+  .cfg-spec-row .v { font-size: 0.88rem; color: var(--text); text-align: right; }
+  .cfg-rating { display: flex; gap: 0.3rem; align-items: center; }
+  .cfg-rating .cell { width: 16px; height: 6px; background: var(--line-strong); border-radius: 2px; }
+  .cfg-rating .cell.filled { background: var(--secondary); }
+  .cfg-rating span { font-family: var(--font-mono); font-size: 0.72rem; color: var(--steel-light); margin-left: 0.5rem; }
+  .configurator-cta { margin-top: 0.4rem; width: 100%; justify-content: center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rig .sash { transition: opacity 200ms linear !important; transform: none !important; }
+    .configurator-stage[data-open="true"] .rig .sash { transform: none !important; opacity: 0.55; }
+  }
+
+  /* ── PRODUCTS ── */
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .product-card { background: var(--surface); display: flex; flex-direction: column; transition: background 200ms; border-radius: var(--radius); overflow: hidden; }
+  .product-card:hover { background: var(--surface-2); }
+  .product-img { height: 190px; background: var(--surface-2); overflow: hidden; }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 500ms var(--ease-out-quart); }
+  .product-card:hover .product-img img { transform: scale(1.04); }
+  .product-body { padding: var(--space-md); }
+  .product-tag { display: inline-block; font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-hi); margin-bottom: 0.6rem; }
+  .product-card h3 { font-size: 1.05rem; font-weight: 400; margin-bottom: 0.85rem; letter-spacing: -0.01em; }
+  .product-features { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .product-features li { font-size: 0.82rem; color: var(--steel-light); display: flex; align-items: baseline; gap: 0.6rem; font-weight: 300; font-family: var(--font-mono); }
+  .product-features li::before { content: '›'; color: var(--accent); flex-shrink: 0; }
+  .product-card.span-2 { grid-column: span 2; }
+  @media (max-width: 1024px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .product-card.span-2 { grid-column: span 1; }
+  }
+
+  /* ── PROCESS ── */
+  .process { background: var(--surface); }
+  .process-interactive { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; margin-top: var(--space-2xl); }
+  .process-visual { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line-strong); background: var(--ink); }
+  .process-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 600ms ease; }
+  .process-visual img.active { opacity: 1; }
+  .process-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, oklch(15% 0.014 242 / 55%) 100%); pointer-events: none; }
+
+  .process-steps { list-style: none; position: relative; padding-left: 3rem; }
+  .process-steps::before { content: ''; position: absolute; left: 1.1rem; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--line-strong); }
+  .pstep {
+    all: unset; box-sizing: border-box; display: block; width: 100%; cursor: pointer;
+    padding: 1rem 0; position: relative;
+  }
+  .pstep-num {
+    position: absolute; left: -3rem; top: 1rem; width: 2.2rem; height: 2.2rem; border-radius: 50%;
+    background: var(--ink); border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--steel); z-index: 1;
+    transition: background 200ms, color 200ms, border-color 200ms;
+  }
+  .pstep.active .pstep-num { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .pstep h3 { font-size: 1.1rem; font-weight: 400; letter-spacing: -0.01em; color: var(--steel-light); transition: color 200ms; }
+  .pstep.active h3 { color: var(--text); }
+  .pstep p {
+    font-size: 0.88rem; color: var(--steel); line-height: 1.6; font-weight: 300; max-width: 46ch;
+    max-height: 0; opacity: 0; overflow: hidden; margin-top: 0; transition: max-height 300ms var(--ease-out-quart), opacity 250ms, margin-top 300ms;
+  }
+  .pstep.active p { max-height: 4rem; opacity: 1; margin-top: 0.4rem; }
+  .pstep-progress { height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; margin-top: 0.7rem; max-width: 240px; }
+  .pstep-progress i { display: block; height: 100%; width: 0%; background: var(--accent); }
+  .pstep.active .pstep-progress i.animating { transition: width linear; }
+  @media (max-width: 760px) {
+    .process-interactive { grid-template-columns: 1fr; }
+    .process-visual { aspect-ratio: 16 / 10; }
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 220px 220px; gap: var(--radius); margin-top: var(--space-2xl); }
+  .proj-card { overflow: hidden; position: relative; background: var(--surface); border-radius: var(--radius); }
+  .proj-card.large { grid-row: 1 / 3; }
+  .proj-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out-quart); }
+  .proj-card:hover img, .proj-card:focus-within img { transform: scale(1.05); }
+  .proj-content { position: absolute; inset: 0; background: linear-gradient(to top, oklch(15% 0.014 242 / 88%) 0%, oklch(15% 0.014 242 / 10%) 60%, transparent 100%); display: flex; align-items: flex-end; padding: var(--space-sm); }
+  .proj-content h4 { font-size: 0.9rem; font-weight: 400; font-family: var(--font-display); color: #fff; text-transform: uppercase; }
+  @media (max-width: 768px) {
+    .projects-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .proj-card.large { grid-row: auto; grid-column: 1 / -1; height: 220px; }
+  }
+
+  /* ── QUOTE / CONTACT ── */
+  .quote-section { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .quote-inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .quote-info p { color: var(--steel-light); line-height: 1.7; margin-bottom: var(--space-lg); font-weight: 300; max-width: 46ch; }
+  .contact-items { display: flex; flex-direction: column; gap: var(--space-md); }
+  .contact-item { display: flex; align-items: center; gap: var(--space-sm); }
+  .contact-icon { width: 38px; height: 38px; border-radius: var(--radius); background: var(--accent-wash); border: 1px solid var(--accent-line); display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
+  .contact-icon svg { width: 17px; height: 17px; }
+  .contact-item span, .contact-item a { font-size: 0.9rem; color: var(--steel-light); font-weight: 300; text-decoration: none; }
+  .contact-item a:hover { color: var(--accent-hi); }
+
+  .form-card { background: var(--ink); border-radius: var(--radius); padding: var(--space-lg); }
+  .form-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem; letter-spacing: -0.01em; text-transform: uppercase; }
+  .form-hint { font-size: 0.78rem; color: var(--steel); margin-bottom: var(--space-lg); font-weight: 300; line-height: 1.5; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--steel); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+  input, select, textarea {
+    background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius);
+    padding: 0.75rem 1rem; color: var(--text); font-family: var(--font-body); font-size: 0.9rem;
+    font-weight: 300; transition: border-color 160ms, background 160ms; width: 100%; outline: none;
+    -webkit-appearance: none;
+  }
+  input::placeholder, textarea::placeholder { color: var(--steel); }
+  select option { background: var(--surface); color: var(--text); }
+  input:hover, select:hover, textarea:hover { border-color: var(--line-strong); }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--accent); background: var(--accent-wash); }
+  textarea { resize: vertical; min-height: 100px; }
+  .field-error { font-family: var(--font-mono); font-size: 0.72rem; color: var(--danger); min-height: 1.1em; }
+  input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--danger); }
+
+  .form-success {
+    display: none; border: 1px solid rgba(37,211,102,0.35); background: rgba(37,211,102,0.08);
+    padding: var(--space-lg); text-align: center; font-family: var(--font-mono); font-size: 0.85rem; color: #8fe0af;
+  }
+  .form-success.visible { display: block; }
+  .form-fields.hidden { display: none; }
+
+  @media (max-width: 860px) {
+    .quote-inner { grid-template-columns: 1fr; gap: var(--space-2xl); }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* ── FOOTER ── */
+  footer { background: oklch(11% 0.012 242); padding: var(--space-xl) clamp(1.25rem, 5vw, 3rem) var(--space-lg); border-top: 1px solid var(--line); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md); margin-bottom: var(--space-lg); }
+  .footer-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; text-transform: uppercase; }
+  .footer-logo span { color: var(--accent); }
+  .footer-links { display: flex; gap: var(--space-lg); list-style: none; flex-wrap: wrap; }
+  .footer-links a { color: var(--steel); text-decoration: none; font-size: 0.82rem; font-family: var(--font-mono); transition: color 150ms; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-bottom { border-top: 1px solid var(--line); padding-top: var(--space-md); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+  .footer-bottom p { font-size: 0.75rem; color: var(--steel); font-weight: 300; font-family: var(--font-mono); }
+
+  /* ── WA FLOAT ── */
+  .wa-float {
+    position: fixed; z-index: 200; width: 56px; height: 56px; background: var(--wa-green);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center; text-decoration: none;
+    transition: transform 160ms var(--ease-out-quart), box-shadow 160ms;
+    box-shadow: 0 8px 28px rgba(37,211,102,0.38);
+    bottom: max(2rem, env(safe-area-inset-bottom)); right: max(2rem, env(safe-area-inset-right));
+  }
+  .wa-float:active { transform: scale(0.97); }
+  .wa-float:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(37,211,102,0.48); }
+  .wa-float svg { width: 27px; height: 27px; fill: white; }
+
+  /* ── FILE UPLOAD ── */
+  .upload-zone {
+    border: 1.5px dashed var(--line-strong); border-radius: var(--radius); padding: 1.15rem;
+    display: flex; align-items: center; gap: 1rem; cursor: pointer;
+    transition: border-color 200ms, background 200ms; background: var(--surface); user-select: none;
+  }
+  .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: var(--accent-wash); }
+  .upload-zone.drag-over { border-style: solid; }
+  .upload-icon { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--accent-line); border-radius: var(--radius); background: var(--accent-wash); display: flex; align-items: center; justify-content: center; color: var(--accent); }
+  .upload-text { display: flex; flex-direction: column; gap: 0.3rem; }
+  .upload-main { font-size: 0.85rem; color: var(--text); font-weight: 400; line-height: 1.4; }
+  .upload-main u { color: var(--accent-hi); text-underline-offset: 3px; }
+  .upload-sub { font-size: 0.7rem; color: var(--steel); font-weight: 300; font-family: var(--font-mono); }
+
+  .file-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.6rem; }
+  .file-item { display: flex; align-items: center; gap: 0.75rem; background: var(--accent-wash); border: 1px solid var(--accent-line); border-radius: var(--radius); padding: 0.5rem 0.75rem; }
+  .file-icon { width: 22px; height: 22px; flex-shrink: 0; color: var(--accent); }
+  .file-icon svg { width: 100%; height: 100%; }
+  .file-info { flex: 1; min-width: 0; }
+  .file-name { font-size: 0.8rem; color: var(--text); font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .file-size { font-size: 0.68rem; color: var(--steel); margin-top: 1px; font-family: var(--font-mono); }
+  .file-remove { background: none; border: none; color: var(--steel); cursor: pointer; padding: 0.3rem; display: flex; align-items: center; justify-content: center; transition: color 160ms; flex-shrink: 0; }
+  .file-remove:hover { color: var(--danger); }
+
+  /* ══════════════════ REDUCED MOTION ══════════════════ */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .slide-bg { transition: opacity 300ms linear !important; transform: none !important; }
+    .slides-track { transition: none !important; }
+    .slide-content .reveal-el { transition: opacity 300ms linear !important; transform: none !important; transition-delay: 0ms !important; }
+    .reveal[data-reveal="rise"] {
+      transition: opacity 300ms linear !important; transform: none !important; transition-delay: 0ms !important;
+    }
+    .tag-dot { animation: none !important; opacity: 1; }
+    .btn:active, .slider-arrow:hover, .product-card:hover, .wa-float:hover { transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">BK<span>Glass</span></a>
+  <ul class="nav-links">
+    <li><a href="#ventajas">Ventajas</a></li>
+    <li><a href="#configurador">Configurador</a></li>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="https://wa.me/56994336807" class="btn btn-outline" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      WhatsApp
+    </a>
+    <a href="#contacto" class="btn btn-primary">Cotizar ahora</a>
+  </div>
+  <button class="nav-hamburger" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Cerrar menú">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <ul class="mobile-menu-links">
+    <li><a href="#ventajas" data-menu-link>Ventajas</a></li>
+    <li><a href="#configurador" data-menu-link>Configurador</a></li>
+    <li><a href="#productos" data-menu-link>Productos</a></li>
+    <li><a href="#proceso" data-menu-link>Proceso</a></li>
+    <li><a href="#proyectos" data-menu-link>Proyectos</a></li>
+    <li><a href="#contacto" data-menu-link>Contacto</a></li>
+  </ul>
+  <div class="mobile-menu-actions">
+    <a href="https://wa.me/56994336807" class="btn btn-wa" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Escribir por WhatsApp
+    </a>
+    <a href="#contacto" class="btn btn-primary" data-menu-link>Cotizar ahora</a>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- HERO SLIDER -->
+<div class="hero-slider" id="heroSlider">
+  <div class="slides-track" id="slidesTrack">
+
+    <div class="slide active">
+      <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80'); background-position:center right;"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content" style="padding-top:5rem;">
+        <div class="slide-tag reveal-el" style="--i:0"><span class="tag-dot"></span>Producto destacado</div>
+        <h1 class="reveal-el" style="--i:1">Ventana Corredera<br><em>PVC Termopanel</em></h1>
+        <p class="reveal-el" style="--i:2">Deslizamiento suave, hermeticidad superior y aislación térmica de clase europea. Disponible en 1, 2 y 3 hojas a la medida de tu espacio.</p>
+        <div class="slide-actions reveal-el" style="--i:3">
+          <a href="#contacto" class="btn btn-primary" style="padding:0.75rem 1.8rem; font-size:0.95rem;">Cotizar ahora</a>
+          <a href="#productos" class="btn btn-outline">Ver todos los productos</a>
+        </div>
+        <div class="hero-stats-bar reveal-el" style="--i:4">
+          <div><span class="stat-num">+500</span><span class="stat-label">Proyectos realizados</span></div>
+          <div><span class="stat-num">10+</span><span class="stat-label">Años de experiencia</span></div>
+          <div><span class="stat-num">RM</span><span class="stat-label">Cobertura completa</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1600&q=80');"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content" style="padding-top:5rem;">
+        <div class="slide-tag reveal-el" style="--i:0"><span class="tag-dot"></span>Alta hermeticidad</div>
+        <h1 class="reveal-el" style="--i:1">Ventana Abatir<br><em>Cierre Multipunto</em></h1>
+        <p class="reveal-el" style="--i:2">Apertura frontal interior o exterior con máxima hermeticidad. Esquinas termofusionadas y refuerzo de acero galvanizado para una vida útil superior.</p>
+        <div class="slide-actions reveal-el" style="--i:3">
+          <a href="#contacto" class="btn btn-primary" style="padding:0.75rem 1.8rem; font-size:0.95rem;">Solicitar visita técnica</a>
+          <a href="https://wa.me/56994336807?text=Hola%2C%20consulta%20por%20ventana%20abatir" class="btn btn-wa" style="padding:0.75rem 1.6rem; font-size:0.95rem;" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80');"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content" style="padding-top:5rem;">
+        <div class="slide-tag reveal-el" style="--i:0"><span class="tag-dot"></span>Cierre de terrazas</div>
+        <h1 class="reveal-el" style="--i:1">Terraza cerrada<br><em>todo el año</em></h1>
+        <p class="reveal-el" style="--i:2">Cierres de cristal y PVC a medida para terrazas y balcones. Protege tus ambientes del frío, viento y lluvia sin perder la luz natural ni la vista.</p>
+        <div class="slide-actions reveal-el" style="--i:3">
+          <a href="#contacto" class="btn btn-primary" style="padding:0.75rem 1.8rem; font-size:0.95rem;">Cotizar mi terraza</a>
+          <a href="#proyectos" class="btn btn-outline">Ver proyectos</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1600&q=80');"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content" style="padding-top:5rem;">
+        <div class="slide-tag reveal-el" style="--i:0"><span class="tag-dot"></span>Proyecto Casa Familiar</div>
+        <h1 class="reveal-el" style="--i:1">Renovación<br><em>integral</em> de ventanas</h1>
+        <p class="reveal-el" style="--i:2">Reemplazamos ventanas de aluminio, fierro y madera por ventanas de PVC termopanel. Instalación en un día, sin obras mayores ni modificaciones estructurales.</p>
+        <div class="slide-actions reveal-el" style="--i:3">
+          <a href="#contacto" class="btn btn-primary" style="padding:0.75rem 1.8rem; font-size:0.95rem;">Quiero renovar mis ventanas</a>
+          <a href="#proyectos" class="btn btn-outline">Galería de obras</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80');"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content" style="padding-top:5rem;">
+        <div class="slide-tag reveal-el" style="--i:0"><span class="tag-dot"></span>Proyecto Edificio / Empresa</div>
+        <h1 class="reveal-el" style="--i:1">Proyectos<br><em>de gran escala</em></h1>
+        <p class="reveal-el" style="--i:2">Trabajamos con constructoras, inmobiliarias y empresas en proyectos de mediana y gran escala. Cotización a medida, tiempos de entrega coordinados.</p>
+        <div class="slide-actions reveal-el" style="--i:3">
+          <a href="#contacto" class="btn btn-primary" style="padding:0.75rem 1.8rem; font-size:0.95rem;">Cotizar proyecto</a>
+          <a href="https://wa.me/56994336807?text=Hola%2C%20tengo%20un%20proyecto%20de%20edificio" class="btn btn-wa" style="padding:0.75rem 1.6rem; font-size:0.95rem;" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="slider-arrow prev" id="sliderPrev" aria-label="Diapositiva anterior">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="slider-arrow next" id="sliderNext" aria-label="Siguiente diapositiva">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+
+  <div class="scroll-cue" aria-hidden="true"><span></span>SCROLL</div>
+
+  <div class="slider-dots" id="sliderDots" role="tablist" aria-label="Seleccionar diapositiva"></div>
+</div>
+
+<!-- WHY: SPEC SHEET -->
+<section class="why" id="ventajas">
+  <div class="section-head">
+    <div>
+      <span class="section-label">Por qué elegirnos</span>
+      <h2 class="section-title">La diferencia BKGlass</h2>
+    </div>
+    <p class="section-sub">Tecnología europea, fabricación local y atención personalizada para cada proyecto.</p>
+  </div>
+
+  <div class="diff-carousel reveal" data-reveal="rise">
+    <div class="diff-track" id="diffTrack">
+      <article class="diff-card">
+        <span class="diff-code">01</span>
+        <h3>Aislamiento térmico</h3>
+        <p class="diff-stat">−30% calefacción</p>
+        <p class="diff-detail">Termopanel de doble vidrio que mantiene la temperatura interior estable todo el año.</p>
+      </article>
+      <article class="diff-card">
+        <span class="diff-code">02</span>
+        <h3>Aislamiento acústico</h3>
+        <p class="diff-stat">−40 dB exterior</p>
+        <p class="diff-detail">Ideal para zonas urbanas y sectores con alto tráfico o ruido constante.</p>
+      </article>
+      <article class="diff-card">
+        <span class="diff-code">03</span>
+        <h3>Variedad de colores</h3>
+        <p class="diff-stat">4 acabados</p>
+        <p class="diff-detail">Blanco, grafito, negro e imitación madera. Se adapta a cualquier estilo arquitectónico.</p>
+      </article>
+      <article class="diff-card">
+        <span class="diff-code">04</span>
+        <h3>Alta seguridad</h3>
+        <p class="diff-stat">Cierre multipunto</p>
+        <p class="diff-detail">Manillas de alta resistencia y refuerzo de acero galvanizado en marcos y hojas.</p>
+      </article>
+      <article class="diff-card">
+        <span class="diff-code">05</span>
+        <h3>Eco amigable</h3>
+        <p class="diff-stat">100% reciclable</p>
+        <p class="diff-detail">Mínimo mantenimiento requerido. Una inversión sostenible para tu hogar.</p>
+      </article>
+      <article class="diff-card">
+        <span class="diff-code">06</span>
+        <h3>Fabricación a medida</h3>
+        <p class="diff-stat">Medida exacta</p>
+        <p class="diff-detail">Cada ventana se fabrica según las medidas exactas de tu proyecto, sin adaptaciones.</p>
+      </article>
+    </div>
+    <div class="diff-controls">
+      <div class="diff-dots" id="diffDots"></div>
+      <div class="diff-arrows">
+        <button type="button" class="diff-arrow" id="diffPrev" aria-label="Anterior">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button type="button" class="diff-arrow" id="diffNext" aria-label="Siguiente">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIGURATOR -->
+<section id="configurador">
+  <div class="section-head">
+    <div>
+      <span class="section-label">Elige tu ventana</span>
+      <h2 class="section-title">Compara los 4 sistemas</h2>
+    </div>
+    <p class="section-sub" style="font-size:0.9rem;">Selecciona un tipo y revisa cómo abre y qué rendimiento entrega antes de cotizar.</p>
+  </div>
+
+  <div class="configurator-wrap reveal" data-reveal="rise">
+    <div class="configurator-tabs" id="cfgTabs" role="tablist" aria-label="Tipo de ventana"></div>
+    <div class="configurator-body">
+      <div class="configurator-stage" id="cfgStage" data-open="false">
+        <div class="rig" id="cfgRig" aria-hidden="true"></div>
+        <button type="button" class="configurator-toggle" id="cfgToggle">
+          <span class="dot"></span><span id="cfgToggleLabel">Ver cómo abre</span>
+        </button>
+      </div>
+      <div class="configurator-specs" id="cfgSpecs"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="productos">
+  <div class="section-head">
+    <div>
+      <span class="section-label">Catálogo</span>
+      <h2 class="section-title">Nuestros productos</h2>
+    </div>
+    <p class="section-sub" style="font-size:0.9rem;">PVC + termopanel para máximo rendimiento térmico y acústico.</p>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card reveal" data-reveal="rise" style="--i:0">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=600&q=70" alt="Living con puertas correderas de vidrio hacia la piscina" loading="lazy" width="600" height="400">
+      </div>
+      <div class="product-body">
+        <span class="product-tag">[ Más popular ]</span>
+        <h3>Ventana Corredera</h3>
+        <ul class="product-features">
+          <li>1 a 3 hojas móviles deslizantes</li>
+          <li>Perfiles con tecnología europea</li>
+          <li>Cierre multipunto con manilla</li>
+          <li>Refuerzo metálico galvanizado</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-reveal="rise" style="--i:1">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1495524455245-b0f961d738a9?auto=format&fit=crop&w=600&q=70" alt="Ventana abatible abierta hacia un patio con vegetación" loading="lazy" width="600" height="400">
+      </div>
+      <div class="product-body">
+        <span class="product-tag">[ Alta hermeticidad ]</span>
+        <h3>Ventana Abatir</h3>
+        <ul class="product-features">
+          <li>Apertura frontal interior o exterior</li>
+          <li>1 o 2 hojas abatibles</li>
+          <li>Esquinas termofusionadas</li>
+          <li>Máxima hermeticidad</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-reveal="rise" style="--i:2">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1509644851169-2acc08aa25b5?auto=format&fit=crop&w=600&q=70" alt="Rincón con ventana y vista al jardín, luz natural entrando" loading="lazy" width="600" height="400">
+      </div>
+      <div class="product-body">
+        <span class="product-tag">[ Ventilación óptima ]</span>
+        <h3>Ventana Proyectante</h3>
+        <ul class="product-features">
+          <li>Apertura exterior inferior</li>
+          <li>Brazo regulable de retención</li>
+          <li>Alta hermeticidad</li>
+          <li>Aislación térmica y acústica</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-reveal="rise" style="--i:3">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1745761264415-6acbdb47a0c7?auto=format&fit=crop&w=600&q=70" alt="Fachada moderna con paño de vidrio fijo de piso a techo" loading="lazy" width="600" height="400">
+      </div>
+      <div class="product-body">
+        <span class="product-tag">[ Sin apertura ]</span>
+        <h3>Ventana Fija</h3>
+        <ul class="product-features">
+          <li>Sin apertura, máxima hermeticidad</li>
+          <li>Ideal para grandes superficies</li>
+          <li>Refuerzo galvanizado en marco</li>
+          <li>Aislación térmica superior</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="product-card span-2 reveal" data-reveal="rise" style="--i:4">
+      <div class="product-img" style="height: 220px;">
+        <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1200&q=70" alt="Terraza cerrada con paredes de vidrio y techo de madera" loading="lazy" width="1200" height="440">
+      </div>
+      <div class="product-body">
+        <span class="product-tag">[ Cierre de terrazas ]</span>
+        <h3>Corredera 3 Hojas — Cierre de Terraza</h3>
+        <ul class="product-features" style="display:grid; grid-template-columns:1fr 1fr; gap: 0.4rem 1.5rem;">
+          <li>3 hojas móviles deslizantes</li>
+          <li>Tecnología europea de perfiles</li>
+          <li>Aislación térmica y acústica</li>
+          <li>Cierre multipunto seguro</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="proceso">
+  <span class="section-label">Proceso simple</span>
+  <h2 class="section-title">Tu proyecto en 4 pasos</h2>
+  <p class="section-sub">Desde la primera consulta hasta la instalación, te acompañamos en cada etapa.</p>
+
+  <div class="process-interactive reveal" data-reveal="rise">
+    <div class="process-visual" id="processVisual">
+      <img class="active" data-index="0" src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=900&q=70" alt="Ingeniero revisando especificaciones técnicas del proyecto">
+      <img data-index="1" src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=70" alt="Planos técnicos y herramientas sobre la mesa de trabajo">
+      <img data-index="2" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=70" alt="Fabricación a medida en taller">
+      <img data-index="3" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=900&q=70" alt="Instalador profesional trabajando con precisión">
+    </div>
+    <ul class="process-steps" id="processSteps">
+      <li class="pstep active" data-index="0" tabindex="0" role="button" aria-pressed="true">
+        <span class="pstep-num">01</span>
+        <h3>Solicita tu cotización</h3>
+        <p>Completa el formulario o escríbenos por WhatsApp con las medidas y tipo de ventana que necesitas.</p>
+        <span class="pstep-progress"><i></i></span>
+      </li>
+      <li class="pstep" data-index="1" tabindex="0" role="button" aria-pressed="false">
+        <span class="pstep-num">02</span>
+        <h3>Visita técnica</h3>
+        <p>Nuestro equipo agenda una visita a domicilio para tomar medidas exactas y asesorarte en las mejores opciones.</p>
+        <span class="pstep-progress"><i></i></span>
+      </li>
+      <li class="pstep" data-index="2" tabindex="0" role="button" aria-pressed="false">
+        <span class="pstep-num">03</span>
+        <h3>Fabricación a medida</h3>
+        <p>Fabricamos tus ventanas con los más altos estándares, usando perfiles con tecnología europea.</p>
+        <span class="pstep-progress"><i></i></span>
+      </li>
+      <li class="pstep" data-index="3" tabindex="0" role="button" aria-pressed="false">
+        <span class="pstep-num">04</span>
+        <h3>Instalación profesional</h3>
+        <p>Nuestro equipo instala con precisión, garantizando el sellado perfecto y el correcto funcionamiento.</p>
+        <span class="pstep-progress"><i></i></span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="proyectos">
+  <span class="section-label">Galería</span>
+  <h2 class="section-title">Proyectos realizados</h2>
+  <p class="section-sub">Más de 500 proyectos completados en la Región Metropolitana.</p>
+  <div class="projects-grid">
+    <div class="proj-card large reveal" data-reveal="rise" style="--i:0" tabindex="0">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=70" alt="Casa moderna con ventanales de piso a techo y piscina, Las Condes" loading="lazy">
+      <div class="proj-content"><h4>Casa Familiar — Las Condes</h4></div>
+    </div>
+    <div class="proj-card reveal" data-reveal="rise" style="--i:1" tabindex="0">
+      <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=700&q=70" alt="Living de apartamento con ventana hacia edificios vecinos, Providencia" loading="lazy">
+      <div class="proj-content"><h4>Apartamento — Providencia</h4></div>
+    </div>
+    <div class="proj-card reveal" data-reveal="rise" style="--i:2" tabindex="0">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&q=70" alt="Oficina moderna con divisiones de vidrio, Santiago Centro" loading="lazy">
+      <div class="proj-content"><h4>Oficinas — Santiago Centro</h4></div>
+    </div>
+    <div class="proj-card reveal" data-reveal="rise" style="--i:3" tabindex="0">
+      <img src="https://images.unsplash.com/photo-1761535315385-219131cb53e6?auto=format&fit=crop&w=700&q=70" alt="Fachada de edificio residencial con balcones y ventanales, Ñuñoa" loading="lazy">
+      <div class="proj-content"><h4>Edificio — Ñuñoa</h4></div>
+    </div>
+    <div class="proj-card reveal" data-reveal="rise" style="--i:4" tabindex="0">
+      <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=700&q=70" alt="Terraza cerrada con ventanales de vidrio, Vitacura" loading="lazy">
+      <div class="proj-content"><h4>Terraza — Vitacura</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / QUOTE -->
+<section class="quote-section" id="contacto">
+  <div class="quote-inner">
+    <div class="quote-info">
+      <span class="section-label">Contacto</span>
+      <h2 class="section-title">¿Listo para renovar tus ventanas?</h2>
+      <p>Completa el formulario y te contactamos en menos de 24 horas con una cotización personalizada. Sin costo, sin compromiso.</p>
+      <div class="contact-items">
+        <div class="contact-item"><div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5.5-8 12-8 12s-8-6.5-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.8"/></svg></div><span>Av. Don Luis 643, Bodega 5, Lampa</span></div>
+        <div class="contact-item"><div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></div><span><a href="tel:+56994336807">(+569) 94336807</a></span></div>
+        <div class="contact-item"><div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div><span><a href="mailto:ventanaspvc@bkglass.cl">ventanaspvc@bkglass.cl</a></span></div>
+        <div class="contact-item"><div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div><span>Lunes a Viernes, 9:00 – 18:00 hrs</span></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <p class="form-title">Solicitar cotización gratuita</p>
+      <p class="form-hint">Detalla ubicación + medidas en los comentarios: "Living: ancho 200cm, alto 150cm, modelo corredera"</p>
+
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite"></div>
+
+      <form id="quoteForm" class="form-fields" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" aria-describedby="err-nombre" required>
+            <span class="field-error" id="err-nombre"></span>
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="+56 9 ···· ····" aria-describedby="err-telefono" required>
+            <span class="field-error" id="err-telefono"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="tu@correo.cl" aria-describedby="err-email" required>
+          <span class="field-error" id="err-email"></span>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="direccion">Dirección</label><input type="text" id="direccion" placeholder="Av. Ejemplo 123"></div>
+          <div class="form-group"><label for="comuna">Comuna</label><input type="text" id="comuna" placeholder="Las Condes"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="tipoVivienda">Tipo de vivienda</label><select id="tipoVivienda"><option value="">Seleccionar</option><option>Casa</option><option>Apartamento</option><option>Oficina / Empresa</option><option>Colegio</option></select></div>
+          <div class="form-group"><label for="colorMarco">Color de marcos</label><select id="colorMarco"><option value="">Seleccionar</option><option>Blanco</option><option>Imitación de Madera</option><option>Grafito</option><option>Negro</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="tipoVentana">Tipo de ventana</label><select id="tipoVentana"><option value="">Seleccionar</option><option>Corredera</option><option>Abatir</option><option>Proyectante</option><option>Fija</option><option>No estoy seguro</option></select></div>
+          <div class="form-group"><label for="construccion">¿Construcción nueva?</label><select id="construccion"><option value="">Seleccionar</option><option>Sí</option><option>No — Reemplazo</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="ventanasActuales">Ventanas actuales</label><select id="ventanasActuales"><option value="">Seleccionar</option><option>Ninguna</option><option>Aluminio</option><option>PVC</option><option>Fierro</option><option>Madera</option></select></div>
+        </div>
+        <div class="form-group"><label for="descripcion">Descripción del proyecto</label><textarea id="descripcion" placeholder="Ej: Living: ancho 200cm, alto 150cm, modelo corredera. Dormitorio 1: ancho 100cm, alto 120cm, modelo abatir..."></textarea></div>
+
+        <div class="form-group">
+          <label id="uploadLabel">Adjuntar documentos o imágenes <span style="color:var(--steel);font-weight:300;text-transform:none;letter-spacing:0;font-size:0.72rem;">(opcional)</span></label>
+          <div class="upload-zone" id="uploadZone" role="button" tabindex="0" aria-labelledby="uploadLabel">
+            <input type="file" id="fileInput" multiple accept=".pdf,.dwg,.dxf,.jpg,.jpeg,.png,.heic,.webp" style="display:none;">
+            <div class="upload-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <div class="upload-text">
+              <span class="upload-main">Arrastra archivos aquí o <u>haz clic para seleccionar</u></span>
+              <span class="upload-sub">PLANOS · FOTOS · PDF, DWG, JPG, PNG · MÁX. 10 MB</span>
+            </div>
+          </div>
+          <div class="file-list" id="fileList"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:0.9rem; font-size:1rem; justify-content:center;">Enviar solicitud de cotización →</button>
+        <p style="font-size:0.75rem; color:var(--steel); text-align:center; margin-top:1rem; font-weight:300;">También puedes adjuntar planos al correo <a href="mailto:ventanaspvc@bkglass.cl" style="color:var(--accent-hi);">ventanaspvc@bkglass.cl</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">BK<span>Glass</span></div>
+    <ul class="footer-links">
+      <li><a href="#ventajas">Ventajas</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="https://wa.me/56994336807" class="btn btn-outline" target="_blank" rel="noopener" style="font-size:0.85rem;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      (+569) 94336807
+    </a>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 BKGlass SPA · Ventanas PVC · Región Metropolitana</p>
+    <p>Av. Don Luis 643, Bodega 5, Lampa</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/56994336807?text=Hola%2C%20quiero%20cotizar%20ventanas%20PVC" class="wa-float" target="_blank" rel="noopener" title="WhatsApp" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+</main>
+
+<script>
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── NAVBAR SCROLL ── */
+  var navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', function () {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── MOBILE MENU ── */
+  (function () {
+    var hamburger = document.getElementById('hamburgerBtn');
+    var menu = document.getElementById('mobileMenu');
+    var closeBtn = document.getElementById('mobileMenuClose');
+    var body = document.body;
+    var lastFocused = null;
+
+    function openMenu() {
+      lastFocused = document.activeElement;
+      menu.classList.add('open');
+      menu.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      body.classList.add('menu-open');
+      closeBtn.focus();
+      document.addEventListener('keydown', onKeydown);
+    }
+    function closeMenu() {
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      body.classList.remove('menu-open');
+      document.removeEventListener('keydown', onKeydown);
+      if (lastFocused) lastFocused.focus();
+    }
+    function onKeydown(e) {
+      if (e.key === 'Escape') closeMenu();
+    }
+
+    hamburger.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    menu.querySelectorAll('[data-menu-link]').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+  })();
+
+  /* ── HERO SLIDER ── */
+  (function () {
+    var AUTOPLAY_MS = 5500;
+    var track = document.getElementById('slidesTrack');
+    var slides = Array.from(track.querySelectorAll('.slide'));
+    var dotsEl = document.getElementById('sliderDots');
+    var total = slides.length;
+    var current = 0;
+    var timer = null;
+
+    slides.forEach(function (_, i) {
+      var d = document.createElement('button');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-label', 'Ir a diapositiva ' + (i + 1));
+      d.addEventListener('click', function () { goTo(i); });
+      dotsEl.appendChild(d);
+    });
+    var dots = Array.from(dotsEl.querySelectorAll('.dot'));
+
+    function setActive(idx) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+
+      current = (idx + total) % total;
+
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    }
+
+    function goTo(idx) {
+      clearTimeout(timer);
+      setActive(idx);
+      scheduleNext();
+    }
+
+    function scheduleNext() {
+      timer = setTimeout(function () {
+        setActive(current + 1);
+        scheduleNext();
+      }, AUTOPLAY_MS);
+    }
+
+    document.getElementById('sliderPrev').addEventListener('click', function () { goTo(current - 1); });
+    document.getElementById('sliderNext').addEventListener('click', function () { goTo(current + 1); });
+
+    var touchX = null;
+    track.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', function (e) {
+      if (touchX === null) return;
+      var diff = touchX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+      touchX = null;
+    });
+
+    var slider = document.getElementById('heroSlider');
+    slider.addEventListener('mouseenter', function () { clearTimeout(timer); });
+    slider.addEventListener('mouseleave', function () { scheduleNext(); });
+    slider.addEventListener('focusin', function () { clearTimeout(timer); });
+    slider.addEventListener('focusout', function () { scheduleNext(); });
+
+    scheduleNext();
+  })();
+
+  /* ── SCROLL REVEAL (per-section variants, see CSS [data-reveal]) ── */
+  // showReveal sets the class (for the animated case) AND forces the end-state inline,
+  // so content is never stuck hidden if the transition itself never runs (backgrounded
+  // tab, throttled rAF, prefers-reduced-motion edge cases, etc.) — the class toggle alone
+  // isn't a reliable enough guarantee that the element ends up visible.
+  function showReveal(el) {
+    el.classList.add('is-visible');
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+    if (el.getAttribute('data-reveal') === 'wipe') el.style.clipPath = 'none';
+  }
+  var revealObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        showReveal(e.target);
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  var revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach(function (el) { revealObs.observe(el); });
+  // Safety net: if the observer never fires for an element (e.g. odd layout timing,
+  // zero-height ancestor at load), force it visible so content is never permanently hidden.
+  setTimeout(function () {
+    revealEls.forEach(function (el) { showReveal(el); });
+  }, 1200);
+
+  /* ── DIFERENCIA CAROUSEL ── */
+  (function () {
+    var track = document.getElementById('diffTrack');
+    var cards = Array.from(track.children);
+    var dotsEl = document.getElementById('diffDots');
+    var prevBtn = document.getElementById('diffPrev');
+    var nextBtn = document.getElementById('diffNext');
+    var current = 0;
+
+    cards.forEach(function (_, i) {
+      var d = document.createElement('button');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Ir a la tarjeta ' + (i + 1));
+      d.addEventListener('click', function () { scrollToCard(i); });
+      dotsEl.appendChild(d);
+    });
+    var dots = Array.from(dotsEl.querySelectorAll('.dot'));
+
+    function scrollToCard(i) {
+      current = Math.max(0, Math.min(cards.length - 1, i));
+      cards[current].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
+    }
+
+    function setActiveDot(i) {
+      dots.forEach(function (d, idx) { d.classList.toggle('active', idx === i); });
+    }
+
+    prevBtn.addEventListener('click', function () { scrollToCard(current - 1); });
+    nextBtn.addEventListener('click', function () { scrollToCard(current + 1); });
+
+    var scrollTimer = null;
+    track.addEventListener('scroll', function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        var trackLeft = track.getBoundingClientRect().left;
+        var closest = 0, closestDist = Infinity;
+        cards.forEach(function (c, i) {
+          var dist = Math.abs(c.getBoundingClientRect().left - trackLeft);
+          if (dist < closestDist) { closestDist = dist; closest = i; }
+        });
+        current = closest;
+        setActiveDot(current);
+      }, 120);
+    }, { passive: true });
+  })();
+
+  /* ── PROCESO INTERACTIVO ── */
+  (function () {
+    var DURATION = 4500;
+    var steps = Array.from(document.querySelectorAll('#processSteps .pstep'));
+    var images = Array.from(document.querySelectorAll('#processVisual img'));
+    var current = 0;
+    var timer = null;
+
+    function activate(i) {
+      steps[current].classList.remove('active');
+      steps[current].setAttribute('aria-pressed', 'false');
+      images[current].classList.remove('active');
+      resetBar(current);
+
+      current = (i + steps.length) % steps.length;
+
+      steps[current].classList.add('active');
+      steps[current].setAttribute('aria-pressed', 'true');
+      images[current].classList.add('active');
+      runBar(current);
+    }
+
+    function runBar(i) {
+      var bar = steps[i].querySelector('.pstep-progress i');
+      bar.classList.remove('animating');
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+      if (reduceMotion) { bar.style.width = '100%'; return; }
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          bar.classList.add('animating');
+          bar.style.transition = 'width ' + DURATION + 'ms linear';
+          bar.style.width = '100%';
+        });
+      });
+    }
+    function resetBar(i) {
+      var bar = steps[i].querySelector('.pstep-progress i');
+      bar.classList.remove('animating');
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+    }
+
+    function goTo(i) {
+      clearTimeout(timer);
+      activate(i);
+      schedule();
+    }
+    function schedule() {
+      timer = setTimeout(function () { activate(current + 1); schedule(); }, DURATION);
+    }
+
+    steps.forEach(function (step, i) {
+      step.addEventListener('click', function () { goTo(i); });
+      step.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(i); }
+      });
+    });
+
+    var wrap = document.getElementById('processSteps');
+    wrap.addEventListener('mouseenter', function () { clearTimeout(timer); });
+    wrap.addEventListener('mouseleave', function () { schedule(); });
+    wrap.addEventListener('focusin', function () { clearTimeout(timer); });
+    wrap.addEventListener('focusout', function () { schedule(); });
+
+    runBar(0);
+    schedule();
+  })();
+
+  /* ── CONFIGURATOR ── */
+  (function () {
+    var TYPES = [
+      {
+        id: 'corredera', label: 'Corredera', tag: 'Más popular',
+        hojas: '1 a 3 hojas móviles deslizantes', apertura: 'Deslizamiento horizontal, riel doble o triple',
+        termico: 3, acustico: 3, openTransform: 'translateX(-52px)', hinge: 'center',
+        svg: '<svg viewBox="0 0 140 140" fill="none" stroke="currentColor" aria-hidden="true">' +
+          '<rect class="frame" x="10" y="10" width="120" height="120" rx="1" stroke-width="6" opacity="0.55"/>' +
+          '<rect class="guide" x="10" y="10" width="59" height="120" rx="1" stroke-width="2" stroke-dasharray="4,3" opacity="0.6"/>' +
+          '<g class="sash"><rect x="71" y="10" width="59" height="120" rx="1" stroke-width="3" fill="currentColor" fill-opacity="0.06"/>' +
+          '<circle cx="100" cy="70" r="5" stroke-width="2"/></g></svg>'
+      },
+      {
+        id: 'abatir', label: 'Abatir', tag: 'Alta hermeticidad',
+        hojas: '1 o 2 hojas abatibles', apertura: 'Giro frontal interior o exterior',
+        termico: 4, acustico: 4, openTransform: 'rotate(-11deg)', hinge: 'left center',
+        svg: '<svg viewBox="0 0 140 140" fill="none" stroke="currentColor" aria-hidden="true">' +
+          '<rect class="frame" x="10" y="10" width="120" height="120" rx="1" stroke-width="6" opacity="0.55"/>' +
+          '<path class="guide" d="M120 24 L24 24 L24 100" stroke-width="1.5" stroke-dasharray="4,3"/>' +
+          '<g class="sash"><rect x="16" y="16" width="108" height="108" rx="1" stroke-width="3" fill="currentColor" fill-opacity="0.06"/>' +
+          '<circle cx="110" cy="70" r="6" stroke-width="2"/></g></svg>'
+      },
+      {
+        id: 'proyectante', label: 'Proyectante', tag: 'Ventilación óptima',
+        hojas: '1 hoja móvil', apertura: 'Bascula hacia el exterior desde abajo',
+        termico: 3, acustico: 3, openTransform: 'rotate(9deg)', hinge: 'top center',
+        svg: '<svg viewBox="0 0 140 140" fill="none" stroke="currentColor" aria-hidden="true">' +
+          '<rect class="frame" x="10" y="10" width="120" height="120" rx="1" stroke-width="6" opacity="0.55"/>' +
+          '<path class="guide" d="M16 95 L70 65 L124 95" stroke-width="1.5" stroke-dasharray="4,3"/>' +
+          '<g class="sash"><rect x="16" y="16" width="108" height="79" rx="1" stroke-width="3" fill="currentColor" fill-opacity="0.06"/>' +
+          '<circle cx="70" cy="95" r="5" stroke-width="2"/></g></svg>'
+      },
+      {
+        id: 'fija', label: 'Fija', tag: 'Sin apertura',
+        hojas: 'Sin hojas móviles', apertura: 'Sellada — no abre',
+        termico: 4, acustico: 4, openTransform: 'none', hinge: 'center', fixed: true,
+        svg: '<svg viewBox="0 0 140 140" fill="none" stroke="currentColor" aria-hidden="true">' +
+          '<rect class="frame" x="10" y="10" width="120" height="120" rx="1" stroke-width="6" opacity="0.55"/>' +
+          '<g class="sash"><rect x="16" y="16" width="108" height="108" rx="1" stroke-width="3" fill="currentColor" fill-opacity="0.08"/>' +
+          '<line x1="70" y1="16" x2="70" y2="124" stroke-width="1.5" opacity="0.3"/><line x1="16" y1="70" x2="124" y2="70" stroke-width="1.5" opacity="0.3"/></g></svg>'
+      }
+    ];
+
+    var tabsEl = document.getElementById('cfgTabs');
+    var stage = document.getElementById('cfgStage');
+    var rig = document.getElementById('cfgRig');
+    var toggle = document.getElementById('cfgToggle');
+    var toggleLabel = document.getElementById('cfgToggleLabel');
+    var specs = document.getElementById('cfgSpecs');
+    var current = TYPES[0];
+
+    function ratingRow(label, value) {
+      var cells = '';
+      for (var i = 0; i < 4; i++) cells += '<div class="cell' + (i < value ? ' filled' : '') + '"></div>';
+      var words = ['Básico', 'Moderado', 'Alto', 'Muy alto'];
+      return '<div class="cfg-spec-row"><span class="k">' + label + '</span>' +
+        '<div class="cfg-rating">' + cells + '<span>' + words[value - 1] + '</span></div></div>';
+    }
+
+    function render(type, tabBtn) {
+      current = type;
+      Array.prototype.forEach.call(tabsEl.children, function (b) {
+        b.setAttribute('aria-selected', b === tabBtn ? 'true' : 'false');
+      });
+
+      stage.setAttribute('data-open', 'false');
+      rig.innerHTML = type.svg;
+      rig.style.setProperty('--open-transform', type.openTransform);
+      rig.querySelector('.sash').style.setProperty('--hinge', type.hinge);
+
+      if (type.fixed) {
+        toggle.disabled = true;
+        toggleLabel.textContent = 'Sin apertura';
+      } else {
+        toggle.disabled = false;
+        toggleLabel.textContent = 'Ver cómo abre';
+      }
+
+      specs.innerHTML =
+        '<h3>Ventana ' + type.label + '</h3>' +
+        '<p>' + type.apertura + '.</p>' +
+        '<div class="cfg-spec-row"><span class="k">Hojas móviles</span><span class="v">' + type.hojas + '</span></div>' +
+        '<div class="cfg-spec-row"><span class="k">Tipo de apertura</span><span class="v">' + type.apertura + '</span></div>' +
+        ratingRow('Aislamiento térmico', type.termico) +
+        ratingRow('Aislamiento acústico', type.acustico) +
+        '<button type="button" class="btn btn-primary configurator-cta" id="cfgCta">Cotizar ' + type.label.toLowerCase() + ' →</button>';
+
+      document.getElementById('cfgCta').addEventListener('click', function () {
+        var sel = document.getElementById('tipoVentana');
+        if (sel) sel.value = type.label;
+        var target = document.getElementById('contacto');
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+        var nombre = document.getElementById('nombre');
+        setTimeout(function () { nombre.focus(); }, reduceMotion ? 0 : 500);
+      });
+    }
+
+    TYPES.forEach(function (type, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'configurator-tab';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      b.textContent = type.label;
+      b.addEventListener('click', function () { render(type, b); });
+      tabsEl.appendChild(b);
+    });
+
+    toggle.addEventListener('click', function () {
+      var open = stage.getAttribute('data-open') === 'true';
+      stage.setAttribute('data-open', open ? 'false' : 'true');
+      toggleLabel.textContent = open ? 'Ver cómo abre' : 'Ver cerrada';
+    });
+
+    render(TYPES[0], tabsEl.children[0]);
+  })();
+
+  /* ── FORM ── */
+  (function () {
+    var form = document.getElementById('quoteForm');
+    var success = document.getElementById('formSuccess');
+    var fields = [
+      { id: 'nombre', errId: 'err-nombre', msg: 'Ingresa tu nombre completo.' },
+      { id: 'telefono', errId: 'err-telefono', msg: 'Ingresa un teléfono de contacto.' },
+      { id: 'email', errId: 'err-email', msg: 'Ingresa un correo válido.', type: 'email' }
+    ];
+
+    function validate() {
+      var firstInvalid = null;
+      var valid = true;
+      fields.forEach(function (f) {
+        var input = document.getElementById(f.id);
+        var errEl = document.getElementById(f.errId);
+        var val = input.value.trim();
+        var bad = !val || (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val));
+        if (bad) {
+          valid = false;
+          input.setAttribute('aria-invalid', 'true');
+          errEl.textContent = f.msg;
+          if (!firstInvalid) firstInvalid = input;
+        } else {
+          input.removeAttribute('aria-invalid');
+          errEl.textContent = '';
+        }
+      });
+      if (firstInvalid) firstInvalid.focus();
+      return valid;
+    }
+
+    fields.forEach(function (f) {
+      document.getElementById(f.id).addEventListener('blur', validate);
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validate()) return;
+      var nombre = document.getElementById('nombre').value.trim();
+      var fileMsg = uploadedFiles.length > 0 ? ' Adjuntaste ' + uploadedFiles.length + ' archivo(s).' : '';
+      success.textContent = '¡Gracias, ' + nombre + '! Hemos recibido tu solicitud y te contactaremos en menos de 24 horas.' + fileMsg;
+      success.classList.add('visible');
+      form.classList.add('hidden');
+      success.focus();
+    });
+  })();
+
+  /* ── FILE UPLOAD ── */
+  var uploadedFiles = [];
+
+  function fmtSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(1) + ' MB';
+  }
+
+  var FILE_ICONS = {
+    image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>',
+    pdf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>',
+    plan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
+    generic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5.5 5.5 0 0 1-7.78-7.78l9.19-9.19a3.5 3.5 0 0 1 4.95 4.95L9.41 17.42a1.5 1.5 0 0 1-2.12-2.12l8.49-8.49"/></svg>'
+  };
+  function fIcon(name) {
+    var ext = name.split('.').pop().toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'heic', 'webp'].indexOf(ext) > -1) return FILE_ICONS.image;
+    if (ext === 'pdf') return FILE_ICONS.pdf;
+    if (['dwg', 'dxf'].indexOf(ext) > -1) return FILE_ICONS.plan;
+    return FILE_ICONS.generic;
+  }
+
+  function renderFiles() {
+    var list = document.getElementById('fileList');
+    list.innerHTML = '';
+    uploadedFiles.forEach(function (f, i) {
+      var div = document.createElement('div');
+      div.className = 'file-item';
+      div.innerHTML =
+        '<span class="file-icon" aria-hidden="true">' + fIcon(f.name) + '</span>' +
+        '<div class="file-info">' +
+          '<div class="file-name">' + f.name + '</div>' +
+          '<div class="file-size">' + fmtSize(f.size) + '</div>' +
+        '</div>' +
+        '<button type="button" class="file-remove" data-remove="' + i + '" title="Quitar archivo" aria-label="Quitar ' + f.name + '">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+        '</button>';
+      list.appendChild(div);
+    });
+    list.querySelectorAll('[data-remove]').forEach(function (btn) {
+      btn.addEventListener('click', function () { removeFile(parseInt(btn.getAttribute('data-remove'), 10)); });
+    });
+  }
+
+  function handleFiles(files) {
+    var MAX = 10 * 1024 * 1024;
+    Array.from(files).forEach(function (f) {
+      if (f.size > MAX) { alert('"' + f.name + '" supera el límite de 10 MB.'); return; }
+      if (!uploadedFiles.find(function (u) { return u.name === f.name && u.size === f.size; })) uploadedFiles.push(f);
+    });
+    renderFiles();
+    document.getElementById('fileInput').value = '';
+  }
+
+  function removeFile(idx) { uploadedFiles.splice(idx, 1); renderFiles(); }
+
+  (function () {
+    var zone = document.getElementById('uploadZone');
+    var input = document.getElementById('fileInput');
+    zone.addEventListener('click', function () { input.click(); });
+    zone.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); }
+    });
+    input.addEventListener('change', function () { handleFiles(input.files); });
+    zone.addEventListener('dragover', function (e) { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', function () { zone.classList.remove('drag-over'); });
+    zone.addEventListener('drop', function (e) {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      handleFiles(e.dataTransfer.files);
+    });
+  })();
+</script>
+</body>
+</html>

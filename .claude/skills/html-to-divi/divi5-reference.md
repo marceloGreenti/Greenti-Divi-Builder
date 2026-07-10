@@ -1292,7 +1292,9 @@ Mismo schema que `column` pero anidado. Adicionalmente puede llevar `advanced.sa
 **Uso:** Wrapper que muestra sus hijos en carrusel (con navegación, autoplay opcional).
 **Tipo:** Contenedor.
 
-**Ejemplo mínimo:**
+**Grupos disponibles:** `module`, `arrows`, `dotNav`, `children`, `activeGroups`.
+
+**Ejemplo mínimo funcional (4 slides visibles en desktop, 3 en tablet, 1.8 en phone):**
 
 ```json
 {
@@ -1302,13 +1304,13 @@ Mismo schema que `column` pero anidado. Adicionalmente puede llevar `advanced.sa
         "desktop": {
           "value": {
             "autoplay": "off",
-            "loop": "on",
-            "slidesPerView": "3",
-            "spaceBetween": "16"
+            "loop": "off",
+            "slidesPerView": "4",
+            "spaceBetween": "12"
           }
         },
-        "tablet":  { "value": { "slidesPerView": "2" } },
-        "phone":   { "value": { "slidesPerView": "1" } }
+        "tablet":  { "value": { "slidesPerView": "3" } },
+        "phone":   { "value": { "slidesPerView": "1.8" } }
       }
     }
   },
@@ -1316,7 +1318,145 @@ Mismo schema que `column` pero anidado. Adicionalmente puede llevar `advanced.sa
 }
 ```
 
-**Uso típico:** carruseles de logos, carruseles de cards, sliders horizontales de contenido custom.
+**Ejemplo completo con arrows, dotNav, autoplay y children/activeGroups configurados:**
+
+```json
+{
+  "module": {
+    "meta": {
+      "adminLabel": { "desktop": { "value": "Strip productos - carrusel" } }
+    },
+    "advanced": {
+      "carousel": {
+        "desktop": {
+          "value": {
+            "autoplay": "off",
+            "loop": "off",
+            "slidesPerView": "4.5",
+            "spaceBetween": "12"
+          }
+        },
+        "tablet": { "value": { "slidesPerView": "3" } },
+        "phone":  { "value": { "slidesPerView": "1.8" } }
+      },
+      "centerMode":      { "desktop": { "value": "off" } },
+      "slidesToShow":    { "desktop": { "value": "4" } },
+      "auto":            { "desktop": { "value": "on" } },
+      "speed":           { "desktop": { "value": "3000ms" } },
+      "transitionSpeed": { "desktop": { "value": "250ms" } }
+    },
+    "decoration": {
+      "spacing": {
+        "desktop": {
+          "value": {
+            "padding": {
+              "syncVertical": "off",
+              "syncHorizontal": "on",
+              "left": "15px",
+              "right": "15px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "arrows": {
+    "advanced": {
+      "color":    { "desktop": { "value": "#ffffff" } },
+      "position": { "desktop": { "value": "center" } }
+    }
+  },
+  "dotNav": {
+    "advanced": {
+      "position":  { "desktop": { "value": "below" } },
+      "alignment": { "desktop": { "value": "center" } },
+      "size":      { "desktop": { "value": "8px" } },
+      "color":     { "desktop": { "value": "#ffffff" } }
+    }
+  },
+  "children": {
+    "decoration": {
+      "layout": {
+        "desktop": {
+          "value": {
+            "display": "flex",
+            "flexDirection": "row",
+            "columnGap": "30px",
+            "rowGap": "30px",
+            "justifyContent": "start",
+            "alignContent": "stretch",
+            "alignItems": "flex-start"
+          }
+        }
+      }
+    }
+  },
+  "activeGroups": {
+    "decoration": {
+      "layout": {
+        "desktop": {
+          "value": {
+            "display": "flex",
+            "flexDirection": "row",
+            "columnGap": "30px",
+            "alignItems": "flex-start"
+          }
+        }
+      },
+      "spacing": {
+        "desktop": {
+          "value": {
+            "margin": {
+              "right": "15px",
+              "syncVertical": "off",
+              "syncHorizontal": "off"
+            }
+          }
+        }
+      }
+    }
+  },
+  "builderVersion": "5.8.1"
+}
+```
+
+**Propiedades clave documentadas:**
+
+Grupo `module.advanced.carousel` (configuración del comportamiento del carrusel):
+- **`slidesPerView`**: cuántos slides son visibles simultáneamente. Acepta **enteros** (`"3"`, `"4"`) o **decimales** (`"4.5"`, `"1.8"`). Los decimales muestran una fracción del siguiente slide como hint visual (patrón popular en carruseles modernos). **Crítico:** este parámetro es el que controla la cantidad visible. Emitirlo mal produce un carrusel que muestra 1 solo elemento.
+- **`spaceBetween`**: espacio en px entre slides (número sin unidad, ej: `"12"`).
+- **`loop`**: `"on"` (repetir al final) o `"off"`.
+- **`autoplay`**: `"on"` o `"off"`.
+
+Grupo `module.advanced` (propiedades adicionales del carrusel):
+- **`slidesToShow`**: entero. Complementa `slidesPerView` para forzar cantidad exacta de slides mostrados.
+- **`centerMode`**: `"on"` centra el slide activo, `"off"` alinea al inicio.
+- **`auto`**: `"on"` habilita autoplay (control separado de `carousel.autoplay`, ambos deben coincidir).
+- **`speed`**: duración del autoplay entre transiciones. Formato ms como string (ej: `"3000ms"`).
+- **`transitionSpeed`**: velocidad de la animación de la transición. Formato ms como string (ej: `"250ms"`).
+
+Grupo `arrows` (flechas de navegación laterales):
+- `advanced.color`: color de las flechas.
+- `advanced.position`: `"center"`, `"top"`, `"bottom"`.
+
+Grupo `dotNav` (paginación con puntos):
+- `advanced.position`: `"below"`, `"above"`, `"none"`.
+- `advanced.alignment`: `"center"`, `"left"`, `"right"`.
+- `advanced.size`: tamaño de los puntos (ej: `"8px"`).
+- `advanced.color`: color de los puntos.
+
+Grupo `children` (configuración global de los items hijos):
+- `decoration.layout`: display flex/grid, alineación, gaps entre elementos.
+
+Grupo `activeGroups` (configuración del grupo activo durante autoplay):
+- `decoration.layout`: mismo shape que `children` pero para el grupo activo.
+- `decoration.spacing`: márgenes específicos.
+
+**Regla operativa para la Skill:**
+
+Cuando el HTML declara un carrusel visible con N slides simultáneos, emitir `slidesPerView` con el valor correcto (nunca dejar `"1"` como default sin razón). Consultar `rules/html-to-divi-mapping.md` para reglas de inferencia.
+
+Cuando el diseño requiere autoplay, emitir **ambos** `carousel.autoplay: "on"` Y `advanced.auto: "on"` con el mismo estado (Divi requiere ambos alineados).
 
 ---
 

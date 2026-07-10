@@ -46,6 +46,12 @@ Al finalizar, la Skill genera en `projects/<nombre-proyecto>/output/`:
 7. **`notes.md`** — avisos importantes, Code Modules pendientes, decisiones tomadas, design tokens usados y su origen.
 8. **`html/landing-corrected.html`** (dentro de la carpeta html/) — HTML corregido por el `seo-auditor` con las correcciones aplicadas.
 
+**Salidas condicionales (según elección del usuario en Fase 2):**
+
+9. **`cf7-form-config.md`** — solo si el usuario eligió Contact Form 7. Contiene la configuración lista para pegar en CF7 admin: contenido del "Form", "Mail", "Messages" y "Additional Settings", más notas sobre integración vía webhook.
+10. **`cf7-form-styles.css`** — solo si el usuario eligió CF7. CSS custom para pegar en Divi → Opciones → CSS personalizado. Hace que el formulario CF7 se vea idéntico al HTML de la maqueta, respetando design tokens.
+11. **`divi-form-styles.css`** — solo si el usuario eligió Divi Form nativo Y hay estilos del HTML que Divi Form no cubre nativamente. CSS complementario para pulir el resultado hasta el 95%+ visual.
+
 ## Fases de ejecución
 
 La Skill orquesta el trabajo en **5 fases secuenciales**. En cada una invoca uno o más subagentes especializados. Los subagentes viven en `.claude/skills/html-to-divi/agents/` y las reglas específicas en `.claude/skills/html-to-divi/rules/`.
@@ -93,6 +99,30 @@ Regla mandatoria para `contentMaxWidth`:
 - Si el HTML NO declara: **preguntar al usuario explícitamente** qué valor usar (null, 1400px, 1600px, 1800px). No aplicar default silencioso.
 
 La confirmación es un gate: la Fase 3 no arranca hasta que el usuario confirme el manifiesto completo, incluyendo el sistema de contenedores.
+
+**Confirmación específica de gestión de formularios (crítica):**
+
+Si el `seo-auditor` detectó uno o más `<form>` en el HTML, la Skill pregunta al usuario cómo gestionarlos:
+
+```
+Se detectó/detectaron N formulario(s) en el HTML.
+
+¿Cómo prefieres gestionarlos?
+
+1. Contact Form 7 (recomendado si vas a integrar con webhooks o automatizaciones externas)
+   → Se emitirá un Code Module con placeholder para pegar el shortcode.
+   → Se generarán `cf7-form-config.md` (config para el admin de CF7) y
+     `cf7-form-styles.css` (estilos para pegar en Divi CSS personalizado).
+
+2. Formulario nativo de Divi
+   → Se emitirá un módulo `contact-form` con los campos detectados del HTML.
+   → Cobertura estimada: 80-95% del diseño y funcionalidad. Se avisará lo no cubierto.
+   → Se generará `divi-form-styles.css` con los estilos complementarios.
+```
+
+La decisión se aplica a todos los formularios del proyecto (regla simple, un solo criterio por proyecto). Si en algún proyecto hay excepciones, el usuario lo indica explícitamente.
+
+La confirmación es un gate: la Fase 3 no arranca hasta que el usuario elija (o confirme que no hay formularios en el HTML).
 
 ### Fase 3 — Emisión del JSON
 
