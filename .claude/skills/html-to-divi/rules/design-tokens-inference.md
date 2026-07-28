@@ -2,7 +2,7 @@
 
 Este documento define la cascada de 4 pasos por la que la Skill obtiene los design tokens del proyecto. La consulta la Skill durante la Fase 2, antes de invocar al `divi-json-builder`.
 
-## Los 6 grupos de tokens que se manejan
+## Los 7 grupos de tokens que se manejan
 
 1. **Paleta de colores.** Primario, secundario, acento, texto base, fondo base, y adicionales.
 2. **Tipografía.** Familias (headings, body, UI/botones), weights disponibles, escala tipográfica por breakpoint.
@@ -10,6 +10,7 @@ Este documento define la cascada de 4 pasos por la que la Skill obtiene los desi
 4. **Radios de borde.** sm, md, lg, pill.
 5. **Sombras (opcional).** Elevaciones (sm, md, lg, xl).
 6. **Sistema de contenedores.** Padding horizontal y vertical de sections, y ancho máximo de rows en pantallas extrawide. Se detalla en el bloque específico más abajo.
+7. **Formulario (v1.3.0+, inferido por defecto).** Colores y estilos específicos del formulario (fondo, borde, focus, placeholder, label). Ver bloque específico más abajo.
 
 ## Cascada de 4 pasos
 
@@ -86,6 +87,20 @@ Opcional. Se aplica al maxWidth de los rows para evitar que el contenido se esti
 - desktop: 1400px  (o null si el diseño debe ser 100% fluido)
 
 Valores típicos: null, 1400px, 1600px, 1800px.
+
+### Padding del header (`headerPadding`)
+El header/navbar tiene padding propio, más compacto que las sections de contenido. Se aplica al `<header>` semántico (o al primer bloque con clase equivalente).
+- desktop:    14/48/14/48  (top/right/bottom/left)
+- tabletWide: 14/48/14/48  (hereda de desktop)
+- tablet:     12/32/12/32
+- phoneWide:  10/24/10/24  (interpolado)
+- phone:      10/20/10/20
+
+Nota: es diferente del `sectionPadding` (que aplica a sections de contenido).
+
+### Border-bottom del header (opcional)
+Separación visual sutil entre el header y el hero.
+- 1px solid rgba(<primaryLight>, 0.10)
 ```
 
 Si el archivo existe pero está incompleto, la Skill completa los huecos con Pasos 2-4 y avisa qué se agregó.
@@ -142,6 +157,21 @@ El sistema de contenedores tiene reglas propias porque afecta la consistencia vi
    - **Preguntar al usuario explícitamente**: "¿Quieres aplicar un `contentMaxWidth` a los rows para pantallas ultrawide? Opciones típicas: null (diseño 100% fluido), 1400px, 1600px, 1800px. Sugerencia: 1400px."
    - No aplicar default silencioso. Este token requiere confirmación explícita para evitar decisiones invisibles.
 
+**D) `headerPadding` (nuevo en v1.3.0):**
+
+El header/navbar tiene padding propio, distinto del `sectionPaddingHorizontal` y `sectionPaddingVertical` de contenido. Se procesa así:
+
+1. Buscar en el HTML el `<header>` semántico (o clase equivalente `.header`, `.site-header`, `.main-header`, `.navbar`).
+2. Si el header declara padding en el CSS, extraerlo directamente.
+3. Si no lo declara, aplicar defaults más compactos que las sections de contenido:
+   - desktop:    14/48/14/48 (vertical/horizontal más comprimido)
+   - tablet:     12/32/12/32
+   - phone:      10/20/10/20
+4. Interpolar `tabletWide` y `phoneWide` con la misma cascada.
+5. Estos valores son intencionalmente MÁS PEQUEÑOS que los del contenido — el header debe ser visualmente compacto para no restar altura al hero.
+
+**Regla operativa:** el `headerPadding` NUNCA es igual al `sectionPadding`. Si al inferir del HTML resultan iguales, avisar al usuario y sugerir valores más compactos para el header.
+
 ### Nota importante sobre el sistema de contenedores
 
 El `contentMaxWidth` funciona en tandem con el padding horizontal de sections. La lógica final es:
@@ -192,6 +222,8 @@ Sistema de contenedores:
     desktop 100px / tablet 72px / phone 56px   [extracted]
 - contentMaxWidth (ancho máximo de rows en extrawide):
     1400px   [inferred - PREGUNTA AL USUARIO si no viene explícito]
+- Padding del header (más compacto que sections):
+    desktop 14/48 / tablet 12/32 / phone 10/20   [inferred - default]
 
 ¿Confirmas este manifiesto? Puedes:
 1. Aceptar tal cual → escribe "OK" y continúa.
@@ -228,6 +260,57 @@ El manifiesto puede usar nombres semánticos (`primario`, `acento`) o hex direct
 Fuera de v1. Si el HTML declara variantes dark mode (ej: clase `.dark` o `@media (prefers-color-scheme: dark)`), la Skill:
 1. Ignora las variantes dark.
 2. Avisa en `notes.md`: "El HTML declara modo oscuro. La Skill v1 no lo soporta. Configurar manualmente si es necesario."
+
+## Tokens de formulario (nuevo en v1.3.0)
+
+Estos tokens se aplican solo cuando el proyecto tiene formularios. En v1.3.0 se **infieren por defecto** de los tokens generales del proyecto. En una versión futura (v1.4.0+) podrán declararse explícitamente.
+
+### Tokens inferidos por defecto
+
+| Token | Inferencia |
+|---|---|
+| `tokens.form.background` | `tokens.color.fondoBase` con lightening del 5-8%, o color específico si el HTML lo declara. |
+| `tokens.form.border` | Derivado del `textoBase` con opacidad 0.15 (patrón sutil). |
+| `tokens.form.borderFocus` | `tokens.color.acento` directamente. |
+| `tokens.form.text` | `tokens.color.textoBase`. |
+| `tokens.form.placeholder` | `tokens.color.textoSecundario` con opacidad 0.6. |
+| `tokens.form.label` | `tokens.color.textoSecundario`. |
+| `tokens.form.radius` | `tokens.borderRadius.md`. |
+
+### Tokens semánticos derivados
+
+Estos también se infieren cuando no se declaran explícitamente:
+
+| Token | Inferencia |
+|---|---|
+| `tokens.color.error` | Rojo semántico. Default: `#FF6B6B` (para diseños oscuros) o `#F71963` según intensidad del acento. |
+| `tokens.color.success` | Verde semántico. Default: `#25D366`. |
+| `tokens.color.textOnAcento` | Color de texto sobre el fondo del acento (calcular contraste WCAG AA). |
+| `tokens.color.acentoHover` | Acento con lightening del 10% para hover states. |
+
+### Ejemplo real (BKGlass)
+
+Con estos tokens generales del proyecto:
+- `tokens.color.fondoBase = #070F1C`
+- `tokens.color.textoBase = #D8EEF7`
+- `tokens.color.textoSecundario = #8CA0B8`
+- `tokens.color.acento = #38C3FF`
+- `tokens.borderRadius.md = 8px`
+
+Se infieren estos tokens de formulario:
+- `tokens.form.background = #152540` (fondoBase con lightening)
+- `tokens.form.border = rgba(216, 238, 247, 0.15)` (textoBase con opacidad)
+- `tokens.form.borderFocus = #38C3FF` (acento)
+- `tokens.form.text = #D8EEF7` (textoBase)
+- `tokens.form.placeholder = rgba(140, 160, 184, 0.6)` (textoSecundario 0.6)
+- `tokens.form.label = #8CA0B8` (textoSecundario)
+- `tokens.form.radius = 8px` (borderRadius.md)
+- `tokens.color.error = #FF6B6B` (rojo semántico oscuro)
+- `tokens.color.success = #25D366` (verde semántico)
+- `tokens.color.textOnAcento = #070F1C` (fondoBase, alto contraste sobre acento)
+- `tokens.color.acentoHover = #5BD0FF` (acento con lightening)
+
+Estos valores se usan en la generación del CSS del formulario (ver `rules/cf7-form-generation.md`).
 
 ## Salida al finalizar la Fase 2
 

@@ -21,6 +21,7 @@ Antes de emitir cualquier bloque, este subagente **debe consultar** los siguient
 4. **`rules/responsive-inference.md`** — cascada de inferencia entre breakpoints.
 5. **`rules/design-tokens-inference.md`** — cascada de tokens (ya aplicada en Fase 2, aquí solo consulta el manifiesto confirmado).
 6. **`rules/cf7-form-generation.md`** — reglas para generar Contact Form 7 (solo si el usuario eligió CF7 en Fase 2).
+7. **`rules/convencion-html-formularios.md`** — convención estándar de HTML que las Skills de Greenti usan para formularios. Consultarla cuando se detecta un `<form>` en el HTML de entrada para hacer mapeo determinístico.
 
 ## Alcance de la emisión
 
@@ -36,8 +37,9 @@ Antes de emitir cualquier bloque, este subagente **debe consultar** los siguient
 - `output/divi-form-styles.css` — si el usuario eligió Divi Form y hay estilos del HTML que Divi Form no cubre nativamente.
 
 **No emite en v1:**
-- `presets` (queda en `null`).
-- `global_colors`, `global_variables` (quedan en `[]`), salvo que el HTML use variables globales explícitas.
+- `presets`: se emite con al menos 2 presets de botón desde v1.3.0 (ver "Sobre presets" más abajo). Antes de v1.3.0 iba en `null`.
+- `global_colors`: se emite con los 5 colores principales desde v1.3.0 (ver "Sobre Global Colors" más abajo). Antes de v1.3.0 iba en `[]`.
+- `global_variables` (queda en `[]`), salvo que el HTML use variables globales explícitas.
 - Configuración de Theme Builder Canvases (queda en `{"local":[],"global":[]}`).
 - Imágenes embebidas en base64 (queda en `{}`).
 
@@ -282,6 +284,106 @@ Buenas prácticas:
 
 **Siempre** `"builderVersion": "5.8.1"` en cada bloque, sin excepción. No usar valores como `5.0.0-public-alpha.23` aunque aparezcan en exports de referencia.
 
+### Sobre Global Colors (nuevo en v1.3.0)
+
+La Skill emite `global_colors` en el top-level del JSON con los 5 colores principales del manifiesto de tokens. Los usos en módulos referencian estos globales vía la sintaxis `$variable(...)$`.
+
+**Regla de emisión:**
+
+1. Consultar el manifiesto de tokens confirmado en Fase 2.
+2. Emitir en `global_colors` estos 5 IDs estándar con los valores del manifiesto:
+
+```json
+"global_colors": [
+  ["gcid-primary-color",   { "color": "<tokens.color.primario>",   "status": "active", "label": "Color Primario" }],
+  ["gcid-secondary-color", { "color": "<tokens.color.secundario>", "status": "active", "label": "Color Secundario" }],
+  ["gcid-accent-color",    { "color": "<tokens.color.acento>",     "status": "active", "label": "Color Acento" }],
+  ["gcid-text-base",       { "color": "<tokens.color.textoBase>",  "status": "active", "label": "Color Texto Base" }],
+  ["gcid-bg-base",         { "color": "<tokens.color.fondoBase>",  "status": "active", "label": "Color Fondo Base" }]
+]
+```
+
+Si algún rol del manifiesto no está definido (ej: no hay color secundario), NO emitir esa entrada. Ejemplo: si solo hay primario, acento, texto base y fondo base, se emiten 4 entradas.
+
+3. **Usos en módulos:** cada vez que un módulo necesita usar uno de estos 5 colores, emitir la referencia variable en vez del hex:
+
+```json
+"color": "$variable({\"type\":\"color\",\"value\":{\"name\":\"gcid-primary-color\",\"settings\":{}}})$"
+```
+
+4. **Colores utility/secundarios** (grises, colores de fondo alternos como `#0B1A2E`, colores de estados como error/success) siguen emitiéndose hardcoded. No saturar el sistema de globals.
+
+**Ventaja:** el dev de Greenti puede cambiar el color primario editando un solo global color en Divi Admin → Theme Customizer → Global Colors, y el cambio se propaga automáticamente a todos los módulos que lo referencian.
+
+### Sobre Presets de botón (nuevo en v1.3.0)
+
+La Skill emite al menos 2 presets de botón cuando el proyecto tiene botones. Facilita al dev unificar el estilo de todos los botones editando el preset en vez de cada botón individual.
+
+**Regla de emisión:**
+
+Detectar en el HTML las variantes de botón usadas (típicamente 2-3 estilos): botón primario (con fondo), botón outline (con borde, sin fondo), botón ghost (solo texto).
+
+Emitir en `presets.module.divi/button.items` un preset por cada variante detectada:
+
+**Preset 1 — "Botón Outline" (con borde, sin fondo — típicamente para acciones secundarias como "WhatsApp"):**
+
+```json
+{
+  "id": "<uuid-1>",
+  "name": "Botón Outline",
+  "moduleName": "divi/button",
+  "version": "5.8.1",
+  "type": "module",
+  "created": <timestamp>,
+  "updated": <timestamp>,
+  "attrs": {
+    "button": {
+      "decoration": {
+        "background": { "desktop": { "value": { "color": "transparent" } } },
+        "border": { "desktop": { "value": { "styles": { "all": { "width": "1px", "color": "$variable({\"type\":\"color\",\"value\":{\"name\":\"gcid-primary-color\",\"settings\":{}}})$" } }, "radius": { "topLeft": "5px", "topRight": "5px", "bottomLeft": "5px", "bottomRight": "5px", "sync": "on" } } } },
+        "font": { "font": { "desktop": { "value": { "weight": "600", "size": "15px", "color": "$variable({\"type\":\"color\",\"value\":{\"name\":\"gcid-primary-color\",\"settings\":{}}})$" } } } },
+        "button": { "desktop": { "value": { "icon": { "enable": "off" } } } }
+      }
+    }
+  },
+  "styleAttrs": { "...igual que attrs..." }
+}
+```
+
+**Preset 2 — "Botón Sólido" (con fondo, sin borde — típicamente para la CTA principal como "Cotizar ahora"):**
+
+```json
+{
+  "id": "<uuid-2>",
+  "name": "Botón Sólido",
+  "moduleName": "divi/button",
+  "version": "5.8.1",
+  "type": "module",
+  "created": <timestamp>,
+  "updated": <timestamp>,
+  "attrs": {
+    "button": {
+      "decoration": {
+        "background": { "desktop": { "value": { "color": "$variable({\"type\":\"color\",\"value\":{\"name\":\"gcid-primary-color\",\"settings\":{}}})$" } } },
+        "border": { "desktop": { "value": { "styles": { "all": { "width": "0px" } }, "radius": { "topLeft": "5px", "topRight": "5px", "bottomLeft": "5px", "bottomRight": "5px", "sync": "on" } } } },
+        "font": { "font": { "desktop": { "value": { "weight": "600", "size": "15px", "color": "<tokens.color.textOnPrimary>" } } } },
+        "button": { "desktop": { "value": { "icon": { "enable": "off" } } } }
+      }
+    }
+  },
+  "styleAttrs": { "...igual que attrs..." }
+}
+```
+
+**Regla operativa:**
+
+1. El `default` del preset apunta al UUID del preset "sólido" (más común como CTA principal): `"default": "<uuid-2>"`.
+2. Los botones del JSON que sigan el estilo del preset **NO** repiten esos atributos en su config individual; solo overrides específicos (texto, hover state particular, padding custom).
+3. Si el HTML tiene una tercera variante (ghost, link-style), emitir un tercer preset.
+4. Los `<uuid-X>` deben ser strings únicos de 10-36 caracteres (usar `uuid4`).
+
+Ver ejemplo completo del schema `presets` en `divi5-reference.md` sección 2.4.
+
 ### Sobre formularios (v1.2.0+)
 
 La decisión de CF7 vs Divi Form se toma en Fase 2 (con el usuario). En Fase 3, el `divi-json-builder` recibe esa decisión como input y actúa:
@@ -307,18 +409,113 @@ La decisión de CF7 vs Divi Form se toma en Fase 2 (con el usuario). En Fase 3, 
 2. Generar `output/cf7-form-config.md` siguiendo el schema de `rules/cf7-form-generation.md`.
 3. Generar `output/cf7-form-styles.css` siguiendo las plantillas de `rules/cf7-form-generation.md`, resolviendo los tokens del manifiesto.
 
+**Nuevo en v1.3.0 — Detección de modo de emisión CF7:**
+
+Antes de emitir el formulario CF7, la Skill determina el "modo" según el HTML de entrada:
+
+- **Modo A (Compacto):** el HTML no tiene labels visibles (solo placeholders). Emite shortcodes CF7 directamente dentro de wrappers de fila. Menos verboso.
+- **Modo B (Con wrappers de label):** el HTML tiene `<label>` visible arriba de cada input (o clases `.gt-form-field` + `.gt-form-label`). Emite wrappers `.gt-cf7-field` con `<span class="gt-cf7-label">`.
+
+Reglas de detección:
+1. Si el HTML sigue la convención `gt-form-*` (ver `rules/convencion-html-formularios.md`) → mapeo directo, detección determinística.
+2. Si el HTML NO sigue la convención → fallback por inferencia CSS (grid, flex, presencia de labels visibles).
+
+**Nuevo en v1.3.0 — Aviso automático sobre wpautop:**
+
+El `notes.md` generado incluye siempre esta acción crítica cuando se genera CF7:
+
+```
+⚠ CRÍTICO: Desactivar wpautop de CF7 en functions.php del child theme:
+
+    add_filter( 'wpcf7_autop_or_not', '__return_false' );
+
+Sin esto, el formulario aparecerá roto (columnas colapsadas, gaps enormes entre labels y campos). Greenti actualmente NO tiene este filtro desactivado globalmente.
+```
+
 **Vía B — Usuario eligió Divi Form nativo:**
 
 1. Por cada `<form>` detectado, emitir un módulo `contact-form` con:
    - Los campos mapeados según la tabla en `rules/html-to-divi-mapping.md`.
    - Los estilos aplicados según los design tokens del manifiesto.
-2. Detectar features del HTML que Divi Form NO cubre nativamente. Para cada una, registrar en `notes.md`:
+
+2. **Regla crítica de `id` únicos por campo (fix v1.3.0):**
+   Cada `contact-field` DEBE tener un `fieldItem.advanced.id.desktop.value` único derivado del label o `name` del input HTML.
+   
+   Convención: **snake_case, minúsculas, sin tildes, ASCII puro.**
+   
+   Ejemplos de mapeo label → id:
+   - "Nombre Completo" → `nombre_completo`
+   - "Email Address" → `email` (o `correo` según el HTML)
+   - "Teléfono" → `telefono`
+   - "Dirección" → `direccion`
+   - "Comuna" → `comuna`
+   - "Descripción del proyecto" → `descripcion_proyecto`
+   - "¿Cómo llegaste a nosotros?" → `como_llegaste`
+   
+   Reglas de derivación:
+   - Preferir el `name` del `<input>` HTML si viene declarado y es válido.
+   - Si no viene, derivar del label visible: minúsculas + reemplazar espacios por `_` + eliminar tildes + limpiar caracteres no ASCII.
+   - Truncar a máximo 40 caracteres si el label es muy largo.
+   - Si hay colisión entre dos campos que generarían el mismo id (ej: dos campos con label "Nombre"), sufijar `_2`, `_3`, etc.
+   
+   **NUNCA emitir todos los fields con el mismo id** (bug conocido — hace que el formulario solo capture el último campo).
+
+3. **Regla de limpieza de `checkboxOptions` (fix v1.3.0):**
+   El grupo `fieldItem.advanced.checkboxOptions` solo se emite cuando el `type` del field es `checkbox`, `radio` o `select`. Para tipos `input`, `email`, `tel`, `text`, `textarea`, `url`, `number`, `date` NO se emite este grupo (deja residuos que confunden en el editor).
+   
+   Divi por template puede incluir `checkboxOptions` con valores placeholder ("Nombre Completo", etc.) — la Skill los elimina explícitamente cuando el field no es de tipo choice.
+
+4. Detectar features del HTML que Divi Form NO cubre nativamente. Para cada una, registrar en `notes.md`:
    ```
    - <feature> no soportada por Divi Form nativo.
      Ubicación: <section, row>.
      Sugerencia: <alternativa>.
    ```
-3. Si hay estilos que necesitan CSS adicional (placeholder color, focus custom, etc.), generar `output/divi-form-styles.css`.
+
+5. Si hay estilos que necesitan CSS adicional (placeholder color, focus custom, etc.), generar `output/divi-form-styles.css`.
+
+### Sobre enumeración de `adminLabel` en múltiples instancias (nuevo en v1.3.0)
+
+Cuando la Skill emite N instancias hijas del mismo tipo de módulo dentro del mismo contexto (row, group, section), los `adminLabel` deben ser únicos y descriptivos. Es un fix crítico: en v1.2.0 y anteriores, todas las instancias podían quedar con el mismo label ("Ventaja 1 - ícono", "Producto 1 - imagen"), lo que hacía imposible distinguirlas en el árbol del builder.
+
+**Regla:**
+
+1. **Enumerar por posición** dentro del contenedor padre: `1`, `2`, `3`, ..., `N`.
+2. **Preservar el contexto de la section/group** en el label: `Ventaja 1 - ícono`, `Ventaja 2 - ícono`, ..., `Ventaja 6 - ícono`.
+3. **Incorporar el contenido semántico** cuando el módulo lo tenga (título del blurb, texto principal): `Ventaja 1 - Aislamiento térmico`, `Ventaja 2 - Aislamiento acústico`, etc.
+4. Se aplica a **grupos de módulos hermanos del mismo tipo**: 6 iconos consecutivos, 8 imágenes en un carrusel, 3 blurbs de features, 4 pasos de un proceso, 2 stats de un hero, etc.
+
+**Ejemplos concretos:**
+
+En la sección "Ventajas" con 6 blurbs (icono + título + descripción):
+- `Ventaja 1 - Aislamiento térmico`
+- `Ventaja 2 - Aislamiento acústico`
+- `Ventaja 3 - Variedad de colores`
+- `Ventaja 4 - Alta seguridad`
+- `Ventaja 5 - Eco amigable`
+- `Ventaja 6 - Fabricación a medida`
+
+En un carrusel de 8 productos:
+- `Producto 1 - Ventana Corredera`
+- `Producto 2 - Ventana Abatir`
+- ...
+
+En 2 stats del hero:
+- `Stat 1 - Proyectos realizados`
+- `Stat 2 - Años de experiencia`
+
+**Nunca emitir todas las instancias con el mismo label** (ej: `Ventaja 1 - ícono` repetido 6 veces). Es un anti-patrón.
+
+### Sobre placeholders "IMAGEN PENDIENTE" (actualizado en v1.3.0)
+
+El prefijo `IMAGEN PENDIENTE - <nombre>` en el `adminLabel` solo se aplica cuando la imagen NO tiene URL definitiva resuelta (es decir, cuando `assets-analyst` la marcó como pendiente en el checklist).
+
+**Regla:**
+
+- Si la imagen tiene URL definitiva (existe en `assets/` con match confirmado): NO usar el prefijo. AdminLabel normal: `Producto 1 - imagen`.
+- Si la imagen es placeholder (sin URL definitiva): prefijar `IMAGEN PENDIENTE - <nombre-archivo>`: `IMAGEN PENDIENTE - producto-1.jpg`.
+
+Esto evita que labels de "IMAGEN PENDIENTE" persistan en el output cuando en realidad las imágenes ya están subidas al Media Library.
 
 ### Sobre carruseles (`group-carousel`)
 

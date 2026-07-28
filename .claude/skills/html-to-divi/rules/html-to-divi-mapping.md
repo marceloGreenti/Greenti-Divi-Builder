@@ -210,10 +210,46 @@ Ver schema completo del `group-carousel` en `divi5-reference.md`.
 
 Detectar por:
 - Etiqueta `<header>` semántica.
-- Clase `.header`, `.site-header`, `.main-header`.
+- Clase `.header`, `.site-header`, `.main-header`, `.navbar`.
 - Bloque que contiene `<nav>` principal y logo, usualmente en la parte superior.
 
 El contenido del header se emite en `divi-import-header.json` con la misma estructura (placeholder → section → row → column → módulos).
+
+**Regla crítica de padding del header (v1.3.0+):**
+
+La section del header NO usa `sectionPaddingHorizontal`/`sectionPaddingVertical` (los de contenido). Usa el token propio `headerPadding` del manifiesto, más compacto:
+
+```json
+{
+  "module": {
+    "decoration": {
+      "spacing": {
+        "desktop": { "value": { "padding": { "top": "14px", "right": "48px", "bottom": "14px", "left": "48px", "syncVertical": "off", "syncHorizontal": "off" } } },
+        "tablet":  { "value": { "padding": { "top": "12px", "right": "32px", "bottom": "12px", "left": "32px", "syncVertical": "off", "syncHorizontal": "off" } } },
+        "phone":   { "value": { "padding": { "top": "10px", "right": "20px", "bottom": "10px", "left": "20px", "syncVertical": "off", "syncHorizontal": "off" } } }
+      }
+    }
+  }
+}
+```
+
+**Border-bottom sutil (opcional pero recomendado):**
+
+El header suele beneficiarse de un border-bottom muy sutil como separador visual del hero:
+
+```json
+{
+  "module": {
+    "decoration": {
+      "border": {
+        "desktop": { "value": { "styles": { "bottom": { "width": "1px", "style": "solid", "color": "rgba(168,212,232,0.10)" } } } }
+      }
+    }
+  }
+}
+```
+
+Se emite por defecto salvo que el HTML declare explícitamente que no debe tenerlo.
 
 ### Footer
 

@@ -7,7 +7,7 @@ Se sigue el formato de [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 
 
-## [v1.2.0] - 2026-07-XX
+## [v1.2.0] - 2026-07-24
 
 ### Agregado
 - **Elección de gestión de formularios**: la Skill ahora pregunta en Fase 2 si el proyecto usa Contact Form 7 o Divi Form nativo. La decisión se aplica a todos los formularios del proyecto.

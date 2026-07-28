@@ -120,6 +120,37 @@ Si existen `divi-import-header.json` y `divi-import-footer.json`:
 1. **Todo bloque significativo tiene `adminLabel`** en español descriptivo.
 2. **No hay `adminLabel` duplicados** que puedan confundir en el árbol del builder.
 3. **Placeholders temporales tipo `TODO`, `XXX`, `FIXME`** no quedan en el JSON final.
+4. **Enumeración de múltiples instancias** (nuevo en v1.3.0): cuando hay N módulos hermanos del mismo tipo dentro del mismo contenedor (row, group, section), sus `adminLabel` deben ser únicos y enumerados (`Ventaja 1`, `Ventaja 2`, ...). No pueden todos tener el mismo texto.
+5. **Labels "IMAGEN PENDIENTE" solo cuando aplica** (nuevo en v1.3.0): un módulo Image que referencia un asset con URL definitiva NO puede tener prefijo "IMAGEN PENDIENTE" en su adminLabel. Cross-check con `assets-checklist.md` para determinar el estado.
+
+### Categoría 10 — Contact-fields con ids únicos (nuevo en v1.3.0)
+
+Solo aplica cuando el usuario eligió Divi Form nativo.
+
+1. **Cada `contact-field` tiene `fieldItem.advanced.id.desktop.value` único** dentro del formulario. Nunca todos con `"Nombre"` o mismo valor.
+2. **El id sigue convención snake_case, minúsculas, ASCII puro**, derivado del label del campo.
+3. **`fieldItem.advanced.checkboxOptions` solo se emite** cuando el `type` del field es `checkbox`, `radio` o `select`. Para tipos `input`, `email`, `tel`, `text`, `textarea`, etc. NO debe emitirse este grupo.
+
+Ejemplo de fallo típico a detectar:
+
+```
+[CRÍTICO] Categoría 10 - Contact-fields
+  - Los 6 fields del formulario "Contacto" tienen id="Nombre" duplicado.
+    Esperado: nombre_completo, email, telefono, direccion, comuna, descripcion_proyecto.
+    Impacto: el formulario solo capturará el valor del último campo.
+```
+
+### Categoría 11 — Sistema de contenedores diferenciado por rol (nuevo en v1.3.0)
+
+1. **El header/navbar usa `headerPadding`** (más compacto), no `sectionPadding`. Si la section del header tiene padding igual al de sections de contenido, error crítico.
+2. **Las sections de contenido usan `sectionPaddingHorizontal` y `sectionPaddingVertical`** del manifiesto de forma consistente entre todas ellas.
+
+### Categoría 12 — Global Colors y Presets (nuevo en v1.3.0)
+
+1. **`global_colors` está poblado** con los 5 IDs estándar (`gcid-primary-color`, `gcid-secondary-color`, `gcid-accent-color`, `gcid-text-base`, `gcid-bg-base`), salvo que el manifiesto no defina todos los roles.
+2. **Los colores del manifiesto se emiten como referencias variables** en los módulos, no hardcoded. Ejemplo: si `tokens.color.primario = #38C3FF`, en el JSON debe aparecer `$variable(...gcid-primary-color...)$`, no `#38C3FF` directo.
+3. **`presets.module.divi/button.items`** contiene al menos 2 presets cuando el proyecto tiene botones (Outline + Sólido).
+4. **Cada preset tiene UUID único**, `moduleName: "divi/button"`, `version: "5.8.1"`, y `type: "module"`.
 
 ## Cómo reportar
 
@@ -136,16 +167,19 @@ Archivos validados:
   - divi-import-footer.json  (J módulos, I KB)   [si aplica]
 
 Checks aplicados:
-  - Validez estructural         ✓
-  - Sintaxis Gutenberg          ✓
-  - Jerarquía Divi              ✓
-  - Coherencia de columnas      ✓
-  - Catálogo de módulos         ✓
-  - Design tokens               ✓
-  - Sistema de contenedores     ✓
-  - Assets                      ✓
-  - Header/Footer separación    ✓
-  - Idempotencia y adminLabels  ✓
+  - Validez estructural              ✓
+  - Sintaxis Gutenberg               ✓
+  - Jerarquía Divi                   ✓
+  - Coherencia de columnas           ✓
+  - Catálogo de módulos              ✓
+  - Design tokens                    ✓
+  - Sistema de contenedores          ✓
+  - Assets                           ✓
+  - Header/Footer separación         ✓
+  - Idempotencia y adminLabels       ✓
+  - Contact-fields ids únicos        ✓
+  - Header vs section padding        ✓
+  - Global Colors + Presets          ✓
 
 Los archivos están listos para importar en Divi Library / Theme Builder.
 ```

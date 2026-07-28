@@ -184,11 +184,15 @@ Pasos:
 ## Reglas transversales
 
 - **Sistema de contenedores unificado.** Todas las sections del proyecto emiten el mismo padding horizontal (según `sectionPaddingHorizontal` del manifiesto). Todos los rows emiten `sizing.width: "100%"` + `sizing.maxWidth` explícito (nunca dejar sin declarar — el default de Divi es 1080px y rompe la unificación). Excepciones legítimas se registran en `notes.md`.
+- **Header con tokens propios (v1.3.0+).** El header/navbar usa `headerPadding` (más compacto que sections de contenido). Nunca reusa el `sectionPadding` de contenido.
+- **Global Colors + Presets (v1.3.0+).** La Skill emite los 5 colores principales del manifiesto como `global_colors` con IDs estándar (`gcid-primary-color`, etc.). Los módulos referencian estos colores vía variable, no hardcoded. Emite al menos 2 presets de botón (Outline + Sólido) para facilitar el mantenimiento post-import.
+- **AdminLabels enumerados (v1.3.0+).** Cuando se emiten N instancias hijas del mismo tipo (6 iconos, 8 productos, 3 blurbs), sus `adminLabel` deben ser únicos y enumerados (`Ventaja 1`, `Ventaja 2`, ...).
+- **Contact-fields con ids únicos (v1.3.0+).** Cuando se elige Divi Form, cada `contact-field` emite `id` único derivado del label (snake_case, ASCII).
 - **Fidelidad de estilos.** La Skill nunca inventa valores. Si un valor no viene en el HTML o los tokens, aplica la cascada de inferencia y confirma con el usuario.
 - **builderVersion fijo.** Siempre `"5.8.1"` en cada bloque emitido.
 - **5 breakpoints Divi 5.** desktop, tabletWide, tablet, phoneWide, phone. Ver `rules/responsive-inference.md` para inferencia.
 - **Header y footer separados.** Detectar por `<header>` / `<footer>` semánticos o clases equivalentes.
-- **CF7 como Code Module placeholder.** Cuando el HTML tenga un `<form>`, emitir Code Module con `[contact-form-7 id="INSERTA_ID_AQUI" title="Inserta shortcode del formulario aquí"]`.
+- **CF7 como Code Module placeholder** (cuando el usuario elige CF7). Cuando el HTML tenga un `<form>`, emitir Code Module con `[contact-form-7 id="INSERTA_ID_AQUI" title="Inserta shortcode del formulario aquí"]`.
 - **Idempotencia.** Regenerar la Skill sobre el mismo input debe producir el mismo output.
 - **Sanitización.** Limpiar clases/IDs del HTML que colisionen con las que Divi genera (`et_pb_*`).
 - **Sección B / módulos pendientes.** Si el HTML requiere un módulo aún no catalogado en `divi5-reference.md`, cortar y pedir al usuario que exporte un ejemplo mínimo desde su Divi para completar el catálogo antes de continuar.
@@ -204,3 +208,5 @@ Pasos:
 - `rules/design-tokens-inference.md` — cascada de 4 pasos para tokens.
 - `rules/html-to-divi-mapping.md` — tabla de mapeo HTML → módulos Divi.
 - `rules/code-module-triggers.md` — patrones que fuerzan Code Module.
+- `rules/cf7-form-generation.md` — reglas de generación de Contact Form 7 (convención `gt-cf7-*`, modo compacto vs con labels, CSS scopeado).
+- `rules/convencion-html-formularios.md` — convención estándar de HTML para formularios de Greenti (contrato inter-Skills).

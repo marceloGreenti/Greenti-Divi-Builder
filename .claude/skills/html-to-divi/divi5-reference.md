@@ -84,18 +84,100 @@ Un archivo exportado desde Divi 5 es un objeto JSON con **8 llaves top-level**:
 
 Este es el archivo mínimo importable en Divi Library: una página con una sección vacía como slot inicial.
 
-### 2.3 Sobre `global_colors` reales encontrados
+### 2.3 Sobre `global_colors` (actualizado en v1.3.0)
 
 En exports reales de Divi 5.8.1 aparece este patrón cuando el usuario tiene colores globales configurados:
 
 ```json
 "global_colors": [
-  ["gcid-body-color", { "color": "#666666", "status": "active", "label": "Color del Texto Principal" }],
-  ["gcid-link-color", { "color": "#2ea3f2", "status": "active", "label": "Color Del Enlace" }]
+  ["gcid-primary-color",   { "color": "#38C3FF", "status": "active", "label": "Color Primario" }],
+  ["gcid-secondary-color", { "color": "#0B1A2E", "status": "active", "label": "Color Secundario" }],
+  ["gcid-accent-color",    { "color": "#1EDFAE", "status": "active", "label": "Color Acento" }],
+  ["gcid-text-base",       { "color": "#FFFFFF", "status": "active", "label": "Color Texto Base" }],
+  ["gcid-bg-base",         { "color": "#070F1C", "status": "active", "label": "Color Fondo Base" }]
 ]
 ```
 
-Formato: array de arrays `[id, { color, status, label }]`. El `id` comienza con prefijo `gcid-` (Global Color ID). Los módulos los referencian mediante la sintaxis `$variable(...)$` (ver 5.6). **En v1 la Skill no emite global_colors** (los colores van hardcoded), pero debe **respetar los global_colors si vienen en el HTML** de entrada con notación de variable, y avisarlo.
+Formato: array de arrays `[id, { color, status, label }]`. El `id` comienza con prefijo `gcid-` (Global Color ID). Los módulos los referencian mediante la sintaxis `$variable(...)$` (ver 5.6).
+
+**Regla de emisión en v1.3.0+:**
+
+La Skill emite los 5 colores primarios del manifiesto de tokens como `global_colors` en el top-level del JSON, con nombres estándar:
+
+| Rol semántico | ID global | Se emite desde |
+|---|---|---|
+| Color primario | `gcid-primary-color` | Token `tokens.color.primario` del manifiesto |
+| Color secundario | `gcid-secondary-color` | Token `tokens.color.secundario` |
+| Color acento | `gcid-accent-color` | Token `tokens.color.acento` |
+| Texto base | `gcid-text-base` | Token `tokens.color.textoBase` |
+| Fondo base | `gcid-bg-base` | Token `tokens.color.fondoBase` |
+
+Los usos de estos 5 colores en el JSON emiten la **referencia variable** en vez de hardcoded:
+
+```json
+"color": "$variable({\"type\":\"color\",\"value\":{\"name\":\"gcid-primary-color\",\"settings\":{}}})$"
+```
+
+Colores secundarios/utility del manifiesto (grises, colores de estados, colores de fondo alternos como `#0B1A2E`) siguen emitiéndose hardcoded para no saturar el sistema de globals.
+
+**Beneficio:** cuando el dev de Greenti quiera cambiar el color primario de un sitio, edita un solo global color en Divi y se propaga a todos los módulos. Facilita el mantenimiento post-import.
+
+---
+
+### 2.4 Sobre `presets` (nuevo en v1.3.0)
+
+Divi 5 permite crear presets reutilizables por tipo de módulo. Cada preset guarda un conjunto de atributos que se aplican a todos los módulos del mismo tipo que lo referencien. Facilita el mantenimiento post-import.
+
+**Formato del schema `presets`:**
+
+```json
+"presets": {
+  "module": {
+    "divi/button": {
+      "default": "<uuid-del-preset-default>",
+      "items": {
+        "<uuid-1>": {
+          "id": "<uuid-1>",
+          "name": "Botón Outline",
+          "moduleName": "divi/button",
+          "version": "5.8.1",
+          "type": "module",
+          "created": 1785000000000,
+          "updated": 1785000000000,
+          "attrs": { "...atributos del preset..." },
+          "styleAttrs": { "...igual que attrs..." }
+        },
+        "<uuid-2>": {
+          "id": "<uuid-2>",
+          "name": "Botón Sólido",
+          "moduleName": "divi/button",
+          "version": "5.8.1",
+          "type": "module",
+          "created": 1785000000000,
+          "updated": 1785000000000,
+          "attrs": { "..." },
+          "styleAttrs": { "..." }
+        }
+      }
+    }
+  }
+}
+```
+
+**Regla de emisión en v1.3.0+:**
+
+La Skill emite al menos 2 presets de botón cuando el proyecto tiene botones:
+- **Preset 1** con estilo outline (borde + sin fondo).
+- **Preset 2** con estilo sólido (fondo + sin borde).
+
+Detalles de emisión en `agents/divi-json-builder.md` sección "Sobre Presets de botón".
+
+**Notas técnicas:**
+
+- Los UUIDs deben ser strings únicos generados con `uuid4()` o equivalente.
+- El campo `default` apunta al preset que Divi aplicará a los módulos nuevos por defecto.
+- Los campos `created` y `updated` son timestamps en milisegundos.
+- `attrs` y `styleAttrs` suelen tener el mismo contenido (Divi los usa en momentos distintos del pipeline de render).
 
 ---
 

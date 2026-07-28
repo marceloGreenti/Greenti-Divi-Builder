@@ -138,7 +138,19 @@ Ejemplo:
 https://placehold.co/1920x1080/cccccc/333333?text=PENDING+hero-bg
 ```
 
-En el JSON de Divi, el `adminLabel` del módulo Image lleva prefijo `IMAGEN PENDIENTE - <nombre>` para identificación visual en el árbol del builder.
+**Regla de adminLabel según estado (actualizado en v1.3.0):**
+
+El prefijo `IMAGEN PENDIENTE - <nombre>` en el `adminLabel` del módulo Image se aplica ÚNICAMENTE cuando el asset NO tiene URL definitiva resuelta.
+
+Tres casos posibles:
+
+1. **Asset resuelto (URL definitiva en Media Library):** `adminLabel` normal sin prefijo. Ejemplo: `Producto 1 - imagen`, `Hero - imagen de fondo`.
+2. **Asset con placeholder (sin URL definitiva):** prefijar `IMAGEN PENDIENTE - <nombre-archivo>`. Ejemplo: `IMAGEN PENDIENTE - producto-1.jpg`.
+3. **Asset entregado con nombre inválido (necesita renombrar):** prefijar `IMAGEN A RENOMBRAR - <nombre-actual>`. Ejemplo: `IMAGEN A RENOMBRAR - Foto Cliente.JPG`.
+
+Cuando el `assets-analyst` reporta un asset como resuelto en el checklist, el `divi-json-builder` NO debe usar el prefijo "IMAGEN PENDIENTE" para ese asset. Esto evita que el label pendiente persista en el output cuando en realidad la imagen ya está subida.
+
+Adicionalmente, el `divi-json-builder` debe **enumerar** cuando emite múltiples imágenes del mismo tipo. Ejemplo: en un carrusel con 8 productos, cada uno lleva `Producto 1 - imagen`, `Producto 2 - imagen`, ..., `Producto 8 - imagen`, NO todos con el mismo label. Ver regla completa en `agents/divi-json-builder.md` sección "Sobre enumeración de `adminLabel` en múltiples instancias".
 
 ## Cómo reportar
 

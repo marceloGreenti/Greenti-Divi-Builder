@@ -118,12 +118,16 @@ El `seo-auditor` prepara el borrador de `seo-meta.md` con esta estructura:
 
 1. **`html/landing-corrected.html`** — HTML corregido con todas las correcciones de Nivel 1 aplicadas + Nivel 2 respondidas por el usuario.
 2. **Borrador de `output/seo-meta.md`** — se completa en la Fase 5 de la Skill.
-3. **Inventario de formularios detectados** (nuevo en v1.2.0) — lista estructurada de todos los `<form>` encontrados en el HTML, con:
+3. **Inventario de formularios detectados** (nuevo en v1.2.0, extendido en v1.3.0) — lista estructurada de todos los `<form>` encontrados en el HTML, con:
    - Ubicación (section, row) para adminLabel.
-   - Campos detectados con `type`, `name`, `placeholder`, `required`.
+   - Campos detectados con `type`, `name`, `placeholder`, `required`, `autocomplete`.
    - Botón submit con texto.
    - Notas de estilo relevantes (border-radius, colores, spacing).
-   Este inventario alimenta la pregunta de "CF7 vs Divi Form" que la Skill hace al usuario en Fase 2, y es consumido por el `divi-json-builder` en Fase 3.
+   - **Convención detectada (v1.3.0):** identificar si el formulario sigue la convención estándar `gt-form-*` de Greenti (definida en `rules/convencion-html-formularios.md`).
+   - **Estructura de layout (v1.3.0):** por cada fila, identificar el tipo (`1col`, `2col`, `2col-1-2`, `2col-2-1`, `3col`) para que el `divi-json-builder` haga mapeo determinístico al emitir CF7.
+   - **Casos especiales detectados (v1.3.0):** upload múltiple de archivos, aceptación de términos, autocomplete hints, selects con placeholder.
+
+   Este inventario alimenta la pregunta de "CF7 vs Divi Form" que la Skill hace al usuario en Fase 2, y es consumido por el `divi-json-builder` en Fase 3 para hacer mapeo directo a los shortcodes CF7 o al módulo `contact-form` de Divi.
 4. **Log interno** con todas las correcciones aplicadas y decisiones tomadas, que la Skill copia a `notes.md`.
 
 ## Cómo reportar
