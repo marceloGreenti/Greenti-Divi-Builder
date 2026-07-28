@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA preview — CF7 bkglass-cotizacion</title>
+
+<!--
+  Preview de QA. NO se despliega.
+
+  Reproduce el markup que Contact Form 7 genera en el front a partir del bloque "Form"
+  de output/cf7-form-config.md, incluyendo los <span class="wpcf7-form-control-wrap">
+  que CF7 inyecta alrededor de cada control y el markup del addon "Drag and Drop
+  Multiple File Upload" para el campo [mfile].
+
+  Sirve para verificar que output/cf7-form-styles.css reproduce la maqueta antes de
+  tocar WordPress. Los estilos se cargan del archivo real, sin copiarlos.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../output/cf7-form-styles.css">
+
+<style>
+  /* Solo contexto de página — no forma parte del entregable */
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    background-color: #070F1C;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .qa-stage { max-width: 1280px; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<div class="qa-stage">
+<div class="wpcf7" id="wpcf7-f1234-p1-o1">
+<form class="wpcf7-form init" method="post" novalidate="novalidate">
+
+<input type="hidden" name="page-title" value="Contacto" id="page-title">
+
+<div class="gt-cf7-form">
+
+  <h3 class="gt-cf7-title">Solicitar cotización gratuita</h3>
+  <p class="gt-cf7-intro">Detalla ubicación + medidas en los comentarios: "Living: ancho 200cm, alto 150cm, modelo corredera"</p>
+
+  <div class="gt-cf7-half">
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Nombre completo *</span>
+      <span class="wpcf7-form-control-wrap" data-name="nombre"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" autocomplete="name" aria-required="true" placeholder="Juan Pérez" type="text" name="nombre"></span>
+    </label>
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Teléfono *</span>
+      <span class="wpcf7-form-control-wrap" data-name="telefono"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-tel wpcf7-validates-as-required wpcf7-validates-as-tel" autocomplete="tel" aria-required="true" placeholder="+56 9 ···· ····" type="tel" name="telefono"></span>
+    </label>
+  </div>
+
+  <div class="gt-cf7-full">
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Correo electrónico *</span>
+      <span class="wpcf7-form-control-wrap" data-name="email"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email" autocomplete="email" aria-required="true" placeholder="tu@correo.cl" type="email" name="email"></span>
+    </label>
+  </div>
+
+  <div class="gt-cf7-half-2-1">
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Dirección</span>
+      <span class="wpcf7-form-control-wrap" data-name="direccion"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text" autocomplete="street-address" placeholder="Av. Ejemplo 123" type="text" name="direccion"></span>
+    </label>
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Comuna</span>
+      <span class="wpcf7-form-control-wrap" data-name="comuna"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text" autocomplete="address-level2" placeholder="Las Condes" type="text" name="comuna"></span>
+    </label>
+  </div>
+
+  <div class="gt-cf7-half">
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Tipo de vivienda</span>
+      <span class="wpcf7-form-control-wrap" data-name="tipo_vivienda"><select class="wpcf7-form-control wpcf7-select" name="tipo_vivienda"><option value="">Seleccionar</option><option value="Casa">Casa</option><option value="Apartamento">Apartamento</option><option value="Oficina">Oficina</option><option value="Edificio">Edificio</option></select></span>
+    </label>
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">¿Construcción nueva?</span>
+      <span class="wpcf7-form-control-wrap" data-name="construccion_nueva"><select class="wpcf7-form-control wpcf7-select" name="construccion_nueva"><option value="">Seleccionar</option><option value="Sí">Sí</option><option value="No">No</option></select></span>
+    </label>
+  </div>
+
+  <div class="gt-cf7-half">
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Color de marcos</span>
+      <span class="wpcf7-form-control-wrap" data-name="color_marcos"><select class="wpcf7-form-control wpcf7-select" name="color_marcos"><option value="">Seleccionar</option><option value="Blanco">Blanco</option><option value="Grafito">Grafito</option><option value="Negro">Negro</option><option value="Imitación madera">Imitación madera</option></select></span>
+    </label>
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Ventanas actuales</span>
+      <span class="wpcf7-form-control-wrap" data-name="ventanas_actuales"><select class="wpcf7-form-control wpcf7-select" name="ventanas_actuales"><option value="">Seleccionar</option><option value="Aluminio">Aluminio</option><option value="Madera">Madera</option><option value="PVC">PVC</option><option value="Sin ventanas">Sin ventanas</option></select></span>
+    </label>
+  </div>
+
+  <div class="gt-cf7-full">
+    <label class="gt-cf7-field">
+      <span class="gt-cf7-label">Descripción del proyecto</span>
+      <span class="wpcf7-form-control-wrap" data-name="descripcion"><textarea cols="40" rows="4" maxlength="2000" class="wpcf7-form-control wpcf7-textarea" placeholder="Ej: Living: ancho 200cm, alto 150cm, modelo corredera..." name="descripcion"></textarea></span>
+    </label>
+  </div>
+
+  <div class="gt-cf7-dropzone">
+    <span class="gt-cf7-label gt-cf7-sr-only">Adjuntar archivos</span>
+    <span class="wpcf7-form-control-wrap" data-name="archivos">
+      <div class="codedropz-upload-wrapper">
+        <div class="codedropz-upload-handler">
+          <div class="codedropz-upload-container">
+            <div class="codedropz-upload-inner">
+              <h3>⬆ Arrastra archivos aquí o haz clic para seleccionar</h3>
+              <div class="codedropz-btn-wrap"><a class="cd-upload-btn" href="#">Seleccionar archivos</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
+    <p class="gt-cf7-hint">Planos, fotos o medidas · PDF, DWG, JPG, PNG · Máx. 10 MB por archivo</p>
+  </div>
+
+  <div class="gt-cf7-submit-wrap">
+    <input class="wpcf7-form-control wpcf7-submit has-spinner gt-cf7-submit" type="submit" value="Enviar solicitud de cotización →">
+  </div>
+
+  <p class="gt-cf7-foot">También puedes adjuntar planos al correo <a href="mailto:ventanaspvc@bkglass.cl">ventanaspvc@bkglass.cl</a></p>
+
+</div>
+
+<div class="wpcf7-response-output" aria-hidden="true"></div>
+
+</form>
+</div>
+</div>
+
+</body>
+</html>
